@@ -1,0 +1,236 @@
+.list-edition-button {
+	position: relative;
+	background: #ffffff;
+	color: #23282d;
+	font-weight: 600;
+	text-align: center;
+	border: solid 0.1rem #ddd;
+	padding: 0.6rem;
+	overflow: hidden;
+}
+
+.list-edition-button:hover {
+    border-color: #999;
+    color: #fd2a5f;
+    overflow: visible;
+}
+
+.list-selection {
+    text-align:  center;
+    margin-top: 1rem;
+}
+
+.list-selection > span {
+    display:  inline-block;
+    padding: 0.3rem 1rem;
+    color: #fd2a5f;
+    border: solid 0.1rem #fd2a5f;
+    transition: all 0.2s;
+    cursor:  pointer;
+	user-select: none;
+}
+/*
+.list-selection > span.active {
+    background-color: #fd2a5f;
+    color: #ffffff;
+    cursor: default;
+}
+*/
+.list-selection > span.active {
+    background-color: #adadad;
+    border-color: #adadad;
+    color: #d3d3d3;
+    cursor: default;
+}
+
+.lists-visualization {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: solid 0.1rem #fd2a5f;
+}
+
+.list-selection > span:not(.active):hover {
+    background-color: #fd2a5f;
+    color: #ffffff;
+}
+
+.lists-visualization p {
+    font-size: 1.6rem;
+    margin-bottom:  1rem;
+}
+
+.the-list-name {
+    box-shadow: inset 0px 0px 1px black;
+    padding: 0.1rem 1rem;
+    margin-right: 0.7rem;
+}
+
+.current-list li {
+    position: relative;
+    background: #ffffff;
+    color: #fd2a5f;
+    font-weight: 600;
+    text-align: center;
+    border: solid 0.1rem #fd2a5f;
+    cursor: move !important;
+    padding: 0.6rem;
+    overflow: hidden;
+    min-height: 2rem;
+    white-space: nowrap;
+}
+
+.current-list ul {
+    margin-left: 0;
+    cursor: move !important;
+    counter-reset: list;
+}
+
+.current-list li:hover, .current-list li.dragged {
+    color: #ffffff;
+	border-color: #fd2a5f;
+    overflow: visible;
+    background-color: #fd2a5f;
+}
+
+.current-list li:not(.ui-sortable-placeholder):before {
+    content: counter(list, decimal);
+    counter-increment: list;
+    position: absolute;
+    left: 0;
+    font-size: 6rem;
+    top: -3rem;
+    color: #fd2a5f!important;
+    font-family: sans-serif;
+}
+
+.ui-sortable-placeholder {
+    border: dotted 0.1rem #fd2a5f!important;
+    background-color: transparent!important;
+    visibility: visible!important;
+}
+
+.current-list li:hover:before {
+    color: #ffff00!important;
+}
+
+.add-list-item-button {
+    color: #fd2a5f;
+    font-size: 4rem;
+    text-align: center;
+}
+
+.add-li-button-holder {
+    text-align:  center;
+}
+
+.insert-item-content {
+	display: none;
+    position: fixed;
+    z-index: 202032;
+    padding: 1rem;
+    background-color: white;
+    border: solid 0.1rem #fd2a5f;
+	top: 50px;
+	left: 0;
+}
+
+.insert-item-content h6 {
+    color: #fd2a5f;
+}
+
+.editing-list-item > .panel-overlay{
+	display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background-color: #000000b0;
+    z-index: 1;
+}
+
+.item-edition-buttons{
+	font-size: 2rem;
+	text-align: right;
+	color: #fd2a5f;
+}
+
+.item-edition-buttons:not(.awaiting-edition) i {
+    cursor:  pointer;
+}
+
+.item-edition-buttons.awaiting-edition {
+    color: #555d66;
+}
+
+.item-edition-buttons i.discard-changes-button {
+	color: #fd2a5f;
+}
+
+.edit-name {
+    color: #fd2a5f;
+	cursor: pointer;
+}
+
+.add-list-item, .add-list {
+    text-align:  center;
+}
+
+.add-list-item i, .add-list i {
+    font-size: 5rem;
+    color: #fd2a5f;
+    cursor:  pointer;
+    transition:  all 0.4s;
+}
+
+.add-list-item i:hover, .add-list i:hover {
+    color: #39a746;
+}
+
+.lists-visualization li .list-name, .view-list li .list-item-name  {
+    display:  inline-block;
+    width: 80%;
+    box-sizing:  border-box;
+    padding-left: 3rem;
+}
+
+.lists-visualization li .delete-list, .view-list li .delete-list-item, .lists-visualization li .edit-button, .view-list li .edit-button {
+    width: 10%;
+    cursor:  pointer;
+    transition: transform 0.4s;
+    font-size: 1.79rem;
+    position:  relative;
+    top: 0.2rem;
+}
+
+.lists-visualization li .delete-list:hover, .lists-visualization li .delete-list-item:hover {
+	animation: colorChange 1.5s infinite;
+}
+
+.lists-visualization li .edit-button:hover, .lists-visualization li .edit-button:hover {
+	animation: colorChange2 1.5s infinite;
+}
+
+
+@keyframes colorChange {
+  0% {
+    color: #ffffff;
+  }
+  50% {
+    color: #53b2e1;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+
+@keyframes colorChange2 {
+  0% {
+    color: #ffffff;
+  }
+  50% {
+    color: #53e15f;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
