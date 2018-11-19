@@ -226,8 +226,11 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 		public $show_option_none = "None";
 		public $dinamic_label = null;
 		public $show_inputs_label = true;
+<<<<<<< HEAD
 		public $collapsible_group = false;
 		public $collapsible_open = false;
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 
 		public function __construct($manager, $id, $args = array())
 		{
@@ -235,16 +238,24 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 
 			$this->input_title = $args["inputs_title"];
 			$this->disable_generator = $args["disable_generator"] ? $args["disable_generator"] : $this->disable_generator;
+<<<<<<< HEAD
 			$this->collapsible_group = $args["collapsible_group"] ? $args["collapsible_group"] : $this->collapsible_group ;
 			$this->collapsible_open = $args["collapsible_open"] ? $args["collapsible_open"] : $this->collapsible_open ;
+=======
+			$this->disable_generator = $args["disable_generator"] ? $args["disable_generator"] : $this->disable_generator;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		}
 
 		public function type_is_taxonomy ( $type ){
 			switch ( $type ){
+<<<<<<< HEAD
 				case "pedigree-category":
 					return true;
 				break;
 				case "category":
+=======
+				case "categorie":
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 					return true;
 				break;
 				case "tag":
@@ -263,15 +274,23 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			return false;
 		}
 
+<<<<<<< HEAD
 		public function get_taxs_dropdown( $type, $id, $value, $class = "" ){
 			$dropdown = null;
 			switch ( $type ){
 				case "pedigree-category":
+=======
+		public function get_taxs_dropdown( $type, $id, $value ){
+			$dropdown = null;
+			switch ( $type ){
+				case "categorie":
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 					$dropdown = wp_dropdown_categories(
 						array(
 							'name'              => $id,
 							'echo'              => 0,
 							'show_option_none'  => __( $this->show_option_none ),
+<<<<<<< HEAD
 							'option_none_value' => "",
 							'selected'          => $value,
 							'class'             => $class,
@@ -292,6 +311,10 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'orderby'			=> 'name',
 							'selected'          => $value,
 							'class'             => $class,
+=======
+							'option_none_value' => -1,
+							'selected'          => $value,
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 						)
 					);
 				break;
@@ -301,12 +324,18 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'name'              => $id,
 							'echo'              => 0,
 							'show_option_none'  => __( $this->show_option_none ),
+<<<<<<< HEAD
 							'option_none_value' => "",
 							'hide_empty'		=> 0,
 							'orderby'			=> 'name',
 							'selected'          => $value,
 							'taxonomy'			=> 'post_tag',
 							'class'             => $class,
+=======
+							'option_none_value' => -1,
+							'selected'          => $value,
+							'taxonomy'			=> 'post_tag',
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 						)
 					);
 				break;
@@ -316,20 +345,30 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'name'              => $id,
 							'echo'              => 0,
 							'show_option_none'  => __( $this->show_option_none ),
+<<<<<<< HEAD
 							'option_none_value' => "",
 							'hide_empty'		=> 0,
 							'orderby'			=> 'name',
 							'selected'          => $value,
 							'class'             => $class,
+=======
+							'option_none_value' => -1,
+							'selected'          => $value,
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 						)
 					);
 				break;
 				case "post":
 					$dropdown = "<select
 						name='$id'
+<<<<<<< HEAD
 						class='$class'
 					>";
 					$dropdown .= '<option value=""'.selected($value, $post->ID, false).'>'.__( $this->show_option_none ).'</option>';
+=======
+					>";
+					$dropdown .= '<option value="-1"'.selected($value, $post->ID, false).'>'.__( $this->show_option_none ).'</option>';
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 					$posts = get_posts(array(
 						'posts_per_page'       	=> -1,
 						'orderby'				=> 'title',
@@ -343,9 +382,14 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 				case "user":
 					$dropdown = "<select
 						name='$id'
+<<<<<<< HEAD
 						class='$class'
 					>";
 					$dropdown .= '<option value=""'.selected($value, $post->ID, false).'>'.__( $this->show_option_none ).'</option>';
+=======
+					>";
+					$dropdown .= '<option value="-1"'.selected($value, $post->ID, false).'>'.__( $this->show_option_none ).'</option>';
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 
 					$users = get_users();
 					foreach ( $users as $user ){
@@ -358,6 +402,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			return $dropdown;
 		}
 
+<<<<<<< HEAD
 		public function fontawesome_icon($prefix, $code, $current_code = ''){
 			$class = $prefix . ' fa-' . $code;
 			$class_fa_current = $class == $current_code ? 'active' : '';
@@ -414,6 +459,8 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 		<?php
 		}
 
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		public function decode_json_value(){
 			return json_decode($this->value(), true);
 		}
@@ -458,6 +505,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			$this->print_single_inputs_group( $inputs );
 		}
 
+<<<<<<< HEAD
 
 		public function add_empty_inputs($inputs){
 			$result = array();
@@ -511,6 +559,12 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			if ( !empty($inputs_groups) && $this->is_safe_value() ){
 				foreach( $inputs_groups as $inputs ){
 					$inputs = $this->add_empty_inputs($inputs);
+=======
+		public function print_inputs_groups(){
+			$inputs_groups = $this->decode_json_value();
+			if ( !empty($inputs_groups) && $this->is_safe_value() ){
+				foreach( $inputs_groups as $inputs ){
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 					$this->print_single_inputs_group( $inputs );
 					if ( $this->disable_generator )
 						break;
@@ -546,29 +600,45 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			if ( !empty( $inputs ) ){
 				foreach( $inputs as $input_id => $input_value ){
 					$input_data = $this->get_input_data_by_id( $input_id );
+<<<<<<< HEAD
 					$this->print_single_input($input_id, $input_data["nice_name"], $input_data["type"], $input_data["dependencies"], $input_data["reverse_dependencies"], $input_value, $input_data["description"]);
+=======
+					$this->print_single_input($input_id, $input_data["nice_name"], $input_data["type"], $input_data["dependencies"], $input_data["reverse_dependencies"], $input_value);
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 				}
 			}
 		}
 
 		//Prints a single input, matching the markup with its type
+<<<<<<< HEAD
 		public function print_single_input($input_id, $nice_name, $type, $dependencies, $reverse_dependencies, $value, $description = ""){
+=======
+		public function print_single_input($input_id, $nice_name, $type, $dependencies, $reverse_dependencies, $value){
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			?>
 				<div class="inputs-generator-inputs-holder" data-inputs-dependencies="<?php echo $dependencies; ?>"
 				data-reverse-dependencies="<?php echo $reverse_dependencies; ?>" data-input-show="true">
 
+<<<<<<< HEAD
 				<?php //CHECKBOX ?>
 				<?php if ( $type == "checkbox" ): ?>
 				<input class="rb-sub-input" name="<?php echo $input_id; ?>" type="<?php  echo $type; ?>" value="<?php echo $value; ?>"
 				<?php if ( $value ): ?> checked <?php endif; ?>>
 				<?php endif; ?>
 				<?php //END CHECKBOX ?>
+=======
+				<?php if ( $type == "checkbox" ): ?>
+				<input name="<?php echo $input_id; ?>" type="<?php  echo $type; ?>" value="<?php echo $value; ?>"
+				<?php if ( $value ): ?> checked <?php endif; ?>>
+				<?php endif; ?>
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 
 				<?php if ( $this->show_inputs_label ): ?>
 				<span class="input-label"><?php echo $nice_name; ?></span>
 				<?php endif; ?>
 
 				<?php if ( $type == "textarea" ): ?>
+<<<<<<< HEAD
 				<textarea class="rb-sub-input" name="<?php echo $input_id; ?>" value="<?php echo $value; ?>"><?php echo $value; ?></textarea>
 				<?php elseif ($type == "texteditor"): ?>
 				<div class="rb-tinymce-control">
@@ -578,12 +648,16 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 					</div>
 					<input name="<?php echo $input_id; ?>" type="hidden" class="rb-tinymce-input rb-sub-input" value="<?php echo htmlentities($value); ?>">
 				</div>
+=======
+				<textarea name="<?php echo $input_id; ?>" value="<?php echo $value; ?>"><?php echo $value; ?></textarea>
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 				<?php elseif ( $type == "image" ): ?>
 				<div class="input-wp-media-image-holder">
 					<img class="input-image-src" src="<?php echo $value; ?>">
 					<div class="input-image-placeholder">
 						<p> Select an image </p>
 					</div>
+<<<<<<< HEAD
 					<input class="rb-sub-input" name="<?php echo $input_id; ?>" type="text" value="<?php echo $value; ?>">
 				</div>
 				<div class="remove-image-button"><i class="fas fa-times" title="Remove image"></i></div>
@@ -592,19 +666,34 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 				<?php
 					elseif ( $this->type_is_taxonomy( $type ) ):
 						$dropdown = $this->get_taxs_dropdown( $type, $input_id, $value, "rb-sub-input" );
+=======
+					<input name="<?php echo $input_id; ?>" type="text" value="<?php echo $value; ?>">
+				</div>
+				<div class="remove-image-button"><i class="fas fa-times" title="Remove image"></i></div>
+				<?php
+					elseif ( $this->type_is_taxonomy( $type ) ):
+						$dropdown = $this->get_taxs_dropdown( $type, $input_id, $value );
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 						echo $dropdown;
 
 					elseif ( $type != "checkbox" ):
 				?>
+<<<<<<< HEAD
 				<input class="rb-sub-input" name="<?php echo $input_id; ?>" type="<?php  echo $type; ?>" value="<?php echo $value; ?>">
 				<?php endif; ?>
 				</div>
 
 				<p><?php echo $description; ?></p>
+=======
+				<input name="<?php echo $input_id; ?>" type="<?php  echo $type; ?>" value="<?php echo $value; ?>">
+				<?php endif; ?>
+				</div>
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			<?php
 		}
 
 		public function render_content() {
+<<<<<<< HEAD
 			$title_classes = "title-and-trash-holder";
 			if($this->collapsible_group){
 				$title_classes .= " collapsible-title";
@@ -622,11 +711,19 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 						<i class="fas fa-angle-down collapsible-arrow" aria-hidden="true"></i>
 					</span>
 					<?php endif;?>
+=======
+			?>
+			<label class="customize-control-multiple-inputs customize-control-inputs-generator customizer-control-holder <?php echo $this->label_classes; ?>"
+			data-base-inputs="<?php echo esc_html($this->inputs_as_string()); ?>"
+			data-dinamic-label-id="<?php echo $this->dinamic_label; ?>">
+				<div class="title-and-trash-holder">
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 					<span class="customize-control-title"><?php echo $this->label; ?></span>
 					<?php if ( !$this->disable_generator ): ?>
 					<i class="fas fa-trash-alt delete-item-on-drop" title="Drag item over to delete"></i>
 					<?php endif; ?>
 				</div>
+<<<<<<< HEAD
 				<?php if($this->collapsible_group): ?>
 				<div class="collapsible-body">
 				<?php endif;?>
@@ -644,6 +741,18 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 				<?php if($this->collapsible_group): ?>
 				</div>
 				<?php endif;?>
+=======
+				<span class="description customize-control-description"><?php echo $this->description; ?></span>
+				<ul class="customizer-sortable-ul ui-sortable">
+					<?php echo $this->print_inputs_groups(); ?>
+				</ul>
+				<?php if ( !$this->disable_generator ): ?>
+				<div class="add-new-li customizer-add-new-button">
+					<i class="fas fa-plus"></i>
+				</div>
+				<?php endif; ?>
+				<input class="control-value" type="hidden" <?php $this->link(); ?>>
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			</label>
 			<?php
 		}
@@ -675,6 +784,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 				return false;
 		}
 
+<<<<<<< HEAD
 
 		public function get_all_inputs_values(){
 			$result = $this->decode_json_value();
@@ -689,6 +799,12 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			$input_data = current($this->inputs_types);
 			$input_id = key( $this->inputs_types );
 			$this->print_single_input($input_id, $input_data["nice_name"], $input_data["type"], $input_data["dependencies"], $input_data["reverse_dependencies"], $input_value, $input_data["description"]);
+=======
+		public function print_inputs ( $input_value ){
+			$input_data = current($this->inputs_types);
+			$input_id = key( $this->inputs_types );
+			$this->print_single_input($input_id, $input_data["nice_name"], $input_data["type"], $input_data["dependencies"], $input_data["reverse_dependencies"], $input_value);
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		}
 
 		public function print_empty_group(){
@@ -754,8 +870,13 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 		}
 
 		public function print_inputs_groups(){
+<<<<<<< HEAD
 			$inputs_values = $this->decode_json_value();
 			$inputs = $this->get_inputs_group_values($inputs_values);
+=======
+			$inputs = $this->decode_json_value();
+
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			if ( !empty($inputs) && $this->is_safe_value() )
 				$this->print_single_inputs_group( $inputs );
 			else
@@ -994,7 +1115,11 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 					<textarea class="tinymce-content-preview"><?php echo $this->value(); ?></textarea>
 					<div class="edit-button">Editar</div>
 				</div>
+<<<<<<< HEAD
 				<input type="hidden" class="rb-tinymce-input" value="<?php echo $this->value(); ?>" <?php $this->link(); ?>>
+=======
+				<input type="hidden" class="rb-control-value-input" value="<?php echo $this->value(); ?>" <?php $this->link(); ?>>
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			</label>
 		<?php
 		}

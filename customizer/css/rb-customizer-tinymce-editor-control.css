@@ -2,7 +2,11 @@
     position:  relative;
 }
 
+<<<<<<< HEAD
 .customize-tinymce-control .edit-button, .rb-tinymce-control .edit-button {
+=======
+.customize-tinymce-control .edit-button {
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     position:  absolute;
     width:  100%;
     height:  100%;
@@ -19,11 +23,19 @@
     user-select:  none;
 }
 
+<<<<<<< HEAD
 .customize-tinymce-control .tinymce-content-preview, .rb-tinymce-control .tinymce-content-preview {
     margin-bottom:  0;
 }
 
 .customize-tinymce-control .edit-button:hover, .rb-tinymce-control .edit-button:hover {
+=======
+.customize-tinymce-control .tinymce-content-preview {
+    margin-bottom:  0;
+}
+
+.customize-tinymce-control .edit-button:hover {
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     background-color: rgba(253, 42, 95, 0.8);
     color: #ffffff;
 }

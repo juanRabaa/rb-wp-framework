@@ -1,7 +1,11 @@
 ( function( $ ) {
 	var tinymceSettings = {
 		quicktags: {
+<<<<<<< HEAD
 			buttons:"strong,em,link,ul,ol,li,aligncenter"
+=======
+			buttons:"strong,em,link,ul,ol,li"
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		},
 		tinymce: {
 			branding:false,
@@ -25,7 +29,11 @@
 			resize:"vertical",
 			skin:"lightgray",
 			theme:"modern",
+<<<<<<< HEAD
 			toolbar1:"bold,italic,underline,strikethrough,alignleft,aligncenter,justifyleft,alignright,alignjustify,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent,cut,copy,paste,undo,redo,link,unlink,image,cleanup,help,code,hr,removeformat,formatselect,fontselect,fontsizeselect,styleselect,sub,sup,forecolor,backcolor,forecolorpicker,backcolorpicker,charmap,visualaid,anchor,newdocument,blockquote,separator",
+=======
+			toolbar1:"bold,italic,underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,outdent,indent,cut,copy,paste,undo,redo,link,unlink,image,cleanup,help,code,hr,removeformat,formatselect,fontselect,fontsizeselect,styleselect,sub,sup,forecolor,backcolor,forecolorpicker,backcolorpicker,charmap,visualaid,anchor,newdocument,blockquote,separator",
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			wp_keep_scroll_position:false,
 			wp_lang_attr:"es-ES",
 			wp_shortcut_labels:{
@@ -72,6 +80,7 @@
 		$controlPanel: null,
 		editorPanelID: 'rb-tinymce-editor-panel',
 		editorID: "rb-tinymce-editor",
+<<<<<<< HEAD
 		contentTimeout: null,
 		isSubcontrol: function(){
 			return this.$controlPanel.hasClass('rb-tinymce-control');
@@ -79,20 +88,30 @@
 		triggerControlChange: function(){
 			this.$controlPanelInput().trigger('input');
 		},
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		getEditorContent: function(){
 			return this.tinyMCE.getContent();
 		},
 		$controlPanelInput: function(){
+<<<<<<< HEAD
 			return this.$controlPanel.find('.rb-tinymce-input');
+=======
+			return this.$controlPanel.find('.rb-control-value-input');
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		},
 		$controlPanelPlaceholder: function(){
 			return this.$controlPanel.find('.tinymce-content-preview');
 		},
 		updateControl: function(){
+<<<<<<< HEAD
 			console.log(this.$controlPanelInput());
 			console.log(this.getEditorContent());
 			this.$controlPanelInput().val( this.getEditorContent() );
 			this.triggerControlChange();
+=======
+			this.$controlPanelInput().val( this.getEditorContent() ).trigger('change');
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			console.log(this.$controlPanelPlaceholder());
 			this.$controlPanelPlaceholder().html( this.getEditorContent() );
 			this.$controlPanelPlaceholder().val( this.getEditorContent() );
@@ -111,6 +130,7 @@
 			wp.editor.initialize( this.editorID, tinymceSettings);
 			this.tinyMCE = tinyMCE.get(this.editorID);
 			this.$controlPanel = _$controlPanel;
+<<<<<<< HEAD
 			var controlContent = currentEditorData.$controlPanelInput().val();
 			currentEditorData.tinyMCE.setContent( controlContent );
 			if( controlContent != currentEditorData.tinyMCE.getContent() ){
@@ -120,6 +140,9 @@
 				}, 1000);
 			}
 
+=======
+			this.tinyMCE.setContent( this.$controlPanelInput().val() );
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			this.linkEditorContentToControl();
 			$('#' + this.editorPanelID).css({
 				height: 'calc(100vh - 4.5rem)',
@@ -173,11 +196,19 @@
 	});
 
 	$(document).on('click', '#rb-tinymce-editor-panel .controls-bar .close-button', function(){
+<<<<<<< HEAD
 		closeTinymceEditorPanel( $(this).closest('.customize-tinymce-control, .rb-tinymce-control') );
 	});
 
 	$(document).on('click', '.customize-tinymce-control .edit-button, .rb-tinymce-control .edit-button', function(){
 		openTinymceEditorPanel( $(this).closest('.customize-tinymce-control, .rb-tinymce-control') );
+=======
+		closeTinymceEditorPanel( $(this).closest('.customize-tinymce-control') );
+	});
+
+	$(document).on('click', '.customize-tinymce-control .edit-button', function(){
+		openTinymceEditorPanel( $(this).closest('.customize-tinymce-control') );
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 	});
 
 	function closeTinymceEditorPanel( $controlPanel ){

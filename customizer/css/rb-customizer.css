@@ -3,7 +3,11 @@
 }
 
 a {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 li {
@@ -23,12 +27,17 @@ label, legend {
     font-weight: 400;
 }
 
+<<<<<<< HEAD
 button.customize-partial-edit-shortcut-button {
     left: 1rem;
 }
 
 .separator-control {
     border-top: double 0.3rem #ffa200;
+=======
+.separator-control {
+    border-top: double 0.3rem #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     padding-top: 1rem;
 
 }
@@ -38,6 +47,7 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .customize-panel-back:focus, .customize-panel-back:hover, .customize-section-back:focus, .customize-section-back:hover {
+<<<<<<< HEAD
     color: #ffa200;
     border-left-color: #ffa200;
 }
@@ -49,12 +59,30 @@ button.customize-partial-edit-shortcut-button {
 #customize-controls .control-section .accordion-section-title:focus, #customize-controls .control-section .accordion-section-title:hover, #customize-controls .control-section.open .accordion-section-title, #customize-controls .control-section:hover>.accordion-section-title {
     color: #ffa200;
     border-left-color: #ffa200;
+=======
+    color: #fd2a5f;
+    border-left-color: #fd2a5f;
+}
+
+#customize-theme-controls .control-section .accordion-section-title:focus:after, #customize-theme-controls .control-section .accordion-section-title:hover:after, #customize-theme-controls .control-section.open .accordion-section-title:after, #customize-theme-controls .control-section:hover>.accordion-section-title:after {
+    color: #fd2a5f;
+}
+
+#customize-controls .control-section .accordion-section-title:focus, #customize-controls .control-section .accordion-section-title:hover, #customize-controls .control-section.open .accordion-section-title, #customize-controls .control-section:hover>.accordion-section-title {
+    color: #fd2a5f;
+    border-left-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .button.button-primary, button.button-primary, input[type="submit"].button-primary, input[type="reset"].button-primary, input[type="button"].button-primary {
     color: #FFF;
+<<<<<<< HEAD
     background-color: #ffa20000;
     border-color: #ffa200;
+=======
+    background-color: #fd2a5f00;
+    border-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 @media screen and (max-width: 640px){
@@ -64,6 +92,7 @@ button.customize-partial-edit-shortcut-button {
 }
 
 #publish-settings{
+<<<<<<< HEAD
 	border-left: solid 0.1rem #ffa200;
 }
 
@@ -77,6 +106,21 @@ button.customize-partial-edit-shortcut-button {
 .wp-core-ui .button-primary.focus, .wp-core-ui .button-primary:focus {
     -webkit-box-shadow: 0 1px 0 #ffa200, 0 0 2px 1px #ffa200;
     box-shadow: 0 1px 0 #ffa200, 0 0 2px 1px #ffa200;
+=======
+	border-left: solid 0.1rem #fd2a5f;
+}
+
+.wp-core-ui .button-primary {
+    background: #fd2a5f00;
+    text-decoration: none;
+    text-shadow: none;
+    color: #fd2a5f!important;
+}
+
+.wp-core-ui .button-primary.focus, .wp-core-ui .button-primary:focus {
+    -webkit-box-shadow: 0 1px 0 #fd2a5f, 0 0 2px 1px #fd2a5f;
+    box-shadow: 0 1px 0 #fd2a5f, 0 0 2px 1px #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .wp-core-ui .button-primary.focus, .wp-core-ui .button-primary.hover, .wp-core-ui .button-primary:focus, .wp-core-ui .button-primary:hover {
@@ -88,8 +132,13 @@ button.customize-partial-edit-shortcut-button {
 .button.button-primary:hover, button.button-primary:hover, input[type="submit"].button-primary:hover, input[type="reset"].button-primary:hover, input[type="button"].button-primary:hover, .button.button-primary:focus, button.button-primary:focus, input[type="submit"].button-primary:focus, input[type="reset"].button-primary:focus, input[type="button"].button-primary:focus {
     color: #ffffff!important;
     background-color: #c04d5b00;
+<<<<<<< HEAD
     border-color: #ffa200;
     background-color: #ffa200;
+=======
+    border-color: #fd2a5f;
+    background-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .wp-core-ui .button-primary.active, .wp-core-ui .button-primary.active:focus, .wp-core-ui .button-primary.active:hover, .wp-core-ui .button-primary:active {
@@ -111,12 +160,21 @@ button.customize-partial-edit-shortcut-button {
 }
 
 #customize-save-button-wrapper .save:focus, #publish-settings:focus {
+<<<<<<< HEAD
     box-shadow: 0 1px 0 #ffa200, 0 0 2px 1px #ffa200;
 }
 
 .wp-core-ui .button-primary.active, .wp-core-ui .button-primary.active:focus, .wp-core-ui .button-primary.active:hover, .wp-core-ui .button-primary:active {
     background-color: #ffa200;
     border-color: #ffa200;
+=======
+    box-shadow: 0 1px 0 #fd2a5f, 0 0 2px 1px #fd2a5f;
+}
+
+.wp-core-ui .button-primary.active, .wp-core-ui .button-primary.active:focus, .wp-core-ui .button-primary.active:hover, .wp-core-ui .button-primary:active {
+    background-color: #fd2a5f;
+    border-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 #customize-header-actions .customize-controls-preview-toggle, #customize-header-actions .spinner, #customize-save-button-wrapper, .button-primary#save, #publish-settings {
@@ -124,7 +182,11 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .wp-core-ui .button-link {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .customize-pane-child {
@@ -134,7 +196,11 @@ button.customize-partial-edit-shortcut-button {
 .input-container-control {
 	display: none;
     width: 100%;
+<<<<<<< HEAD
     background: #ffa200;
+=======
+    background: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     padding: 0.5rem;
     box-sizing: border-box;
 	color: white;
@@ -159,12 +225,15 @@ button.customize-partial-edit-shortcut-button {
 	transition: all 0.4s;
 }
 
+<<<<<<< HEAD
 .customize-control-arrow.top-control-arrow{
     float: none;
     position: static;
     margin-right: 1rem;
 }
 
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 .rotate {
     animation: half-turn 0.4s;
     animation-fill-mode: forwards;
@@ -182,14 +251,23 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .title-holder:hover  span {
+<<<<<<< HEAD
 	color: #ffa200;
+=======
+	color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .controls-separator{
     margin: 3rem 0;
     text-align: center;
+<<<<<<< HEAD
     border: solid 0.3rem #ffa200;
     background-color: #ffa200;
+=======
+    border: solid 0.3rem #fd2a5f;
+    background-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     border-left: 0;
     border-right: 0;
     font-weight: bold;
@@ -211,6 +289,7 @@ button.customize-partial-edit-shortcut-button {
     cursor: default;
 }
 
+<<<<<<< HEAD
 .rb-inputs-group-fake-input{
     display: none!important;
     height: 0!important;
@@ -220,21 +299,35 @@ button.customize-partial-edit-shortcut-button {
     overflow: hidden!important;
 }
 
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 /*Collapsibles*
 /*************************************************************************************************/
 .collapsible-body {
     display:  none;
+<<<<<<< HEAD
     background-color: #ffffff;/*    background-color: #ffa200;*/
+=======
+    background-color: #ffffff;/*    background-color: #fd2a5f;*/
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     padding: 1rem 0.7rem;
 }
 
 .collapsible-body input:not([type='checkbox']), .collapsible-body textarea{
 	width: 100%;
+<<<<<<< HEAD
 	background-color: #ffa2000a;
 }
 
 .customizer-inputs-group .input-label {
     color: #ffa200;
+=======
+	background-color: #fd2a5f0a;
+}
+
+.customizer-inputs-group .input-label {
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     font-size: 1.6rem;
     font-weight:  bold;
 }
@@ -265,7 +358,11 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .collapsible-title .collapsible-arrow:hover {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .collapsible-title i {
@@ -281,11 +378,19 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .collapsible-title:hover .collapsible-arrow {
+<<<<<<< HEAD
     color: #ffa200;
 }
 
 .collapsible-title:hover .customize-control-title {
     color: #ffa200;
+=======
+    color: #fd2a5f;
+}
+
+.collapsible-title:hover .customize-control-title {
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .collapsible-title.customize-control-title {
@@ -364,7 +469,11 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .customizer-add-new-button i:hover {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .customizer-add-new-button i {
@@ -385,7 +494,11 @@ button.customize-partial-edit-shortcut-button {
     display: block;
     width: 1.7rem;
     height: 1.7rem;
+<<<<<<< HEAD
     background-color: #ffa200;
+=======
+    background-color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     border-radius: 50%;
     position: absolute;
 	left: 0;
@@ -433,8 +546,13 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .customizer-draggable-li .draggable-ball:hover {
+<<<<<<< HEAD
     background-color: #ffa200;
     box-shadow: 0px 0px 2px 0px #ffa200;
+=======
+    background-color: #fd2a5f;
+    box-shadow: 0px 0px 2px 0px #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .customizer-draggable-li .customize-control-title {
@@ -487,7 +605,11 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .customizer-add-new-button i:hover {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .bullet-draggable .customizer-draggable-li-title {
@@ -514,7 +636,10 @@ button.customize-partial-edit-shortcut-button {
     display:  flex;
     align-items:  center;
     justify-content:  center;
+<<<<<<< HEAD
     background-color: #d2d2d2;
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .input-wp-media-image-holder .input-image-placeholder {
@@ -526,8 +651,11 @@ button.customize-partial-edit-shortcut-button {
     width:  100%;
     top: 0;
     left:  0;
+<<<<<<< HEAD
     opacity: 0;
     transition: opacity 0.3s;
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     z-index: -1;
 }
 
@@ -542,7 +670,10 @@ button.customize-partial-edit-shortcut-button {
 
 .input-wp-media-image-holder:hover .input-image-placeholder, .input-wp-media-image-holder .input-image-src[src=""] ~ .input-image-placeholder {
     z-index: 2;
+<<<<<<< HEAD
     opacity: 1;
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .input-wp-media-image-holder input {
@@ -583,7 +714,11 @@ button.customize-partial-edit-shortcut-button {
     overflow: auto;
     transition: 0.4s;
     cursor: default;
+<<<<<<< HEAD
     border-right: solid 0.3rem #ffa200;
+=======
+    border-right: solid 0.3rem #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 @media (min-width: 601px){
@@ -595,7 +730,11 @@ button.customize-partial-edit-shortcut-button {
 .rb-control-panel > span {display:  block;}
 
 .rb-control-panel-title {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
     width: 90%;
     margin-bottom: 0;
 }
@@ -610,7 +749,11 @@ button.customize-partial-edit-shortcut-button {
 }
 
 .rb-control-panel-close-button:hover {
+<<<<<<< HEAD
     color: #ffa200;
+=======
+    color: #fd2a5f;
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 }
 
 .rb-control-panel-title-container {

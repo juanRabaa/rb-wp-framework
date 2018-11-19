@@ -32,7 +32,11 @@
 
         init: function() {
 
+<<<<<<< HEAD
             $(window).on('load',function(){
+=======
+            $(window).load(function(){
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 
                 $('textarea.wp-editor-area').each(function(){
                     var tArea = $(this),
@@ -73,7 +77,11 @@
 
         init: function() {
 
+<<<<<<< HEAD
             $(window).on('load',function(){
+=======
+            $(window).load(function(){
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 				$(document).on("click",".title-holder", function(){
 					var $settings = $(this).siblings(".input-container-control");
 
@@ -103,10 +111,15 @@
     };
 	wp.customizerInputsCollapsible.init();
 
+<<<<<<< HEAD
 	$(document).on("click",".collapsible-title", function(event){
 		console.log(event);
 		event.stopPropagation();
 		var $settings = $(this).next(".collapsible-body");
+=======
+	$(document).on("click",".collapsible-title", function(){
+		var $settings = $(this).siblings(".collapsible-body");
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 		var $arrow = $(this).find(".collapsible-arrow");
 		var _this = this;
 		if ( !$settings.hasClass("animating") ){
@@ -128,11 +141,14 @@
 			$settings.removeClass("animating");
 		}
 	});
+<<<<<<< HEAD
 
 	$(document).ready(function(){
 		$(".collapsible-title.collapsible-open").click();
 	});
 
+=======
+>>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 } )( jQuery );
 
 /*Function for the extended control, it hides/shows the input controls dependencies*/
