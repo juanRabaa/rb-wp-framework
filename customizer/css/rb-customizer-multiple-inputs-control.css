@@ -1,0 +1,14 @@
+.input-label {
+    color: #fd2a5f;
+    font-size: 1.6rem;
+    font-weight:  bold;
+}
+
+.customize-control-multiple-inputs input {
+    margin-bottom: 1rem!important;
+}
+
+.customize-control-multiple-inputs .collapsible-title {
+	border-left-width:  0.1rem!important;
+}
+

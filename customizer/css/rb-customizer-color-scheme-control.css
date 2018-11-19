@@ -1,0 +1,49 @@
+#customize-controls .color-scheme {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem;
+    position: relative;
+    margin: 0.5rem 0;
+}
+
+.color-scheme > div > span {
+    width: 5rem;
+    height: 5rem;
+    display:  block;
+    border-radius: 50%;
+    box-shadow: -2px 0 5px 1px black;
+}
+
+.color-scheme-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.color-scheme-container input[type="radio"]:checked {
+	border-color: #00ffde;
+    box-shadow: 0px 0px 8px 0px #009c23;
+}
+
+.color-scheme-container input[type="radio"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    background-color: transparent;
+    color: transparent;
+}
+
+.color-scheme > div {
+    width: 4rem;
+}
+
+.colors-scheme {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

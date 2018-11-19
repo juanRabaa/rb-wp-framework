@@ -1,0 +1,58 @@
+.gallery-image-holder {
+    height: 5rem;
+    background-position:  center;
+    background-size:  cover;
+    background-repeat:  no-repeat;
+}
+
+.gallery-image-holder .edit-image, .gallery-image-holder .remove-image {
+    width: 20%;
+    height:  100%;
+    display:  flex;
+    align-items:  center;
+    justify-content:  center;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 2rem;
+    cursor:  pointer;
+    transition: all 0.3s;
+    color: #2f363d;
+}
+
+.gallery-image-holder .drag-image {
+    width: 60%;
+    height:  100%;
+    cursor: move;
+}
+
+.gallery-image-controls {
+    height:  100%;
+    display:  flex;
+    opacity:  0;
+    transition: 0.2s;
+}
+
+.gallery-image-holder:hover .gallery-image-controls {
+    opacity: 1;
+}
+
+.gallery-image-holder .remove-image:hover {
+    background-color: rgba(184, 19, 19, 0.8);
+    color: #ffffff;
+}
+
+.gallery-image-holder .edit-image:hover {
+    background-color: rgba(19, 184, 80, 0.8);
+    color: #ffffff;
+}
+
+.customize-control-image-gallery .ui-sortable-placeholder{
+	border: none!important;
+	background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+	opacity: 0.2;
+}
+
+.customizer-gallery-image-li {
+    border: solid 0.1rem #555d66;
+}

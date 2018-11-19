@@ -1,0 +1,320 @@
+.rb-tax-form-field input[type=checkbox] {
+    display: inline-block;
+    float: left;
+    margin-top: 0.1rem;
+}
+
+.form-wrap input[type=radio]+label {
+    display: inline-block;
+}
+/* ========================================================================== */
+/* COLLAPSIBLE */
+/* ========================================================================== */
+.rb-collapsible-title {
+    font-weight: 600;
+    cursor: pointer;
+    display:  flex;
+    align-items:  center;
+    justify-content:  space-between;
+}
+
+.rb-collapsible-title, .rb-collapsible-body {
+    /* border: solid 0.1px #d4d4d4; */
+    background-color: #ffffff;
+    padding: 1rem;
+}
+
+.rb-collapsible-body {
+    border-top: 0;
+    height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.rb-collapsible-title.open .rb-collapsible-body {
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.rb-collapsible-title .rb-title {
+    /* display:  inline-block; */
+    /* width: 80%; */
+}
+
+.rb-collapsible-title .rb-collapsible-button {
+    /* width: 17%; */
+    text-align: right;
+    display: inline-block;
+}
+
+.rb-collapsible-title .rb-collapsible-button > i {
+    transition:  all 0.4s;
+}
+
+.rb-collapsible-title.open .rb-collapsible-button > i {
+    transform: rotate(180deg);
+}
+
+.rb-field-controls > * + * {
+    margin-left: 1rem;
+}
+
+
+.rb-collapsible-title .rb-field-controls {
+    font-size: 1.5rem;
+}
+
+.rb-collapsible-holder {
+    border: solid 1px #d4d4d4;
+    border-bottom-width:  0;
+    margin-bottom: 0.5rem;
+}
+
+.rb-collapsible-holder > .rb-collapsible-body {
+    border-top: solid 0.5px #d4d4d4;
+    border-bottom: solid 0.5px #d4d4d4;
+}
+
+[rb-collapsibles-accordion] > .rb-collapsible-holder{
+    margin-bottom:  0;
+}
+
+[rb-collapsibles-accordion] > .rb-collapsible-holder + .rb-collapsible-holder{
+    border-top-width: 0;
+}
+/* ========================================================================== */
+/* IMAGE ZOOM */
+/* ========================================================================== */
+.rb-image-zoom{
+    cursor: pointer;
+}
+
+.rb-image-zoom-container {
+    position:  fixed;
+    height:  100vh;
+    width:  100vw;
+    padding: 5% 10%;
+    top: 0;
+    box-sizing:  border-box;
+    background-color:  rgba(0,0,0,0.7);
+    z-index:  2000000;
+    opacity:  0;
+    display: none;
+    align-items:  center;
+    justify-content:  center;
+}
+
+.rb-image-zoom-container.open {
+    display:  flex;
+}
+
+.rb-image-zoom-container .rb-zoomed {
+    max-height: 100%;
+    max-width: 100%;
+    user-select:  none;
+}
+/* ========================================================================== */
+/* RB TAX */
+/* ========================================================================== */
+.rb-tax-fields-group.rows-separator{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+
+.rb-tax-fields-group.rows-separator > .rb-tax-field-container:nth-child(even) {
+    /*background-color: #d4d4d4;*/
+    background-color: #ffdada;
+}
+
+.rb-tax-fields-group.rows-separator > .rb-tax-field-container {
+    position:  relative;
+    left: -1rem;
+    box-sizing:  border-box;
+    width: calc(100% + 2rem);
+    padding: 0.5rem 1rem;
+}
+
+.rb-tax-repeated > .rb-tax-repeated-controls > .rb-tax-field, .rb-tax-repeated > .rb-tax-repeated-placeholder {
+    /* margin-bottom: 0.5rem; */
+}
+
+.rb-add-item-container {
+    text-align:  center;
+    margin: 1rem;
+    font-size: 3rem;
+}
+
+.rb-add-item-container .rb-add-item-button:hover {
+    color: #00db00;
+}
+
+.rb-add-item-container .rb-add-item-button {
+    transition:  all 0.3s;
+    cursor:  pointer;
+}
+
+.rb-tax-delete-button:hover {
+    color:  red;
+}
+
+.rb-tax-delete-button {
+    transition:  all 0.3s;
+    cursor: pointer;
+}
+
+.rb-tax-repeater-column-group {
+    border-bottom: solid 0.1px #cecece;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+}
+
+.rb-tax-repeater-field:not(.rb-tax-repeater-field-collapsible) {
+    border: solid 0.1px #c8c8c8;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #ffffff;
+}
+
+.rb-tax-repeater-field.rb-tax-repeater-field-no-collapsible .rb-field-controls {
+    margin-top: 0.5rem;
+    text-align:  right;
+    font-size: 2rem;
+}
+
+.rb-tax-repeater-field.ui-sortable-placeholder {
+    visibility:  visible!important;
+    background-color:  transparent;
+    border: dashed 0.1px #c8c8c8!important;
+}
+
+.rb-tax-repeated {
+    margin-top: 1rem;
+}
+/* ========================================================================== */
+/* GALLERY TAX */
+/* ========================================================================== */
+.rb-tax-field .rb-tax-field-title {
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.rb-tax-images {
+    position: relative;
+    left: -0.3rem;
+    display: flex;
+    flex-wrap:  wrap;
+}
+
+.rb-tax-images .rb-tax-images-boxes {
+    display: flex;
+    flex-wrap:  wrap;
+}
+
+.rb-gallery-box {
+    height:  5rem;
+    width:  5rem;
+    background-position:  center;
+    background-size:  cover;
+    background-repeat:  no-repeat;
+    display:  flex;
+    align-items:  center;
+    justify-content:  center;
+    /* float: left; */
+    margin-left:  0.3rem;
+    margin-bottom: 0.3rem;
+    border: solid 0.1px grey;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.rb-gallery-box:hover {
+    border-color: #3e3e3e;
+}
+
+.rb-gallery-box > i {
+    text-shadow: 0 0 3px black;
+    opacity: 0.5;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.rb-gallery-box > i:hover {
+    opacity: 1;
+}
+
+.rb-gallery-box > .rb-remove {
+    color: red;
+}
+
+.rb-gallery-box.rb-tax-add{
+    cursor: pointer;
+}
+
+.rb-gallery-box.rb-tax-add > .rb-add {
+    opacity: 1;
+    color: green;
+    text-shadow: none;
+}
+
+.rb-gallery-box.rb-tax-add:hover > .rb-add {
+    color: lime;
+}
+
+.rb-image-zoom-container[rb-zoom-gallery-container] .rb-zoom-gallery-close {
+    content: "";
+    width: 2rem;
+    height: 2rem;
+    position:  absolute;
+    background:  red;
+    top: calc(5% + 1rem);
+    right: calc(10% + 1rem);
+}
+/* ========================================================================== */
+/* COLUMNS */
+/* ========================================================================== */
+.rb-term-column-images > .rb-gallery-box {
+    height: 2rem;
+    width: 100%;
+}
+
+@media (min-width: 980px) {
+    .rb-term-column-images > .rb-gallery-box {
+        height: 2rem;
+        width: calc(50% - 0.32rem);
+    }
+}
+
+.rb-term-column-images {
+    display:  flex;
+    flex-wrap:  wrap;
+    position:  relative;
+    left: -0.3rem;
+}
+
+.images.column-images {
+    vertical-align: middle;
+}
+
+/* ========================================================================== */
+/* COLLAPSIBLE STYLES FOR FORM */
+/* ========================================================================== */
+.rb-tax-field .rb-collapsible-title {
+    color: #ffffff;
+    background-color:  #ff5c5c;
+}
+
+.rb-tax-field .rb-collapsible-holder > .rb-collapsible-body {
+    border-color: #ffffff;
+    border-width: 0;
+}
+
+.rb-tax-field .rb-collapsible-holder {
+    border-color: #ffffff;
+    border: 0;
+}
+
+.rb-tax-field [rb-collapsibles-accordion] > .rb-collapsible-holder > .rb-collapsible-body {
+    border-width: 0.5px;
+}

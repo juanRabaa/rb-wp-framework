@@ -1,0 +1,15 @@
+.textarea-generator-input {
+    width: 100%;
+    margin-bottom: 0!important;
+}
+
+.textarea-generator-sortable-ul .customize-control-title {
+    overflow:  hidden;
+    text-overflow:  ellipsis;
+    white-space:  nowrap;
+    max-width: 71%;
+    font-size: 1rem;
+    user-select: none;
+    left: 2rem;
+    position: relative;
+}
