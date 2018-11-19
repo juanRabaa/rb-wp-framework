@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-
->>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 class RB_Customizer_API{
 	public $wp_customize_manager;
 	public $sections = array();
@@ -17,7 +13,6 @@ class RB_Customizer_API{
 
 		foreach ( $this->sections as $section ) {
 			$dependent_settings = $section->settings_without_selective_refresh();
-<<<<<<< HEAD
 			//Selective refresh activated, and there are settings without
 			if ( $section->selective_refresh['activated'] && !empty($dependent_settings) ){
 				//If it has multiple selectors
@@ -41,14 +36,6 @@ class RB_Customizer_API{
 						$section->selective_refresh
 					);
 				}
-=======
-			if ( $section->selective_refresh['activated'] && !empty($dependent_settings) ){
-				$this->add_selective_refresh_partial(
-					$section->id,
-					$dependent_settings,
-					$section->selective_refresh
-				);
->>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
 			}
 			//echo __LINE__ . "\n"; print_r($section->settings_with_selective_refresh()); echo "\n";
 			foreach( $section->settings_with_selective_refresh() as $setting ){
@@ -211,8 +198,3 @@ class RB_Customizer_Setting{
 		$this->selective_refresh = array_merge($this->selective_refresh, $selective_refresh);
 	}
 }
-<<<<<<< HEAD
-=======
-
-?>
->>>>>>> fb5d34d713776637ffa260c1541721b620bdc468
