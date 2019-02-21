@@ -78,6 +78,8 @@
 		$(document).on('click', '.input-wp-media-image-holder', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
+			var $button = $(this);
+			$button.attr('media-open');
 			console.log( $(this));
 			var $controlPanel = $(this).closest(".customize-control-multiple-inputs");
 			var $input_field = $(this).find("input");
@@ -95,6 +97,7 @@
 				$input_field.val(attachment.url)
 				updateValue( $controlPanel );
 				$image_holder.attr('src', attachment.url );
+				$button.removeAttr('media-open');
 			});
 			custom_uploader.open();
 		});
