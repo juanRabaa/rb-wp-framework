@@ -278,6 +278,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'hide_empty'		=> 0,
 							'orderby'			=> 'name',
 							'taxonomy'			=> 'pedigree-product-category',
+							'order'				=> 'ASC',
 						)
 					);
 				break;
@@ -292,6 +293,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'orderby'			=> 'name',
 							'selected'          => $value,
 							'class'             => $class,
+							'order'				=> 'ASC',
 						)
 					);
 				break;
@@ -307,6 +309,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'selected'          => $value,
 							'taxonomy'			=> 'post_tag',
 							'class'             => $class,
+							'order'				=> 'ASC',
 						)
 					);
 				break;
@@ -321,6 +324,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 							'orderby'			=> 'name',
 							'selected'          => $value,
 							'class'             => $class,
+							'order'				=> 'ASC',
 						)
 					);
 				break;
@@ -332,6 +336,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 					$dropdown .= '<option value=""'.selected($value, $post->ID, false).'>'.__( $this->show_option_none ).'</option>';
 					$posts = get_posts(array(
 						'posts_per_page'       	=> -1,
+						'order'				=> 'ASC',
 						'orderby'				=> 'title',
 					));
 					foreach ( $posts as $post ){
