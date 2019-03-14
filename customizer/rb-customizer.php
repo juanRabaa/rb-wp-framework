@@ -36,11 +36,8 @@ add_action( 'customize_controls_enqueue_scripts', function () use ($rb_customize
 // Customizer SCRIPTS
 // =============================================================================
 add_action( 'customize_controls_enqueue_scripts', function () use ($rb_customizer_uri){
-<<<<<<< HEAD
     wp_enqueue_script( "jquery", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
-=======
     //wp_enqueue_script( "jquery-3", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
->>>>>>> 8c3ad444e9e1ebdd0a1fbde899df0caf1e48fc49
     wp_enqueue_script( "jquery-ui", $rb_customizer_uri . '/js/jquery-ui-1.12.1.custom/jquery-ui.min.js', array("jquery"), true );
     wp_enqueue_script( 'rb-wp-editor-customizer', $rb_customizer_uri . '/js/rb-customizer-panel.js', array( 'jquery' ), rand(), true );
     wp_enqueue_script( "rb-customizer-image-selection-control", $rb_customizer_uri."/js/rb-customizer-image-selection-control.js", array("jquery"), true );
