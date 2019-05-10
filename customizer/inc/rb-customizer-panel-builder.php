@@ -104,6 +104,7 @@ class RB_Customizer_Section{
 	public $controls = array();
 	public $selective_refresh = array(
 		'activated' => false,
+		'selector'	=> '',
 	);
 
 	public function __construct($wp_customize_manager, $id, $options, $selective_refresh = array()){
@@ -133,7 +134,7 @@ class RB_Customizer_Section{
 		$settings_array = array();
 		foreach ( $settings as $setting_id => $setting_data ){
 			$this->wp_customize_manager->add_setting($setting_id,$setting_data['options']);
-			$settings_selective_refresh = $setting_data['selective_refresh'] ? $setting_data['selective_refresh'] : array();
+			$settings_selective_refresh = isset($setting_data['selective_refresh']) && $setting_data['selective_refresh'] ? $setting_data['selective_refresh'] : array();
 			$settings_array[] = new RB_Customizer_Setting($setting_id, $setting_data['options'], $settings_selective_refresh);
 		}
 		return $settings_array;
