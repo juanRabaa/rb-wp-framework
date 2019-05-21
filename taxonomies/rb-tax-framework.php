@@ -18,7 +18,7 @@ if( !class_exists('RB_Taxonomy_Form') ){
             );
         }
     }
-    
+
     function rb_tax_scripts() {
         wp_enqueue_style( 'rb_taxonomies', get_template_directory_uri() . '/inc/rb-wordpress-framework/taxonomies/style.css' );
         wp_enqueue_script( "rb_taxonomies", get_template_directory_uri(). '/inc/rb-wordpress-framework/taxonomies/rb-tax-gallery-control.js', true );
@@ -771,10 +771,10 @@ if( !class_exists('RB_Taxonomy_Form') ){
 
         public function __construct($id, $args = array()){
             $this->type = $args['type'];
-            $this->choices = $args['choices'];
-            $this->max = $args['max'];
-            $this->min = $args['min'];
-            if($args['choice_none'])
+            $this->choices = isset($args['choices']) ? $args['choices'] : array();
+            $this->max = isset($args['max']) ? $args['max'] : null;
+            $this->min = isset($args['min']) ? $args['min'] : null;
+            if(isset($args['choice_none']) && $args['choice_none'])
                 $this->choice_none = $args['choice_none'];
             parent::__construct($id, $args);
         }
