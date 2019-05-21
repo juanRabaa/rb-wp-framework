@@ -234,9 +234,9 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			parent::__construct($manager, $id, $args);
 
 			$this->input_title = $args["inputs_title"];
-			$this->disable_generator = $args["disable_generator"] ? $args["disable_generator"] : $this->disable_generator;
-			$this->collapsible_group = $args["collapsible_group"] ? $args["collapsible_group"] : $this->collapsible_group ;
-			$this->collapsible_open = $args["collapsible_open"] ? $args["collapsible_open"] : $this->collapsible_open ;
+			$this->disable_generator = isset($args["disable_generator"]) && $args["disable_generator"] ? $args["disable_generator"] : $this->disable_generator;
+			$this->collapsible_group = isset($args["collapsible_group"]) && $args["collapsible_group"] ? $args["collapsible_group"] : $this->collapsible_group ;
+			$this->collapsible_open = isset($args["collapsible_open"]) && $args["collapsible_open"] ? $args["collapsible_open"] : $this->collapsible_open ;
 		}
 
 		public function type_is_taxonomy ( $type ){
