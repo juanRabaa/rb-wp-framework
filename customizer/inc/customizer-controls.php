@@ -233,7 +233,7 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 		{
 			parent::__construct($manager, $id, $args);
 
-			$this->input_title = $args["inputs_title"];
+			$this->input_title = isset($args["inputs_title"]) ? $args["inputs_title"] : '';
 			$this->disable_generator = isset($args["disable_generator"]) && $args["disable_generator"] ? $args["disable_generator"] : $this->disable_generator;
 			$this->collapsible_group = isset($args["collapsible_group"]) && $args["collapsible_group"] ? $args["collapsible_group"] : $this->collapsible_group ;
 			$this->collapsible_open = isset($args["collapsible_open"]) && $args["collapsible_open"] ? $args["collapsible_open"] : $this->collapsible_open ;
@@ -551,7 +551,13 @@ if( ! function_exists( 'wp_dropdown_posts' ) ) {
 			if ( !empty( $inputs ) ){
 				foreach( $inputs as $input_id => $input_value ){
 					$input_data = $this->get_input_data_by_id( $input_id );
-					$this->print_single_input($input_id, $input_data["nice_name"], $input_data["type"], $input_data["dependencies"], $input_data["reverse_dependencies"], $input_value, $input_data["description"]);
+					$nice_name =  isset($input_data["nice_name"]) ? $input_data["nice_name"] : '';
+					$type =  isset($input_data["type"]) ? $input_data["type"] : '';
+					$dependencies =  isset($input_data["dependencies"]) ? $input_data["dependencies"] : null;
+					$reverse_dependencies =  isset($input_data["reverse_dependencies"]) ? $input_data["reverse_dependencies"] : false;
+					$description =  isset($input_data["description"]) ? $input_data["description"] : '';
+
+					$this->print_single_input($input_id, $nice_name, $type, $dependencies, $reverse_dependencies, $input_value, $description);
 				}
 			}
 		}
