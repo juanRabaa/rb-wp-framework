@@ -54,7 +54,7 @@ if( !class_exists('RB_Taxonomy_Form') ){
         // =========================================================================
         //
         // =========================================================================
-        public function add_field($id, $args = array(), $control_class = ''){
+        static function add_field($id, $args = array(), $control_class = ''){
             //If a control class wasnt given
             if ( $control_class == '')
                 $control_class = 'RB_Taxonomy_Form_Basic';
@@ -62,12 +62,12 @@ if( !class_exists('RB_Taxonomy_Form') ){
             $control->initialize();
         }
 
-        public function add_group($id, $group_args = array(), $fields_args = array()){
+        static function add_group($id, $group_args = array(), $fields_args = array()){
             $control = new RB_Taxonomy_Fields_Group($id, $group_args, $fields_args);
             $control->initialize();
         }
 
-        public function add_repeater($id, $repeater_args = array(), $fields_args = array()){
+        static function add_repeater($id, $repeater_args = array(), $fields_args = array()){
             $control = new RB_Taxonomy_Repeater($id, $repeater_args, $fields_args);
             $control->initialize();
         }
