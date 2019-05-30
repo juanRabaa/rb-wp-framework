@@ -284,7 +284,7 @@ if( !class_exists('RB_Taxonomy_Form') ){
 
         protected function run_single_arg_action($hook, $a){
             $result = $a;
-            if ( $this->actions_hooks[$hook] ){
+            if ( isset($this->actions_hooks[$hook]) && is_array($this->actions_hooks[$hook]) ){
                 foreach( $this->actions_hooks[$hook] as $action ){
                     if ( is_callable($action) )
                         $result = $action($a);

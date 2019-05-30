@@ -55,15 +55,16 @@ add_action( 'customize_controls_enqueue_scripts', function () use ($rb_customize
 // =============================================================================
 // ON CUSTOMIZER PAGE
 // =============================================================================
-add_action( 'customize_register', 'my_customize_register' );
-
-function my_customize_register($wp_customize) {
+add_action( 'customize_register', function($wp_customize) use ($rb_customizer_uri){
     require get_template_directory() . '/inc/rb-wordpress-framework/customizer/inc/rb-customizer-panel-builder.php';
     require get_template_directory() . '/inc/rb-wordpress-framework/customizer/inc/customizer-controls.php';
-}
+});
 
 
 
+// =============================================================================
+//
+// =============================================================================
 
 
 
