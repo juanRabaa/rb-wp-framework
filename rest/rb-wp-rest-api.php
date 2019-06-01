@@ -207,7 +207,9 @@ class RB_WP_Rest_API_Extended{
                     return true;
                 },
         ));
-        add_action( 'rest_api_init', self::register_rest_route($data));
+        add_action( 'rest_api_init', function() use ($data){
+            self::register_rest_route($data);
+        });
     }
 
     public static function get($namespace, $route, $callback){

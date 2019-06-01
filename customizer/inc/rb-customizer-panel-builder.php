@@ -4,7 +4,7 @@ class RB_Customizer_API{
 	public $sections = array();
 	public $configuration_function;
 
-	public function __construct($wp_customize_manager, $configuration_function){
+	public function __construct($wp_customize_manager = null, $configuration_function){
 		$this->wp_customize_manager = $wp_customize_manager;
 		$this->configuration_function = $configuration_function;
 	}
@@ -69,23 +69,25 @@ class RB_Customizer_API{
 	)
 	*/
 	public function add_section($name, $options, $selective_refresh = array()){
-		$this->wp_customize_manager->add_section($name,$options);
+		if($this->wp_customize_manager)
+			$this->wp_customize_manager->add_section($name,$options);
 		$section = new RB_Customizer_Section($this->wp_customize_manager, $name, $options, $selective_refresh);
 		$this->sections[] = $section;
 		return $section;
 	}
 
 	public function add_panel($name, $options){
-		$this->wp_customize_manager->add_panel( $name, $options);
+		if($this->wp_customize_manager)
+			$this->wp_customize_manager->add_panel( $name, $options);
 		return $this;
 	}
 
 	public function add_selective_refresh_partial($id, $settings, $args = array()){
 		$args['settings'] = $settings;
 
-		$this->wp_customize_manager->selective_refresh->add_partial(
-			$id,$args
-		);
+		if($this->wp_customize_manager)
+			$this->wp_customize_manager->selective_refresh->add_partial($id,$args);
+
 		/*print_r($selector);echo "\n";
 		print_r($settings);echo "\n";
 		print_r($render_callback);echo "\n";*/
@@ -121,7 +123,7 @@ class RB_Customizer_Section{
 		'selector'	=> '',
 	);
 
-	public function __construct($wp_customize_manager, $id, $options, $selective_refresh = array()){
+	public function __construct($wp_customize_manager = null, $id, $options, $selective_refresh = array()){
 		$this->wp_customize_manager = $wp_customize_manager;
 		$this->id = $id;
 		$this->options = $options;
@@ -139,7 +141,8 @@ class RB_Customizer_Section{
 		}
 		$options['settings'] = $option_settings;
 
-		$this->wp_customize_manager->add_control( new $control_class($this->wp_customize_manager,$id,$options) );
+		if($this->wp_customize_manager)
+			$this->wp_customize_manager->add_control( new $control_class($this->wp_customize_manager,$id,$options) );
 
 		$this->controls[] = new RB_Customizer_Control($id, $settings_objects);
 		return $this;
@@ -148,7 +151,8 @@ class RB_Customizer_Section{
 	public function add_settings( $settings ){
 		$settings_array = array();
 		foreach ( $settings as $setting_id => $setting_data ){
-			$this->wp_customize_manager->add_setting($setting_id,$setting_data['options']);
+			if($this->wp_customize_manager)
+				$this->wp_customize_manager->add_setting($setting_id,$setting_data['options']);
 			$settings_selective_refresh = isset($setting_data['selective_refresh']) && $setting_data['selective_refresh'] ? $setting_data['selective_refresh'] : array();
 			$settings_array[] = new RB_Customizer_Setting($setting_id, $setting_data['options'], $settings_selective_refresh);
 		}
@@ -271,10 +275,13 @@ class RB_Customizer_Setting{
 // =============================================================================
 // PANEL PREVIEW JAVASCRIPT
 // =============================================================================
-add_action( 'customize_preview_init', function() use ($rb_customizer_uri){
-	wp_enqueue_script( 'rb-customizer-preview-js',  $rb_customizer_uri. '/js/rb-customizer-preview.js', array( 'customize-preview' ), '1.0', true );
-	wp_localize_script( 'rb-customizer-preview-js', 'rbCustomizer', array(
-		'settings'  => RB_Customizer_Setting::$settings,
-		'controls'  => RB_Customizer_Control::$controls,
-	) );
-});
+if( current_user_can('edit_theme_options') ){
+	add_action( 'wp_enqueue_scripts', function(){
+		wp_enqueue_script( 'rb-customizer-preview-js',  RB_CUSTOMIZER_FRAMEWORK_URI. '/js/rb-customizer-preview.js', array( 'customize-preview' ), '1.0', true );
+		wp_localize_script( 'rb-customizer-preview-js', 'rbCustomizer', array(
+			'templateUrl'	=> get_site_url(null, '', 'http'),
+			'settings'  	=> RB_Customizer_Setting::$settings,
+			'controls'  	=> RB_Customizer_Control::$controls,
+		) );
+	});	
+}
