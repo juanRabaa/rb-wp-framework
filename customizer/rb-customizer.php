@@ -9,9 +9,9 @@ define('RB_CUSTOMIZER_FRONT_EDITION_ACTIVE', true);
 // Customizer STYLES
 // =============================================================================
 add_action( 'customize_controls_enqueue_scripts', function(){
-    wp_enqueue_style( "normalize-css", RB_CUSTOMIZER_FRAMEWORK_URI . "/commons/libs/Skeleton-2.0.4/css/normalize.css", array() );
-	wp_enqueue_style( "skeleton-css", RB_CUSTOMIZER_FRAMEWORK_URI ."/commons/libs/Skeleton-2.0.4/css/skeleton.css", array() );
-	wp_enqueue_style( "font-awesome-css", RB_CUSTOMIZER_FRAMEWORK_URI. "/commons/libs/fontawesome-free-5.1.0-web/css/all.css", array() );
+    wp_enqueue_style( "normalize-css", RB_WORDPRESS_FRAMEWORK_URI . "/commons/libs/Skeleton-2.0.4/css/normalize.css", array() );
+	wp_enqueue_style( "skeleton-css", RB_WORDPRESS_FRAMEWORK_URI ."/commons/libs/Skeleton-2.0.4/css/skeleton.css", array() );
+	wp_enqueue_style( "font-awesome-css", RB_WORDPRESS_FRAMEWORK_URI. "/commons/libs/fontawesome-free-5.1.0-web/css/all.css", array() );
 	wp_enqueue_style( "rb-customizer-css", RB_CUSTOMIZER_FRAMEWORK_URI . "/css/rb-customizer.css" );
 	wp_enqueue_style( "rb-customizer-image-selection-control", RB_CUSTOMIZER_FRAMEWORK_URI . "/css/rb-customizer-image-selection-control.css" );
 	wp_enqueue_style( "rb-customizer-color-scheme-control", RB_CUSTOMIZER_FRAMEWORK_URI . "/css/rb-customizer-color-scheme-control.css" );
