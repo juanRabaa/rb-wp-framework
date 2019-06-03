@@ -28,7 +28,6 @@ class RB_Rest_Error_Manager{
 
     // método singleton
     public static function singleton(){
-        echo("asdasdasd");
         if (!isset(self::$instancia)){
             $miclase = __CLASS__;
             self::$instancia = new $miclase;

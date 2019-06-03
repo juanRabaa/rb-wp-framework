@@ -144,7 +144,7 @@ class RB_Customizer_Section{
 		if($this->wp_customize_manager)
 			$this->wp_customize_manager->add_control( new $control_class($this->wp_customize_manager,$id,$options) );
 
-		$this->controls[] = new RB_Customizer_Control($id, $settings_objects);
+		$this->controls[] = new RB_Customizer_Control($id, $control_class, $settings_objects);
 		return $this;
 	}
 
@@ -182,11 +182,13 @@ class RB_Customizer_Section{
 class RB_Customizer_Control{
 	static public $controls = array();
 	public $id;
+	public $control_class;
 	public $settings = array();
 
-	public function __construct($id, $settings){
+	public function __construct($id, $control_class, $settings){
 		$this->id = $id;
 		$this->settings = $settings;
+		$this->control_class = $control_class;
 		array_push(self::$controls, $this);
 	}
 
@@ -270,18 +272,4 @@ class RB_Customizer_Setting{
 	static public function refresh_has_callback($selective_refresh){
 		return isset($selective_refresh['render_callback']) && is_callable($selective_refresh['render_callback']) ? true : false;
 	}
-}
-
-// =============================================================================
-// PANEL PREVIEW JAVASCRIPT
-// =============================================================================
-if( current_user_can('edit_theme_options') ){
-	add_action( 'wp_enqueue_scripts', function(){
-		wp_enqueue_script( 'rb-customizer-preview-js',  RB_CUSTOMIZER_FRAMEWORK_URI. '/js/rb-customizer-preview.js', array( 'customize-preview' ), '1.0', true );
-		wp_localize_script( 'rb-customizer-preview-js', 'rbCustomizer', array(
-			'templateUrl'	=> get_site_url(null, '', 'http'),
-			'settings'  	=> RB_Customizer_Setting::$settings,
-			'controls'  	=> RB_Customizer_Control::$controls,
-		) );
-	});	
 }

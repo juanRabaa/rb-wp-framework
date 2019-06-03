@@ -4,6 +4,13 @@
 *	Custom controls for customizer
 *
 */
+function font_awesome_json_codes(){
+    return file_get_contents(RB_CUSTOMIZER_FRAMEWORK_PATH . "/json/fontawesome.json");
+}
+
+function font_awesome_codes(){
+    return json_decode(font_awesome_json_codes(), true);
+}
 
 if( ! function_exists( 'wp_dropdown_posts' ) ) {
 	/**

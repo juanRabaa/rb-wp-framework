@@ -3,14 +3,7 @@ define('RB_WORDPRESS_FRAMEWORK_PATH',  get_template_directory(). "/inc/rb-wordpr
 define('RB_WORDPRESS_FRAMEWORK_URI',  get_template_directory_uri(). "/inc/rb-wordpress-framework" );
 define('RB_CUSTOMIZER_FRAMEWORK_PATH', dirname(__FILE__));
 define('RB_CUSTOMIZER_FRAMEWORK_URI',  RB_WORDPRESS_FRAMEWORK_URI . "/customizer" );
-
-function font_awesome_json_codes(){
-    return file_get_contents(RB_CUSTOMIZER_FRAMEWORK_PATH . "/json/fontawesome.json");
-}
-
-function font_awesome_codes(){
-    return json_decode(font_awesome_json_codes(), true);
-}
+define('RB_CUSTOMIZER_FRONT_EDITION_ACTIVE', true);
 
 // =============================================================================
 // Customizer STYLES
@@ -54,11 +47,14 @@ add_action( 'customize_controls_enqueue_scripts', function(){
 // =============================================================================
 // ON CUSTOMIZER PAGE
 // =============================================================================
-require RB_CUSTOMIZER_FRAMEWORK_PATH . '/inc/rb-customizer-panel-builder.php';
-require RB_CUSTOMIZER_FRAMEWORK_PATH . '/inc/rb-customizer-routes.php';
 add_action( 'customize_register', function($wp_customize){
-    //require get_template_directory() . '/inc/rb-wordpress-framework/customizer/inc/rb-customizer-panel-builder.php';
+    require get_template_directory() . '/inc/rb-wordpress-framework/customizer/inc/rb-customizer-panel-builder.php';
     require get_template_directory() . '/inc/rb-wordpress-framework/customizer/inc/customizer-controls.php';
 });
+
+// =============================================================================
+// FRONT END EDITION
+// =============================================================================
+require_once RB_CUSTOMIZER_FRAMEWORK_PATH . '/inc/rb-customizer-front-edition.php';
 
 ?>
