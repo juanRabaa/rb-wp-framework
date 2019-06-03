@@ -1,5 +1,5 @@
 <?php
-if(!current_user_can('edit_theme_options') || is_customize_preview())
+if(RB_CUSTOMIZER_FRONT_EDITION_ACTIVE || !current_user_can('edit_theme_options') || is_customize_preview())
     return;
 
 // =============================================================================

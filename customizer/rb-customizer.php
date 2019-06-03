@@ -3,7 +3,6 @@ define('RB_WORDPRESS_FRAMEWORK_PATH',  get_template_directory(). "/inc/rb-wordpr
 define('RB_WORDPRESS_FRAMEWORK_URI',  get_template_directory_uri(). "/inc/rb-wordpress-framework" );
 define('RB_CUSTOMIZER_FRAMEWORK_PATH', dirname(__FILE__));
 define('RB_CUSTOMIZER_FRAMEWORK_URI',  RB_WORDPRESS_FRAMEWORK_URI . "/customizer" );
-define('RB_CUSTOMIZER_FRONT_EDITION_ACTIVE', true);
 
 // =============================================================================
 // Customizer STYLES
