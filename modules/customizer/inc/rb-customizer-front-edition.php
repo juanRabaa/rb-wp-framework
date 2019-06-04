@@ -34,6 +34,7 @@ function rb_customizer_front_scripts() {
         wp_enqueue_style( "rb-front-edition", RB_CUSTOMIZER_FRAMEWORK_URI ."/css/rb-front-edition.css", array() );
         wp_enqueue_script( 'rb-customizer-preview-js',  RB_CUSTOMIZER_FRAMEWORK_URI. '/js/rb-customizer-preview.js', array( 'customize-preview' ), '1.0', true );
         wp_localize_script( 'rb-customizer-preview-js', 'rbCustomizer', array(
+            'assetsUrl'     => RB_CUSTOMIZER_FRAMEWORK_ASSETS_URI,
             'templateUrl'	=> get_site_url(null, '', 'http'),
             'settings'  	=> RB_Customizer_Setting::$settings,
             'controls'  	=> RB_Customizer_Control::$controls,

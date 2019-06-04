@@ -66,3 +66,21 @@
     /* width: 5rem; */
     /* height: 5rem; */
 }
+
+#rb-customizer-edition-icons{
+    overflow: hidden;
+}
+
+.rb-customizer-edition-image{
+    position: absolute;
+    z-index: 99999;
+    height: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    /* left: 22px!important; */
+    opacity: 0.5;
+}
+
+*:hover > .rb-customizer-edition-image, #rb-customizer-edition-icons .rb-customizer-edition-image {
+    opacity: 1;
+}

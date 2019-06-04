@@ -1,4 +1,15 @@
 <?php
+// =============================================================================
+// SCRIPTS
+// =============================================================================
+add_action ("wp_enqueue_scripts", "rb_rest_api_scripts");
+function rb_rest_api_scripts() {
+    wp_enqueue_script( 'wp-api' );
+}
+
+// =============================================================================
+// CLASSES
+// =============================================================================
 class RB_Rest_Error{
     public $error_message = "There has been an error!";
     public $status = '';
@@ -147,12 +158,11 @@ class RB_WP_Rest_API_Extended{
     //              WP_Error or false: user doesnt meet conditions
     public static function check_condition($condition_name, $validator){
         $result = true;
-        $condition = self::$conditions[$condition_name];
-
+        $condition = isset(self::$conditions[$condition_name]) ? self::$conditions[$condition_name] : null;
         if ( $condition ){//Checks if the condition exists
             if ( is_array($condition) ){//if it exists and is an array, it checks all the conditions
                 foreach ( $condition as $condition_value ){
-                    $result = self::$validator($condition_value);
+                    $result = is_callable($validator) ? self::$validator($condition_value) : true;
                     if ( if_object($result) )
                         break;
                 }
