@@ -1,6 +1,5 @@
 <?php
-if(!class_exists('RB_WP_Rest_API_Extended'))
-    require_once RB_WORDPRESS_FRAMEWORK_PATH . '/rest/rb-wp-rest-api.php';
+RB_Wordpress_Framework::load_module('rest');
 
 // =============================================================================
 // ADMINISTRATOR ONLY ROUTES
