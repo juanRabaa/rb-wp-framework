@@ -13,7 +13,6 @@ if( !class_exists('RB_Filter_Panel') ){
                 $new_filter = new RB_Radio_Filter( $filter_id, $filter_settings['title'], $filter_settings['options'], $filter_settings['settings'] );
                 array_push( $this->filters, $new_filter );
             }
-
         }
 
         public function get_setting( $name ){

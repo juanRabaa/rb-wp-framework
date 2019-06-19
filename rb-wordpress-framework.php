@@ -1,4 +1,9 @@
 <?php
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if(defined('RB_WORDPRESS_FRAMEWORK_VERSION'))
     return;
 // =============================================================================
@@ -6,8 +11,8 @@ if(defined('RB_WORDPRESS_FRAMEWORK_VERSION'))
 // =============================================================================
 define('RB_WORDPRESS_FRAMEWORK_VERSION', '0.1.0');
 define('RB_WORDPRESS_FRAMEWORK_PATH',  dirname(__FILE__) );
-define('RB_WORDPRESS_FRAMEWORK_URI',  get_template_directory_uri() . "/inc/rb-wordpress-framework" );
-define('RB_WORDPRESS_FRAMEWORK_COMMONS_URI',  get_template_directory_uri() . "/inc/rb-wordpress-framework/commons" );
+define('RB_WORDPRESS_FRAMEWORK_URI',  plugins_url("", __FILE__) );
+define('RB_WORDPRESS_FRAMEWORK_COMMONS_URI', plugins_url("commons", __FILE__));
 
 // =============================================================================
 // COMMONS
@@ -41,8 +46,12 @@ if(!class_exists('RB_Wordpress_Framework')){
             return self::get_framework_uri('/modules') . "/$module_name";
         }
 
+        static public function module_is_loaded($module_name = ''){
+            return isset($modules_loaded[$module_name]);
+        }
+
         static public function load_module($module_name){
-            if(isset($modules_loaded[$module_name]))
+            if(self::module_is_loaded($module_name))
                 return false;
             $module_file = self::get_module_path($module_name) . "/module.php";
             if(!file_exists($module_file))
@@ -52,4 +61,6 @@ if(!class_exists('RB_Wordpress_Framework')){
             return true;
         }
     }
+
+    require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Framework_Module.php';
 }

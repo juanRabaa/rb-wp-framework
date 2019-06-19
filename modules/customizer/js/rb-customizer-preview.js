@@ -102,9 +102,17 @@ jQuery(function($){
             },
             data: control,
         };
-        $.ajax(config)
-        .always(function( msg ) {
-            console.log(msg);
+        var request = $.ajax(config);
+        request.always(function( controlHtml ) {
+            console.log(controlHtml);
+        });
+        return request;
+    }
+
+    function addControlToPreview(control){
+        getControl(control).success(function(controlHtml){
+            var $control = $(controlHtml);
+            $control.appendTo("#rb-customizer-controls");
         });
     }
 
@@ -139,7 +147,8 @@ jQuery(function($){
     }
 
     $(document).ready(function(){
-        //getControl(rbCustomizer.controls[0]);
+        console.log(rbCustomizer);
+        addControlToPreview(rbCustomizer.controls[0]);
         for(let i = 0; i < settings.length; i++){
             let setting = settings[i];
             let selectiveRefresh = setting.selective_refresh;

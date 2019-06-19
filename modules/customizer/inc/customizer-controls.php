@@ -1,5 +1,7 @@
 <?php
-
+if(!class_exists('WP_Customize_Control'))
+	return;
+	
 class RB_Extended_Control extends WP_Customize_Control {
 	public $li_classes = "";
 	public $label_classes = "";

@@ -84,3 +84,13 @@
 *:hover > .rb-customizer-edition-image, #rb-customizer-edition-icons .rb-customizer-edition-image {
     opacity: 1;
 }
+
+#rb-customizer-preview{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    height: 100%;
+    z-index: 99999999999999999999999;
+}

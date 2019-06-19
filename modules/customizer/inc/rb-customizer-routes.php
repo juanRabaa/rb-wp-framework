@@ -10,8 +10,10 @@ RB_WP_Rest_API_Extended::group(['role'   =>  'administrator'], function(){
     // ROUTES
     // =========================================================================
     RB_WP_Rest_API_Extended::get('rb-customizer/v1', '/control', function($request){
-        $control = new $request['control_class'](null, 'preview', array());
-        return $control;
+        $control = new RB_Form_Field_Controller($request['id'], '', $request['options']);
+        ob_start();
+        $control->render();
+        return ob_get_clean();
     });
 
     RB_WP_Rest_API_Extended::post('rb-customizer/v1', '/setting/(?P<settingID>[a-zA-Z0-9-]+)/update', function($request){

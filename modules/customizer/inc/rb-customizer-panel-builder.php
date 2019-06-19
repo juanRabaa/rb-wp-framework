@@ -144,7 +144,7 @@ class RB_Customizer_Section{
 		if($this->wp_customize_manager)
 			$this->wp_customize_manager->add_control( new $control_class($this->wp_customize_manager,$id,$options) );
 
-		$this->controls[] = new RB_Customizer_Control($id, $control_class, $settings_objects);
+		$this->controls[] = new RB_Customizer_Control($id, $control_class, $options, $settings_objects);
 		return $this;
 	}
 
@@ -183,12 +183,14 @@ class RB_Customizer_Control{
 	static public $controls = array();
 	public $id;
 	public $control_class;
+	public $options;
 	public $settings = array();
 
-	public function __construct($id, $control_class, $settings){
+	public function __construct($id, $control_class, $options, $settings){
 		$this->id = $id;
 		$this->settings = $settings;
 		$this->control_class = $control_class;
+		$this->options = $options;
 		array_push(self::$controls, $this);
 	}
 
