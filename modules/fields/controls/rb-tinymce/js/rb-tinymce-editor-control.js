@@ -69,6 +69,11 @@
 		}
 	};
 
+    //Checks if the editor is on wp.editor or wp.oldEditor and returns the correct one
+    function getEditorAPI(){
+        return wp.editor.initialize ? wp.editor : wp.oldEditor;
+    }
+
     // =============================================================================
     //
     // =============================================================================
@@ -111,29 +116,33 @@
         removeEditor: function(editorID){
             var editor = tinyMCE.get(editorID);
             if(editor){
-                wp.editor.remove(editorID);
+                let editorAPI = getEditorAPI();
+                editorAPI.remove(editorID);
                 editor.destroy();
             }
         },
         loadEditor: function($panel){
             var editorID = this.getPanelEditorID($panel);
             var controlContent = this.getControlValue($panel);
+            let editorAPI = getEditorAPI();
 
             this.openEditor($panel);
-			wp.editor.initialize( editorID, tinymceSettings);
+			editorAPI.initialize( editorID, tinymceSettings);
             var tinymce = tinyMCE.get(editorID);
             var rbEditorManager = this;
 
-            tinymce.on('init', function(args) {
-                //Add rb attribute to link to controller
-                rbEditorManager.getEditorHiddenInput(tinymce).attr('rb-control-value', '');
-                //console.log(tinymce, controlContent);
-                tinymce.setContent( controlContent );
-            });
-            tinymce.on("change KeyDown KeyUp", function(data) {
-                tinymce.save();
-                rbEditorManager.getEditorHiddenInput(tinymce).trigger('change');
-            });
+            if(tinymce){
+                tinymce.on('init', function(args) {
+                    //Add rb attribute to link to controller
+                    rbEditorManager.getEditorHiddenInput(tinymce).attr('rb-control-value', '');
+                    //console.log(tinymce, controlContent);
+                    tinymce.setContent( controlContent );
+                });
+                tinymce.on("change KeyDown KeyUp", function(data) {
+                    tinymce.save();
+                    rbEditorManager.getEditorHiddenInput(tinymce).trigger('change');
+                });
+            }
         },
     };
 
@@ -152,13 +161,14 @@
         rbTinymceEditor.openPanelMediaUploader($panel);
     });
 
-    var tinymceCheckInterval = setInterval(function(){
-        if(typeof tinyMCE !== 'undefined'){
-            $('.rb-tinymce-control').each(function(){
-                openPanelTinyMCE($(this));
-            });
-            clearInterval(tinymceCheckInterval);
-        }
-    }, 10);
+    // Toggle editors when tinymce gets defined. removed for compability issues with other plugins
+    // var tinymceCheckInterval = setInterval(function(){
+    //     if(typeof tinyMCE !== 'undefined'){
+    //         $('.rb-tinymce-control').each(function(){
+    //             openPanelTinyMCE($(this));
+    //         });
+    //         clearInterval(tinymceCheckInterval);
+    //     }
+    // }, 10);
 
 })(jQuery);

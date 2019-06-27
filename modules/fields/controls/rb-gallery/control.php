@@ -1,6 +1,6 @@
 <?php
 
-class RB_Images_Gallery_Control extends RB_Metabox_Control{
+class RB_Images_Gallery_Control extends RB_Field_Control{
 
     public function __construct($value, $settings) {
          parent::__construct($value, $settings);
@@ -46,7 +46,7 @@ class RB_Images_Gallery_Control extends RB_Metabox_Control{
         ?>
         <?php $this->print_control_header(); ?>
         <div class="rb-images-gallery-control rb-tax-images rb-tax-images-control" <?php $this->repeatable_attr(); ?>>
-            <input rb-control-value class="rb-tax-value"  name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($attachments_ids_csv); ?>"></input>
+            <input <?php $this->print_input_link(); ?> class="rb-tax-value <?php $this->print_input_classes(); ?>"  name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($attachments_ids_csv); ?>"></input>
             <div class="rb-tax-images-boxes">
                 <?php
                 if ($attachments_ids):

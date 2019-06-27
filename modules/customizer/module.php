@@ -38,6 +38,7 @@ class RB_Customizer_Module extends RB_Framework_Module{
         wp_enqueue_script( "jquery", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
         //wp_enqueue_script( "jquery-3", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
         wp_enqueue_script( "jquery-ui", RB_WORDPRESS_FRAMEWORK_COMMONS_URI . '/js/libs/jquery-ui-1.12.1.custom/jquery-ui.min.js', array("jquery"), true );
+        wp_enqueue_script( "rb-customizer-panel", RB_CUSTOMIZER_FRAMEWORK_URI . '/js/rb-customizer-panel.js', array("jquery"), true );
     }
 
     static private function hook_customizer_scripts(){

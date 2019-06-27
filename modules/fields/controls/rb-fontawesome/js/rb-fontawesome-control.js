@@ -1,6 +1,6 @@
 ( function( $ ) {
 	var fontawesomeCodes = faw_vars.fontawesomeCodes;
-
+	
 	function icon(prefix, code, active){
 		var faClass = iconClass(prefix, code);
 		var activeClass = active ? ' active ' : '';

@@ -94,11 +94,27 @@ class RB_Form_Group_Field{
     public function __construct($id, $value, $controls, $settings = array()) {
         $this->id = $id;
         $this->value = $value;
+        $this->sanitize_value();
         $this->controls = $controls;
         $this->settings = wp_parse_args($this->settings, $settings);
         $this->collapsible = isset($settings['collapsible']) && $settings['collapsible'] ? $settings['collapsible'] : false;
     }
 
+
+    /*The value of a group must be an array of controls values. This is taken
+    *care of once the group value has been submited, when the envirioment compability
+    *functions (customizer,taxonomy,attachment) sanitize the value before storing it.
+    *When the control is used outside of a registered envirioment, the value doesn't get
+    *sanitized, wich causes it to be a json string*/
+    public function sanitize_value(){
+        if(is_string($this->value)){
+            $json_value = json_decode($this->value, true);
+            if(json_last_error() == JSON_ERROR_NONE)
+                $this->value = $json_value;
+        }
+    }
+
+    //Renders the repeater html
     public function render($post = null){
         $collapsible_class = $this->collapsible ? 'rb-collapsible' : '';
         $value_is_set = is_array($this->value) && !empty($this->value);
@@ -126,7 +142,7 @@ class RB_Form_Group_Field{
                     $control_settings = array_merge($def_control_settings, $control);
 
                     $control_settings['id'] = $this->get_input_id($control_ID);
-                    $control_value = $value_is_set ? $this->value[$control_ID] : '';
+                    $control_value = $value_is_set && isset($this->value[$control_ID]) ? $this->value[$control_ID] : '';
                     $control_type = $control_settings['type'];
 
                     if( $control_settings['controls'] ){
@@ -148,13 +164,19 @@ class RB_Form_Group_Field{
         <?php
     }
 
+    //Gets one of the repeaters controls id, sufixing the control_id to the repeater_id
     public function get_input_id($control_id){
         return $this->id . '-' . $control_id;
     }
 
     public function print_group_value_input(){
         ?>
-        <input type="hidden" rb-control-group-value name="<?php echo $this->id; ?>" value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"></input>
+        <input
+        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        rb-control-group-value
+        name="<?php echo $this->id; ?>"
+        value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
+        type="hidden"></input>
         <?php
     }
 
@@ -217,9 +239,23 @@ class RB_Form_Repeater_Field{
     public function __construct($id, $value, $controls, $items_settings = array(), $settings = array()) {
         $this->id = $id;
         $this->value = $value;
+        $this->sanitize_value();
         $this->controls = $controls;
         $this->items_settings = $items_settings;
         $this->settings = wp_parse_args($this->settings, $settings);
+    }
+
+    /*The value of a repeater must be an array of controls values. This is taken
+    *care of once the repeater value has been submited, when the envirioment compability
+    *functions (customizer,taxonomy,attachment) sanitize the value before storing it.
+    *When the control is used outside of a registered envirioment, the value doesn't get
+    *sanitized, wich causes it to be a json string*/
+    public function sanitize_value(){
+        if(is_string($this->value)){
+            $json_value = json_decode($this->value, true);
+            if(json_last_error() == JSON_ERROR_NONE)
+                $this->value = $json_value;
+        }
     }
 
     public function render($post = null){
@@ -231,7 +267,12 @@ class RB_Form_Repeater_Field{
                     <?php $this->print_item('(__COUNTER_PLACEHOLDER)', '', $post); ?>
                 </div>
                 <!-- REPEATER VALUE -->
-                <input type="hidden" rb-control-repeater-value name="<?php echo $this->id; ?>" value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"></input>
+                <input
+                class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+                rb-control-repeater-value
+                name="<?php echo $this->id; ?>"
+                value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
+                type="hidden" ></input>
                 <!-- NONCE -->
                 <?php if($this->render_nonce) wp_nonce_field( basename( __FILE__ ), $this->id . '_nonce' ); ?>
                 <!-- REPEATER CONTROLS -->
@@ -454,6 +495,12 @@ class RB_Form_Field_Controller{
         <?php
     }
 
+    public function get_as_html($post = null){
+        ob_start();
+        $this->render($post);
+        return ob_get_clean();
+    }
+
     public function generate_control($args = array()){
         /*Generate a repeater*/
         if($this->is_repeater()){
@@ -508,4 +555,14 @@ class RB_Form_Field_Controller{
         return $sanitized_value;
     }
 
+    // =========================================================================
+    // VALUE RELATION LINKS
+    // =========================================================================
+    final static function get_input_class_link(){
+        return 'wpb_vc_param_value';
+    }
+
+    final static function get_control_input_link(){
+        return "rb-control-value";
+    }
 }

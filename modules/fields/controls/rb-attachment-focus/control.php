@@ -1,5 +1,5 @@
 <?php
-class RB_Attachment_Focus extends RB_Metabox_Control{
+class RB_Attachment_Focus extends RB_Field_Control{
     public $control_data = array(
         'widthPercentage'   => null,
         'heightPercentage'  => null,
@@ -130,7 +130,7 @@ class RB_Attachment_Focus extends RB_Metabox_Control{
             <?php else: ?>
                 <div class="not-attachment">This controll can only be used on an attachment</div>
             <?php endif; ?>
-            <input rb-control-value name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
+            <input <?php $this->print_input_link(); ?> class="<?php $this->print_input_classes(); ?>" name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
         </div>
         <?php
     }

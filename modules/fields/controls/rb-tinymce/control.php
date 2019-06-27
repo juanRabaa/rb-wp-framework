@@ -1,6 +1,6 @@
 <?php
 
-class RB_tinymce_control extends RB_Metabox_Control{
+class RB_tinymce_control extends RB_Field_Control{
 
     public function render_content(){
         extract($this->settings);
@@ -18,7 +18,7 @@ class RB_tinymce_control extends RB_Metabox_Control{
         		</div> -->
         		<div class="media-button">Insert multimedia</div>
         		<div class="rb-tinymce-editor" id="<?php echo esc_attr( $this->id ); ?>">
-                    <?php echo esc_html($value); ?>
+                    <?php if(isset($value)) echo esc_html($value); ?>
         		</div>
                 <input placeholder-value type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
     		</div>

@@ -1,6 +1,6 @@
 <?php
 
-class RB_Fontawesome_Control extends RB_Metabox_Control{
+class RB_Fontawesome_Control extends RB_Field_Control{
 
     static public $facodes = array (
       'solid' =>
@@ -1307,28 +1307,28 @@ class RB_Fontawesome_Control extends RB_Metabox_Control{
                         <!-- BRANDS -->
                         <div class="collapsible-title fa-icons-group-title">Brands</div>
                         <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach($this->facodes['brands'] as $icon_code)
+                        <?php foreach(self::$facodes['brands'] as $icon_code)
                                 $this->fontawesome_icon("fab", $icon_code,$this->value);
                         ?>
                         </div>
                         <!-- REGULAR -->
                         <div class="collapsible-title fa-icons-group-title">Regular</div>
                         <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach($this->facodes['regular'] as $icon_code)
+                        <?php foreach(self::$facodes['regular'] as $icon_code)
                                 $this->fontawesome_icon("far", $icon_code, $this->value);
                         ?>
                         </div>
                         <!-- SOLID -->
                         <div class="collapsible-title fa-icons-group-title">Solid</div>
                         <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach($this->facodes['solid'] as $icon_code)
+                        <?php foreach(self::$facodes['solid'] as $icon_code)
                                 $this->fontawesome_icon("fas", $icon_code ,$this->value);
                         ?>
                         </div>
                     </div>
                 </div>
             </div>
-            <input rb-control-value name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
+            <input <?php $this->print_input_link(); ?> class="<?php $this->print_input_classes(); ?>" name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
         </div>
     <?php
     }

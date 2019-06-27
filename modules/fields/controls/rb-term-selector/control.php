@@ -1,6 +1,6 @@
 <?php
 
-class RB_Term_Selector extends RB_Metabox_Control{
+class RB_Term_Selector extends RB_Field_Control{
     public $options = array(
         'class'         => '',
         'option_none'   => 'None',
@@ -29,8 +29,8 @@ class RB_Term_Selector extends RB_Metabox_Control{
             //Open
             $dropdown = "<select
                 name='$this->id'
-                class='$class rb-tax-value'
-                rb-control-value
+                class='$class rb-tax-value ". $this->get_control_input_class() . "' "
+                . $this->get_control_input_link() . "
             >";
             //Option none
             $dropdown .= '<option value=""'.selected($this->value, '', false).'>'.__( $option_none ).'</option>';

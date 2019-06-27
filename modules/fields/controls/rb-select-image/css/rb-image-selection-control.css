@@ -32,13 +32,14 @@
     content: "";
     display: block;
     border-radius: 50%;
-    background-color: #00000000;
+    background-color: #ffffff;
     border-color: black;
     box-shadow: inset 0px 0px 6px 0px black;
     width: 15px;
     height: 15px;
     transition: all 0.3s;
     margin: 4px;
+    z-index: 345345345;
 }
 
 .rb-image-selection-control .image-option .image-option-input:checked:before {
@@ -53,4 +54,17 @@
     margin-bottom: auto;
     display: inline-block;
     width: 100%;
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.rb-image-selection-control .images-options-container {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+    margin-bottom: -0.5rem;
+    justify-content: center;
 }

@@ -1,6 +1,6 @@
 <?php
 
-class RB_Input_Control extends RB_Metabox_Control{
+class RB_Input_Control extends RB_Field_Control{
     public $input_render;
     public $id;
     public $value;
@@ -31,7 +31,7 @@ class RB_Input_Control extends RB_Metabox_Control{
         $this->value = esc_attr($this->value);
         $this->choices = isset($choices) ? $choices : null;
         $this->input_type = isset($input_type) ? $input_type : null;
-        $this->option_none = isset($option_none) ? $option_none : null;
+        //$this->option_none = isset($option_none) ? $option_none : null;
 
         if( $input_type ):
             if( $label && $this->input_type != 'checkbox' )
@@ -73,13 +73,13 @@ class RB_Input_Control extends RB_Metabox_Control{
         $type = esc_attr($this->input_type);
         $name = esc_attr($this->id);
         $value = esc_attr($this->value);
-        ?><input type="<?php echo $type; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>" <?php $this->print_input_attributes(); ?> rb-control-value></input><?php
+        ?><input type="<?php echo $type; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>" class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_attributes(); ?> <?php $this->print_input_link(); ?>></input><?php
     }
 
     public function render_textarea_input(){
         $name = esc_attr($this->id);
         $value = esc_attr($this->value);
-        ?><textarea type="textarea" name="<?php echo $name; ?>" value="<?php echo $value; ?>" <?php $this->print_input_attributes(); ?> rb-control-value><?php echo $value; ?></textarea><?php
+        ?><textarea type="textarea" name="<?php echo $name; ?>" value="<?php echo $value; ?>" class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_attributes(); ?> <?php $this->print_input_link(); ?>><?php echo $value; ?></textarea><?php
     }
 
     public function render_checkbox_input(){
@@ -87,9 +87,10 @@ class RB_Input_Control extends RB_Metabox_Control{
         $checked_attr = $this->value ? 'checked' : '';
         ?>
         <label>
-            <input type="hidden" rb-control-value name="<?php echo $this->id; ?>" value="<?php echo $this->value; ?>">
+            <input type="hidden" class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>" value="<?php echo $this->value; ?>">
             <input type="checkbox" <?php echo $checked_attr; ?> <?php $this->print_input_attributes(); ?> onclick="this.previousElementSibling.value=1-this.previousElementSibling.value; $(this.previousElementSibling).trigger('input');">
-            <span><?php echo $this->settings['label']; ?></span>
+            <span class="control-title"><?php echo $this->settings['label']; ?></span>
+            <?php $this->print_description(); ?>
         </label>
         <?php
     }
@@ -98,7 +99,7 @@ class RB_Input_Control extends RB_Metabox_Control{
         //$choices = array( $value => $title, ...)
         //$option_none = array($value, $title)
         if( is_array($this->choices) && !empty($this->choices) ): $option_none = $this->get_input_option('option_none')?>
-        <select class="browser-default" rb-control-value name="<?php echo $this->id; ?>">
+        <select class="browser-default <?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>">
             <?php if( is_array($option_none) && !empty($option_none) ): ?>
                 <option value="<?php echo $option_none[0]; ?>"><?php echo $option_none[1]; ?></option>
             <?php else: ?>

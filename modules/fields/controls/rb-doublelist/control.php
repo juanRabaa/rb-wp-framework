@@ -1,7 +1,7 @@
 <?php
 
 
-class RB_doublelist_control extends RB_Metabox_Control{
+class RB_doublelist_control extends RB_Field_Control{
 
     public function render_content(){
         extract($this->settings);
@@ -29,7 +29,7 @@ class RB_doublelist_control extends RB_Metabox_Control{
             <div class="add-item-button-container">
                 <span class="add-item dashicons dashicons-plus-alt"></span>
             </div>
-            <input rb-control-value name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
+            <input <?php $this->print_input_link(); ?> class="<?php $this->print_input_classes(); ?>" name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
         </div>
         <?php
     }

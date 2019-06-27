@@ -44,6 +44,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     display: inline-block;
+    margin-bottom: 0.25rem;
 }
 
 .rb-wp-control .control-description {
@@ -52,14 +53,14 @@
 }
 
 .rb-wp-control {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     display: block;
     width: 100%;
     min-height: 1rem;
 }
 
 .rb-wp-control .control-header {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     line-height: 1;
 }
 
@@ -144,7 +145,7 @@
 
 .rb-form-control.rb-collapsible > .rb-collapsible-header {
     padding: 0.5rem 0.5rem;
-    background-color: #1e88e5;
+    /* background-color: #1e88e5; */
     border: none;
 }
 
@@ -158,9 +159,21 @@
     box-shadow: none;
 }
 
+.controls[data-rb-accordion] > .rb-collapsible > .rb-collapsible-body {
+    border: none;
+}
+
+.controls[data-rb-accordion] > .rb-collapsible.active > .rb-collapsible-body {
+    border-bottom: solid 0.1px rgb(186, 186, 186);
+}
+
+.controls[data-rb-accordion] > .rb-collapsible > .rb-collapsible-header {
+    border-bottom: solid 0.1px rgb(186, 186, 186);
+}
+
 .controls[data-rb-accordion] > .rb-collapsible:not(:last-child):not(.ui-sortable-helper):not(.active) {
-    border-bottom-width: 0;
-    border-bottom: solid 1px #1b5e98;
+    /* border-bottom-width: 0; */
+    /* border-bottom: solid 1px #555d6645; */
 }
 
 .rb-form-control-repeater .controls > .rb-form-control.ui-sortable-helper .rb-collapsible-body  {
@@ -183,7 +196,7 @@
 }
 
 .rb-collapsible > .rb-collapsible-header .title {
-    color: #ffffff;
+    /* color: #ffffff; */
 }
 
 .rb-form-control-repeater .rb-form-control-single-field {

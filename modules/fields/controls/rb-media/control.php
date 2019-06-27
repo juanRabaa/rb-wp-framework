@@ -1,6 +1,6 @@
 <?php
 
-class RB_Media_Control extends RB_Metabox_Control{
+class RB_Media_Control extends RB_Field_Control{
 
     public function render_content(){
         extract($this->settings);
@@ -12,11 +12,11 @@ class RB_Media_Control extends RB_Metabox_Control{
                 <div class="input-image-placeholder">
                 <p> Select an image </p>
                 </div>
-                <input rb-control-value class="rb-tax-value rb-sub-input"  name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
+                <input <?php $this->print_input_link(); ?> class="rb-tax-value rb-sub-input <?php $this->print_input_classes(); ?>"  name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
             </div>
             <div class="remove-image-button"><i class="fas fa-times" title="Remove image"></i></div>
         </div>
         <?php
     }
-    
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-class RB_Sortable_List_Control extends RB_Metabox_Control{
+class RB_Sortable_List_Control extends RB_Field_Control{
     /**
     *	Array with the list items. Ex:
     *		array(
@@ -94,7 +94,7 @@ class RB_Sortable_List_Control extends RB_Metabox_Control{
                         <?php
                     }
                 ?>
-                <input type="hidden" value="<?php echo $this->value(); ?>" rb-control-value name="<?php echo esc_attr($id); ?>" id="<?php echo esc_attr($id); ?>">
+                <input type="hidden" value="<?php echo $this->value(); ?>" class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo esc_attr($id); ?>" id="<?php echo esc_attr($id); ?>">
             </ul>
         </label>
         <?php
