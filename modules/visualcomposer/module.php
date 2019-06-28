@@ -1,6 +1,6 @@
 <?php
 
-if(!class_exists('RB_VC_Element') && is_plugin_active( 'js_composer/js_composer.php' ) ){
+if(!class_exists('RB_VC_Element')){
     /*
     * Facilitates the creation of a Visual Composer element
     */
@@ -58,7 +58,7 @@ if(!class_exists('RB_VC_Element') && is_plugin_active( 'js_composer/js_composer.
         }
 
         public function make_parent(){
-            if(isset($this->vc_map_args['is_parent'])){
+            if(class_exists('WPBakeryShortCodesContainer') && isset($this->vc_map_args['is_parent'])){
                 $class_name = 'WPBakeryShortCode_' . $this->get_slug_as_class_name();
                 eval("class $class_name extends WPBakeryShortCodesContainer{}");
             }
