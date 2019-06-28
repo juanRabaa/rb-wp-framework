@@ -28,7 +28,7 @@ if(!class_exists('RB_Menu')){
 
         	$items = array();
         	$menu = self::get_theme_menu($theme_location);
-        	if($menu){
+        	if($menu && !is_wp_error($menu)){
         		$items = wp_get_nav_menu_items($menu->term_id, $args);
         		if(is_array($items) && $settings['tree']){
                     $items = array_to_tree($items, function(&$a, &$b){
