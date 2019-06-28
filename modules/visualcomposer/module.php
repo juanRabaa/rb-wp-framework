@@ -1,6 +1,6 @@
 <?php
 
-if(!class_exists('RB_VC_Element')){
+if(!class_exists('RB_VC_Element') && is_plugin_active( 'js_composer/js_composer.php' ) ){
     /*
     * Facilitates the creation of a Visual Composer element
     */
