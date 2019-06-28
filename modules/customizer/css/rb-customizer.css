@@ -254,7 +254,7 @@ button.customize-partial-edit-shortcut-button {
 
 .collapsible-title {
     transition: all 0.4s;
-    display: block;
+    /* display: block; */
     background: #ffffff;
     border: solid 1px #bbbbbb;
     padding: 0.5rem;
