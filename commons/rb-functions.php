@@ -22,6 +22,12 @@ function rb_default_customizable($string, $default){
         echo $string;
 }
 
+function rb_get_default_customizable($string, $default){
+    ob_start();
+    rb_default_customizable($string, $default);
+    return ob_get_clean();
+}
+
 // =============================================================================
 // ARRAY FUNCTIONS
 // =============================================================================

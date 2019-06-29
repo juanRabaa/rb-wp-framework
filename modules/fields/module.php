@@ -1,7 +1,7 @@
 <?php
-define('RB_FORMS_FIELDS_MASTER_DIR', plugin_dir_path(__FILE__));
-
 if(!class_exists('RB_Fields_Module')){
+    define('RB_FORMS_FIELDS_MASTER_DIR', plugin_dir_path(__FILE__));
+    
     class RB_Fields_Module{
         static private $initialized = false;
 
