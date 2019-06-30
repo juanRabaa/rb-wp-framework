@@ -10,6 +10,9 @@ if(!class_exists('RB_Form_Module')){
             self::$initialized = true;
 
             require plugin_dir_path(__FILE__) . 'inc/RB_Wordpress_Form_Handler.php';
+            require plugin_dir_path(__FILE__) . 'inc/RB_Form.php';
+            require plugin_dir_path(__FILE__) . 'inc/RB_Form_Field.php';
+            
             self::enqueue_scripts();
     	}
 
