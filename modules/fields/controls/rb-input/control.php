@@ -9,6 +9,7 @@ class RB_Input_Control extends RB_Field_Control{
     public $default_input_options = array(
         'max'           => null,
         'min'           => null,
+        'step'          => 1, 
         'readonly'      => null,
         'disabled'      => null,
         'size'          => null,
