@@ -1,5 +1,25 @@
+/** Forms manager **/
+const rbFormsManager = {
+    initialize: function(){
+        if( typeof this.isInitialized === "function" && this.isInitialized() )
+            return;
+        var forms = {};
+        this.isInitialized = () => {return true;};
+        this.newForm = (id, $form) => {
+            if(forms[id])
+                return false;
+            forms[id] = new RB_Form_Validator($form);
+            return forms[id];
+        };
+        this.formIsValid = (id) => {return forms[id].isValid;};
+        this.updateForm = (id) => {return forms[id].updateStatus();};
+    }
+}
+rbFormsManager.initialize();
+Object.freeze(rbFormsManager);
+
 // =========================================================================
-// RB FORM VALIDATION FRAMEWORK
+// RB_Field_Validator
 // =========================================================================
 class RB_Field_Validator{
     options = {
@@ -10,11 +30,8 @@ class RB_Field_Validator{
     };
 
     /**
-    *   @Args
-    *   @Param  $field              jQuery object of the form
-    *       @Type jQuery
-    *   @Param  settings            Array of options to overwrite the defaults
-    *       @Type Array
+    *   @param jQuery $field              jQuery object of the form
+    *   @param Array settings            Array of options to overwrite the defaults
     */
     constructor($field, settings){
         this.$field = $field;
@@ -99,9 +116,15 @@ class RB_Field_Validator{
     }
 }
 
+// =========================================================================
+// RB_Form_Validator
+// =========================================================================
 class RB_Form_Validator{
 
     constructor($form){
+        if(!$form || !$form.length)
+            return;
+
         this.$form = $form;
         this.fields = [];
         this.isValid = false;
@@ -124,8 +147,10 @@ class RB_Form_Validator{
     }
 
     addField(field){
+        console.log(this);
         if(field instanceof RB_Field_Validator)
             this.fields.push(field);
         return this;
     }
+
 }
