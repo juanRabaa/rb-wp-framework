@@ -78,6 +78,9 @@
     //
     // =============================================================================
     var rbTinymceEditor = {
+        removePlaceholderValueLink: function($panel){
+            $panel.find('[placeholder-value]').removeAttr('rb-control-value').removeAttr('name');
+        },
         getControlValue: function($panel){
             //console.log($panel);
             return $panel.find('[placeholder-value]').val();
@@ -142,6 +145,7 @@
                     tinymce.save();
                     rbEditorManager.getEditorHiddenInput(tinymce).trigger('change');
                 });
+                rbEditorManager.removePlaceholderValueLink($panel);
             }
         },
     };

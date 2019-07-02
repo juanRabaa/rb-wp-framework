@@ -20,7 +20,8 @@ class RB_tinymce_control extends RB_Field_Control{
         		<div class="rb-tinymce-editor" id="<?php echo esc_attr( $this->id ); ?>">
                     <?php if(isset($value)) echo esc_html($value); ?>
         		</div>
-                <input placeholder-value type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
+                <input placeholder-value class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?>
+                type="hidden" value="<?php echo esc_attr($this->value); ?>" name="<?php echo $this->id; ?>"></input>
     		</div>
         </div>
         <?php
