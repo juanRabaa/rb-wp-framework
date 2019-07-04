@@ -1,7 +1,7 @@
 <?php
 if(!class_exists('RB_Fields_Module')){
     define('RB_FORMS_FIELDS_MASTER_DIR', plugin_dir_path(__FILE__));
-    
+
     class RB_Fields_Module{
         static private $initialized = false;
 
@@ -101,7 +101,7 @@ if(!class_exists('RB_Fields_Module')){
             wp_enqueue_style( 'rb-collapsible', plugin_dir_url(__FILE__) . 'css/rb-collapsible.css' );
             wp_enqueue_script( 'rb-collapsible', plugin_dir_url(__FILE__) . 'js/rb-collapsible.js', array('jquery'), true );
             //Sortabe jQuery UI
-            wp_enqueue_script( 'jquery-ui', plugin_dir_url(__FILE__) . 'js/libs/jquery-ui/jquery-ui.min.js', array('jquery'), true );
+            wp_enqueue_script( 'jquery-ui-sortable');
             //Main
             wp_enqueue_style( 'rb-form-fields-css', plugin_dir_url(__FILE__) . 'style.css' );
             wp_enqueue_script( 'rb-controls-values-manager', plugin_dir_url(__FILE__) . 'js/rb-controls.js', array('jquery'), true );

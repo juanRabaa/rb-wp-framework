@@ -79,8 +79,43 @@ class RB_Customizer_Module extends RB_Framework_Module{
 // =============================================================================
 function rb_customizer_front_edition_is_active(){
     global $pagenow;
-    $on_editor_page = $pagenow == "admin.php" && isset($_GET['page']) && $_GET['page'] == 'test';
+    $on_editor_page = $pagenow == "admin.php" && isset($_GET['page']) && $_GET['page'] == 'test';//test es la pagina que contiene el panel de customizacion (cambiar nombre)
     return RB_CUSTOMIZER_FRONT_EDITION_ACTIVE && current_user_can('edit_theme_options') && !is_customize_preview() && (!is_admin() || $on_editor_page);
+}
+
+function rb_get_customizable_element_panel(){
+    ?>
+    <div class="rb-customization-helper-placeholder">
+        <div class="rb-customization-helper-panel">
+            <div class="toggle-controls">
+                <div class="rb-fa-button open-helper" title="Open customization helper">
+                    <div class="bkg"></div>
+                	<i class="icon-fa fas fa-question"></i>
+                </div><div class="rb-fa-button close-helper red" title="Close customization helper">
+                    <div class="bkg"></div>
+                	<i class="icon-fa fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+function rb_get_customizable_element_panel_html(){
+    ob_start();
+    rb_get_customizable_element_panel();
+    return ob_get_clean();
+}
+
+//Print the attribute that relates an element to the edition helper panel if the condition is true
+//Customization must be available, if not it wont print it.
+/**
+*   @param null|bool $condition              Condition that has to be true to print the attr. If
+*                                            a value isn't passed, it will print.
+*/
+function rb_print_helper_attr($condition){
+    if(rb_is_customization_available() && (!isset($condition) || $condition))
+        echo "rb-customization-helper";
 }
 
 RB_Customizer_Module::initialize();

@@ -12,7 +12,8 @@ function wp_query_is_on_last($query = null){
 function rb_is_customization_available(){
     global $pagenow;
     $on_editor_page = $pagenow == "admin.php" && isset($_GET['page']) && $_GET['page'] == 'test';
-    return current_user_can('edit_theme_options') && ( (RB_CUSTOMIZER_FRONT_EDITION_ACTIVE || is_customize_preview()) || (!is_admin() || $on_editor_page) );
+    $is_customize_preview = is_customize_preview();
+    return current_user_can('edit_theme_options') && RB_CUSTOMIZER_FRONT_EDITION_ACTIVE && (!is_admin() || ($is_customize_preview || $on_editor_page));
 }
 
 function rb_default_customizable($string, $default){
