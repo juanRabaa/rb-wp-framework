@@ -115,7 +115,7 @@ if(!class_exists('RB_Fields_Module')){
         }
 
         static public function on_taxonomies_screen_scripts(){
-            wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', false );
+        wp_enqueue_script( 'jquery'/*, 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', false */);
             wp_enqueue_media();
         }
 

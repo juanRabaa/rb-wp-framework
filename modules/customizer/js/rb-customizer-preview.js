@@ -1,4 +1,4 @@
-jQuery(function($){
+( function( $ ) {
     //Customizer settings => rbCustomizer.settings
     //WP Url => rbCustomizer.templateUrl
 
@@ -310,6 +310,10 @@ jQuery(function($){
 
                 editionHelpersManager.setHelpers();
                 editionHelpersManager.initialize();
+                $( ".rb-customization-helper-panel" ).draggable({
+                    handle: '.draggable-handle',
+                    delay: 0,
+                });
             });
 
             // =========================================================================
@@ -333,7 +337,4 @@ jQuery(function($){
 
     rbFrontendEditor.initialize();
 
-
-
-
-})
+} )( jQuery );

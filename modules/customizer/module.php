@@ -35,9 +35,10 @@ class RB_Customizer_Module extends RB_Framework_Module{
         wp_enqueue_style( "font-awesome-css", RB_WORDPRESS_FRAMEWORK_COMMONS_URI. "/libs/fontawesome-free-5.1.0-web/css/all.css", array() );
         wp_enqueue_style( "rb-customizer-css", RB_CUSTOMIZER_FRAMEWORK_URI . "/css/rb-customizer.css" );
         //SCRIPTS
-        wp_enqueue_script( "jquery", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
+        wp_enqueue_script( "jquery", true );
         //wp_enqueue_script( "jquery-3", "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", true );
-        wp_enqueue_script( "jquery-ui", RB_WORDPRESS_FRAMEWORK_COMMONS_URI . '/js/libs/jquery-ui-1.12.1.custom/jquery-ui.min.js', array("jquery"), true );
+        wp_enqueue_script( "jquery-ui-sortable");
+        wp_enqueue_script( "jquery-ui-draggable");
         wp_enqueue_script( "rb-customizer-panel", RB_CUSTOMIZER_FRAMEWORK_URI . '/js/rb-customizer-panel.js', array("jquery"), true );
     }
 
@@ -84,21 +85,7 @@ function rb_customizer_front_edition_is_active(){
 }
 
 function rb_get_customizable_element_panel(){
-    ?>
-    <div class="rb-customization-helper-placeholder">
-        <div class="rb-customization-helper-panel">
-            <div class="toggle-controls">
-                <div class="rb-fa-button open-helper" title="Open customization helper">
-                    <div class="bkg"></div>
-                	<i class="icon-fa fas fa-question"></i>
-                </div><div class="rb-fa-button close-helper red" title="Close customization helper">
-                    <div class="bkg"></div>
-                	<i class="icon-fa fas fa-times"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php
+    require RB_CUSTOMIZER_FRAMEWORK_URI . '/templates/helper-panel.php';
 }
 
 function rb_get_customizable_element_panel_html(){
