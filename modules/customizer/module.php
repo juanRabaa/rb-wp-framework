@@ -85,7 +85,7 @@ function rb_customizer_front_edition_is_active(){
 }
 
 function rb_get_customizable_element_panel(){
-    require RB_CUSTOMIZER_FRAMEWORK_URI . '/templates/helper-panel.php';
+    require RB_CUSTOMIZER_FRAMEWORK_PATH . '/templates/helper-panel.php';
 }
 
 function rb_get_customizable_element_panel_html(){
