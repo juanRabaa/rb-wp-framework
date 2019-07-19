@@ -45,6 +45,15 @@ if(!class_exists('RB_Form')){
         }
 
         /**
+        *   Get the name of the field that failed the validation
+        *   @return string
+        */
+        public function get_unvalidated_field_name(){
+            $field = $this->get_unvalidated_field();
+            return $field ? $field->get_name() : '';
+        }
+
+        /**
         *   Gets the error from the unvalidated field
         *   @return null|string
         */
