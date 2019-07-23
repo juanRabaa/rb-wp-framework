@@ -159,12 +159,17 @@
     box-shadow: none;
 }
 
+.controls[data-rb-accordion] > .rb-collapsible.active {
+    box-shadow: 0px 2px 3px #0000005c;
+}
+
 .controls[data-rb-accordion] > .rb-collapsible > .rb-collapsible-body {
     border: none;
 }
 
 .controls[data-rb-accordion] > .rb-collapsible.active > .rb-collapsible-body {
     border-bottom: solid 0.1px rgb(186, 186, 186);
+    /* box-shadow: 0px 0px 3px #000000b5; */
 }
 
 .controls[data-rb-accordion] > .rb-collapsible > .rb-collapsible-header {

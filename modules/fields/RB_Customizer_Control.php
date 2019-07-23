@@ -21,11 +21,11 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
     }
 
     public function sanitazed_value(){
-        $value = get_theme_mod($this->id, null);
-        //If is group
-        // if( is_array($this->controls) && count($this->controls) > 1 ){
-        //     $value = json_decode($value, true);
-        // }
+        $value = $this->value();//get_theme_mod($this->id, null)
+        /*If is group
+         if( is_array($this->controls) && count($this->controls) > 1 ){
+             $value = json_decode($value, true);
+        }*/
         return $value;
     }
 

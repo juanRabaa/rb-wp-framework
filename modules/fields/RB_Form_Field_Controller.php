@@ -28,19 +28,20 @@ class RB_Form_Single_Field{
     public function render($post = null){
         if( $this->renderer ){
             ?>
-            <div class="rb-form-control-single-field rb-form-control">
+            <div class="rb-form-control-single-field rb-form-control" data-dependencies="<?php echo esc_attr($this->get_field_dependencies_attr()); ?>">
                 <div class="rb-collapsible-body control-content">
                 <?php
                 $this->print_action_controls();
                 $this->renderer->print_control($post);
                 ?>
                 </div>
+                <?php $this->print_value_input(); ?>
             </div>
             <?php
         }
     }
 
-    //Retruns the value of one of the repeater settings
+    //Returns the value of one of the repeater settings
     public function get_setting( $name ){
         $setting = '';
         if( isset($this->settings[$name]) )
@@ -48,6 +49,19 @@ class RB_Form_Single_Field{
         return $setting;
     }
 
+    //Will print the control value input for this single field
+    //Doesnt do anything as of now
+    public function print_value_input(){
+        return false;
+        ?>
+        <input
+        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        rb-control-final-value
+        name="<?php echo $this->id; ?>"
+        value="<?php echo $this->value; ?>"
+        type="hidden"></input>
+        <?php
+    }
 
     public function print_action_controls(){
         $action_controls = $this->get_setting('action_controls');
@@ -70,6 +84,18 @@ class RB_Form_Single_Field{
             $this->renderer = new $this->type( $this->value, $this->control_settings);
         else
             $this->renderer = null;
+    }
+
+    public function get_field_dependencies_attr(){
+        if(!isset($this->control_settings['dependencies']))
+            return '';
+
+        $dependecies = array();
+        $has_operator = isset($this->control_settings['dependencies'][1]) && is_array($this->control_settings['dependencies'][1]) && is_string($this->control_settings['dependencies'][0]);
+        $dependecies[0] = $has_operator ? $this->control_settings['dependencies'][0] : 'AND';
+        $dependecies[1] = $has_operator ? $this->control_settings['dependencies'][1] : $this->control_settings['dependencies'];
+
+        return json_encode($dependecies);
     }
 }
 
@@ -153,9 +179,11 @@ class RB_Form_Group_Field{
                     }
 
                     $class = $this->get_setting('field_classes') . ' ' . $control_settings['field_class'];
-                    ?><div class="group-control-single <?php echo $class; ?>" data-id="<?php echo $control_ID; ?>"><?php
-                        $field_controller->render($post);
-                    ?></div><?php
+                    ?>
+                    <div class="group-control-single <?php echo $class; ?>" data-id="<?php echo $control_ID; ?>">
+                        <?php $field_controller->render($post); ?>
+                    </div>
+                    <?php
                 }
                 ?>
                 </div>
@@ -259,20 +287,17 @@ class RB_Form_Repeater_Field{
     }
 
     public function render($post = null){
+        $max_fields = $this->get_max_amount_of_fields();
         ?>
         <div class="rb-form-control-repeater-container">
-            <div class="rb-form-control-repeater" data-id="<?php echo $this->id; ?>" data-type="<?php echo $this->get_repeater_type(); ?>" <?php echo $this->get_dinamic_title_attr(); ?>
+            <div class="rb-form-control-repeater <?php echo $this->get_repeater_classes(); ?>" data-max="<?php echo $max_fields; ?>"
+            data-id="<?php echo $this->id; ?>" data-type="<?php echo $this->get_repeater_type(); ?>" <?php echo $this->get_dinamic_title_attr(); ?>
             <?php echo $this->get_base_title_attr(); ?>>
                 <div class="empty-control">
                     <?php $this->print_item('(__COUNTER_PLACEHOLDER)', '', $post); ?>
                 </div>
                 <!-- REPEATER VALUE -->
-                <input
-                class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
-                rb-control-repeater-value
-                name="<?php echo $this->id; ?>"
-                value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
-                type="hidden" ></input>
+                <?php $this->print_field_value_input(); ?>
                 <!-- NONCE -->
                 <?php if($this->render_nonce) wp_nonce_field( basename( __FILE__ ), $this->id . '_nonce' ); ?>
                 <!-- REPEATER CONTROLS -->
@@ -283,6 +308,8 @@ class RB_Form_Repeater_Field{
                     foreach($this->value as $value){
                         $this->print_item($this->item_index, $value, $post);
                         $this->item_index++;
+                        if($max_fields && ($this->item_index > $max_fields))
+                            break;
                     }
                 }
                 //There is not a value to work on
@@ -301,6 +328,28 @@ class RB_Form_Repeater_Field{
             </div>
         </div>
         <?php
+    }
+
+    public function print_field_value_input(){
+        ?>
+        <input
+        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        rb-control-repeater-value
+        name="<?php echo $this->id; ?>"
+        value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
+        type="hidden" ></input>
+        <?php
+    }
+
+    public function get_max_amount_of_fields(){
+        return isset($this->settings['max']) && is_int($this->settings['max']) && $this->settings['max'] > 1 ? $this->settings['max'] : null;
+    }
+
+    public function get_repeater_classes(){
+        $class = '';
+        if(isset($this->settings['sortable']))
+            $class .= !$this->settings['sortable'] ? 'no-sortable' : '';
+        return $class;
     }
 
     public function get_item_as_string($item_index, $item_value, $post = null){
@@ -501,6 +550,7 @@ class RB_Form_Field_Controller{
         return ob_get_clean();
     }
 
+    //Creates the control based of the information provided, and stores it in $this->rb_control_field
     public function generate_control($args = array()){
         /*Generate a repeater*/
         if($this->is_repeater()){

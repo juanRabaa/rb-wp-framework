@@ -13,12 +13,25 @@
         if( $input.attr('rb-json') )
             value = JSON.parse(value);
 
+        if(typeof $input.attr('value-as-number') !== typeof undefined && $input.attr('value-as-number') !== false)
+            value = parseInt(value);
+
         return value;
     }
 
     // =========================================================================
     // CONTROLS MANAGER
     // =========================================================================
+
+    function getControlValue($panel){
+        if(singleType.isSingle($panel))
+            return singleType.getValue($panel);
+        if(groupType.isGroup($panel))
+            return groupType.getValue($panel);
+        if(repeaterType.isRepeater($panel))
+            return repeaterType.getValue($panel);
+        return '';
+    }
 
     // =========================================================================
     // Manages the value of a repeater type control field
@@ -80,20 +93,33 @@
             return $emptyControlClone;
         },
         generateNewField: function($panel){
+            if(this.isAtMaxCapacity($panel)){
+                window.alert('Max capacity reached');
+                return false;
+            }
+
             var baseControlHtml = $panel.attr('data-control');
 
             var $controlsContainer = $panel.children('.controls');
-            var $controls = $controlsContainer.children('.rb-form-control');
+            var amountOfControls = this.getAmountOfControls($panel);
 
-            var newControlIndex = $controls.length > 0 ? $controls.length + 1 : 1;
+            var newControlIndex = amountOfControls > 0 ? amountOfControls + 1 : 1;
             var $newControl = this.getEmptyControlClone($panel, newControlIndex);
             console.log($newControl);
+
             //If the empty repeater message is showing, hide it
             if( this.isEmpty($panel) )
                 $panel.find('.rb-repeater-empty-message').slideUp();
 
             //Insert new control
             $newControl.appendTo($controlsContainer);
+
+            //Update Value
+            this.updateValue($panel);
+            //Update new control dependencies / not needed because the blueprint control gets updated on ready
+            // $newControl.find('.rb-form-control-single-field').each(function(){
+            //     singleType.updateFieldStatus($(this));
+            // });
 
             //Animate insertion
             setTimeout(function(){
@@ -181,11 +207,11 @@
         },
         //Updates all the titles
         updateControlsTitle: function($panel){
-            var titleLink = $panel.attr('data-title-link');
-            var baseTitle = $panel.attr('data-base-title');
-
             var $controlsContainer = $panel.children('.controls');
             var $controls = $controlsContainer.children('.rb-form-control');
+            var titleLink = $panel.attr('data-title-link');//Gets fieldID linked to the title
+            var baseTitle = $panel.attr('data-base-title');//Base title if no value in the linked input
+
             //console.log($controls);
             $controls.each(function(index){
                 var newTitle = '';
@@ -211,15 +237,18 @@
                 $title.text(newTitle);
             });
         },
-        isEmpty: function($panel){
-            return $panel.children('.controls').find('.rb-form-control');
-        },
+        isRepeater: function($panel){ return $panel.hasClass('rb-form-control-repeater'); },
+        isEmpty: function($panel){ return $panel.children('.controls').find('.rb-form-control') },
+        getAmountOfControls: function($panel){ return $panel.children('.controls').children('.rb-form-control').length },
+        getMaxCapacity: function($panel){ return parseInt($panel.attr('data-max')) },
+        isAtMaxCapacity: function ($panel){ return this.getAmountOfControls($panel) == this.getMaxCapacity($panel) },
     }
 
     // =========================================================================
     // Manages the value of a group type control field
     // =========================================================================
     var groupType = {
+        getControlsInputs: function($panel){ return $panel.find('[rb-control-value], [rb-control-repeater-value]') },
         getValue: function($panel){
             var finalValue = {};
             var isInRepeater = $panel.closest('.rb-form-control-repeater').length != 0;
@@ -256,6 +285,7 @@
 
             return JSON.stringify(finalValue);
         },
+        getCurrentValue: function($panel){ return this.getValueInput($panel).val(); },
         getValueInput: function($panel){
             return $panel.children('[rb-control-group-value]');
         },
@@ -266,11 +296,12 @@
             if( fieldsController.isCustomizerControl($panel) )
                 fieldsController.updateCustomizer($panel, newValue);
         },
-        isGroup: function($panel){
-            return $panel.hasClass('rb-form-control-field-group');
-        },
+        isGroup: function($panel){ return $panel.hasClass('rb-form-control-field-group'); },
         getGroupBaseID: function($panel){
             return $panel.attr('data-id');
+        },
+        getSingleFieldControl: function($panel, id){ return $panel.children(`.control-content > .controls > .group-control-single[data-id=${id}]`); },
+        initializeGroups: function(){
         },
     }
 
@@ -289,12 +320,75 @@
 
             return finalValue;
         },
-        isSingle: function($panel){
-            return $panel.hasClass('rb-form-control-single-field');
+        isSingle: function($panel){ return $panel.hasClass('rb-form-control-single-field'); },
+        isTopLevel: function($panel){ return ( $panel.closest('.rb-form-control-field-group').length == 0 && $panel.closest('.rb-form-control-repeater').length == 0 ); },
+        getPanel: function($elem){ return $elem.closest('.rb-form-control-single-field'); },
+        getValueInput: function($panel){ return $panel.find('[rb-control-value]'); },
+        isInGroup: function($panel){ return $panel.parent('.group-control-single').length; },
+        getParentGroup: function($panel){ return $panel.closest('.rb-form-control-field-group') },
+        //Toggle control based on dependencies
+        //Returns bool based on the control visibility and its value
+        updateFieldStatus: function($panel){
+            var processedFields = {};
+            var $valueInput = this.getValueInput($panel);
+            var fieldID = $valueInput.attr('name');
+            var dependencies = $panel.attr('data-dependencies') ? JSON.parse($panel.attr('data-dependencies')) : null;
+            var controlValue = getControlValue($panel);
+            var hiddenByDependencies = false;
+            var $parentGroup = this.getParentGroup($panel);
+            var idPrefix = $parentGroup.length ? $parentGroup.attr('data-id') + '-' : '';
+            processedFields[fieldID] = false;
+
+            if(dependencies){//Has dependencies
+
+                for(let dependencyID of dependencies[1]){
+                    //Check for the not operator in the dependencyID
+                    let notOperator = false;
+                    if(dependencyID.charAt(0) == '!'){
+                        notOperator = true;
+                        dependencyID = dependencyID.slice(1);
+                    }
+                    dependencyID = idPrefix + dependencyID;
+
+                    let $dependencyField = this.getPanel($(`[name="${dependencyID}"]`));
+                    //If it has been already processed, take the status from the processedFields, if not, run updateFieldStatus on $dependencyField
+                    let dependencyStatus = processedFields[dependencyID] != null ? processedFields[dependencyID] : this.updateFieldStatus($dependencyField, processedFields);
+                    dependencyStatus = notOperator ? !dependencyStatus : dependencyStatus;
+
+                    //console.log(dependencyID, dependencyStatus, $dependencyField);
+                    if(dependencies[0] == 'AND' && !dependencyStatus){
+                        hiddenByDependencies = true;
+                        break;
+                    }
+                    else if(dependencies[0] == 'OR' && dependencyStatus){
+                        hiddenByDependencies = false;
+                        break;
+                    }
+                }
+
+                //Hide/show based on dependencies result
+                if(hiddenByDependencies)
+                    $panel.stop().slideUp();
+                else
+                    $panel.stop().slideDown();
+            }
+
+            //If it is hidden by its dependencies, or if the value is false, the status will be false
+            processedFields[fieldID] = !hiddenByDependencies && !!controlValue;
+            return processedFields[fieldID];
         },
-        isTopLevel: function($panel){
-            return ( $panel.closest('.rb-form-control-field-group').length == 0 && $panel.closest('.rb-form-control-repeater').length == 0 );
-        }
+        updateFieldsStatus: function(){
+            $('.rb-form-control-single-field').each(function(){
+                singleType.updateFieldStatus($(this));
+            });
+        },
+        initializeFields: function(){
+            singleType.updateFieldsStatus();
+
+            $(document).on('change input', '[rb-control-value]', function(){
+                singleType.updateFieldsStatus();
+            });
+        },
     }
 
     // =============================================================================
@@ -397,7 +491,6 @@
         $(document).on('click', '.rb-form-control-repeater > .repeater-add-button > i', function(){
             var $panel = $(this).closest('.rb-form-control-repeater');
             repeaterType.generateNewField($panel);
-            repeaterType.updateValue($panel);
         });
 
         // =====================================================================
@@ -414,13 +507,13 @@
             });
         });
 
-        // =====================================================================
-        // SORTING
-        // =====================================================================
 
         //It doesnt works on customizer if not pushed out of the regular flow with timeout
         setTimeout(function(){
-            $( ".rb-form-control-repeater .controls" ).sortable({
+            // =====================================================================
+            // SORTING
+            // =====================================================================
+            $( ".rb-form-control-repeater:not(.no-sortable) .controls" ).sortable({
                 revert: 100,
                 refreshPositions: true,
                 scroll: true,
@@ -441,7 +534,16 @@
                     //ui.placeholder.height(ui.helper.outerHeight());
                 }
             });
+
+            // =================================================================
+            // INITIALIZATIONS
+            // =================================================================
+            groupType.initializeGroups();
+            singleType.initializeFields();
         }, 0);
+
+
+
     });
 
 
