@@ -575,6 +575,17 @@ class RB_Form_Field_Controller{
         }
     }
 
+    public function get_group_value(){
+        $value = array();
+        foreach($this->settings['controls'] as $control_ID => $control_data){
+            $field_name = $this->id . '-' . $control_ID;
+            if(isset($_POST[$field_name]))
+                $value[$control_ID] = $_POST[$field_name];
+        }
+        return $value;
+    }
+
+
     public function get_sanitazed_value($value){
         $isset_value = isset($value);
 
@@ -590,8 +601,8 @@ class RB_Form_Field_Controller{
         //If a group of inputs controls were used
         else if( $this->is_group() ){
             $sanitized_value = array();
-            if( $isset_value )
-                $sanitized_value = json_decode($value, true);
+            if($isset_value)
+                $sanitized_value = $this->get_group_value();
         }
         //If a single input control was used
         else{

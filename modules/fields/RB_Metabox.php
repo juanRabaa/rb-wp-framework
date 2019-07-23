@@ -63,6 +63,12 @@ class RB_Metabox extends RB_Form_Field_Controller{
         $meta_exists = $this->meta_exists($post_id);
         $meta_value = get_post_meta( $post_id, $meta_key, true );
 
+        if($this->id == 'gen-project-preview'){
+            print_r("Last error: " . json_last_error()); echo "<br>";
+            print_r($new_meta_value); echo "<br>";
+            //err();
+        }
+
         // If the new value is not null
         if( isset($new_meta_value) ){
             /* If a new meta value was added and there was no previous value, add it. */

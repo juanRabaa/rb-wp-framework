@@ -271,11 +271,12 @@
             $inputs.each(function(){
                 var key = $(this).attr('name').replace(groupID + '-','');
                 var value = getInputValue($(this));
+                // if(value)
+                //     value = value.replace(/"/g, "'");//Replace quotes so not to break de json
                 //If it is a repeater, we remove the stringify to avoid a doble conversion
                 if($(this).attr('rb-control-repeater-value') != undefined)
                     value = JSON.parse(value);
 
-                //console.log(value);
                 finalValue[key] = value;
                 //console.log(key, finalValue[key]);
             });
