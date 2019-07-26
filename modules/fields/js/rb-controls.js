@@ -433,6 +433,12 @@
         // =============================================================================
         // GROUP VALUE UPDATE
         // =============================================================================
+        //Update when a group inside a group changes, without any rb-form-control between them
+        $(document).on('input change', '.rb-form-control-field-group :not(.rb-form-control) .rb-form-control-field-group [rb-control-group-value]', function(){
+            $panel = $(this).closest('.rb-form-control-field-group').parent().closest('.rb-form-control-field-group');
+            groupType.updateValue($panel);
+        });
+
         $(document).on('input change', '.rb-form-control-field-group :not(.rb-form-control-repeater) [rb-control-value], .rb-form-control-field-group [rb-control-repeater-value]', function(){
             $panel = $(this).closest('.rb-form-control-field-group');
             //console.log($(this));

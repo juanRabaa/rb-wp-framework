@@ -396,7 +396,7 @@
 /* ========================================================================== */
 /* GROUP IN GROUP */
 /* ========================================================================== */
-.group-control-single > .rb-form-field-controller-container:not(.rb-collapsible) > .rb-form-field-controller-body > .rb-form-field-controller-control > .rb-form-control-field-group:not(.no-box), .rb-customizer-control .rb-form-control-field-group:not(.no-box):not(.rb-collapsible) {
+.group-control-single > .rb-form-field-controller-container:not(.rb-collapsible) > .rb-form-field-controller-body > .rb-form-field-controller-control > .rb-form-control-field-group:not(.no-box), .rb-customizer-control > .rb-form-field-controller-container > :not(.rb-collapsible-body) .rb-form-control-field-group:not(.no-box):not(.rb-collapsible) {
     border: solid 1px rgb(202, 202, 204);
     /* border-top: solid 2px rgb(0, 0, 0); */
     padding: 1rem;
