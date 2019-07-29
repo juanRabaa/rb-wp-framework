@@ -75,7 +75,7 @@
 
     $(document).on('click', '.rb-collapsible .rb-collapsible-header', function(){
         var $collapsible = $(this).closest('.rb-collapsible');
-        var $accordion = $collapsible.parent('[data-rb-accordion]');
+        var $accordion = $collapsible.parent('.rb-accordion');
         if($accordion.length > 0)
             RBCollapsibleMaster.activateAccordion($accordion, $collapsible);
         else

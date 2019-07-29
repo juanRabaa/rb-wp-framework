@@ -42,10 +42,10 @@
                 return JSON.stringify(finalValue);
             },
             isGroup: function($panel){
-                return $panel.children('.rb-form-control-field-group').length != 0;
+                return $panel.children('.rb-form-control-group-field').length != 0;
             },
             getGroupBaseID: function($panel){
-                return $panel.children('.rb-form-control-field-group').attr('data-id');
+                return $panel.children('.rb-form-control-group-field').attr('data-id');
             }
         }
 

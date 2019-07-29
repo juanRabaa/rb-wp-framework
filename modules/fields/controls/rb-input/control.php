@@ -23,7 +23,7 @@ class RB_Input_Control extends RB_Field_Control{
 
     public function __construct($value, $settings) {
         parent::__construct($value, $settings);
-        if( $this->settings['input_type'] == 'checkbox' )
+        if( isset($this->settings['input_type']) && $this->settings['input_type'] == 'checkbox' )
             $this->strict_type = 'bool';
     }
 
@@ -31,22 +31,17 @@ class RB_Input_Control extends RB_Field_Control{
         extract($this->settings);
         $this->value = esc_attr($this->value);
         $this->choices = isset($choices) ? $choices : null;
-        $this->input_type = isset($input_type) ? $input_type : null;
+        $this->input_type = isset($input_type) ? $input_type : 'text';
         //$this->option_none = isset($option_none) ? $option_none : null;
 
-        if( $input_type ):
-            if( $label && $this->input_type != 'checkbox' )
-                $this->print_control_header();
-            ?>
-            <div class="rb-inputs-control">
-                <?php $this->render_the_input(); ?>
-            </div>
-        <?php
-        else:
+
+        if( $label && $this->input_type != 'checkbox' )
+            $this->print_control_header();
         ?>
-        <p> A type must be assign to the control (input_type is not set) </p>
+        <div class="rb-inputs-control">
+            <?php $this->render_the_input(); ?>
+        </div>
         <?php
-        endif;
     }
 
     public function render_the_input(){

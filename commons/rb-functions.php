@@ -56,9 +56,11 @@ function add_missing($array, $array2, $key){
 
 //Retorna el index del primer elemento que cumpla la condicion. -1 si no se encontro
 function is_in_array($array, $condition){
+    $index = 0;
     foreach($array as $key => $item){
-        if( $condition($item) )
-            return $key;
+        if( $condition($item, $key) )
+            return $index;
+        $index++;
     }
     return -1;
 }

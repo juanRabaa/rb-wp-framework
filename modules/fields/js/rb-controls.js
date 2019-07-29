@@ -43,7 +43,7 @@
             if( this.isGroupRepeater($panel) ){
                 var $inputs = $panel.children('.controls').find('[rb-control-group-value]');
                 $inputs.each(function(){
-                    var $groupPanel = $(this).closest('.rb-form-control-field-group');
+                    var $groupPanel = $(this).closest('.rb-form-control-group-field');
                     var groupValue = JSON.parse(groupType.getValue($groupPanel));
                     //console.log(groupValue);
                     finalValue.push(groupValue);
@@ -258,7 +258,7 @@
                 var $inputParentRepeater = $(this).closest('.rb-form-control-repeater');
                 //If the field is inside a repeater
                 if( $inputParentRepeater.length ){
-                    var repeaterIsInsideGroup = $inputParentRepeater.closest('.rb-form-control-field-group').length != 0;
+                    var repeaterIsInsideGroup = $inputParentRepeater.closest('.rb-form-control-group-field').length != 0;
                     //If the repeater is inside the group (is a field), and the input is not a repeater value
                     if(repeaterIsInsideGroup && $(this).attr('rb-control-repeater-value') === undefined)
                         return false;
@@ -297,7 +297,7 @@
             if( fieldsController.isCustomizerControl($panel) )
                 fieldsController.updateCustomizer($panel, newValue);
         },
-        isGroup: function($panel){ return $panel.hasClass('rb-form-control-field-group'); },
+        isGroup: function($panel){ return $panel.hasClass('rb-form-control-group-field'); },
         getGroupBaseID: function($panel){
             return $panel.attr('data-id');
         },
@@ -322,11 +322,11 @@
             return finalValue;
         },
         isSingle: function($panel){ return $panel.hasClass('rb-form-control-single-field'); },
-        isTopLevel: function($panel){ return ( $panel.closest('.rb-form-control-field-group').length == 0 && $panel.closest('.rb-form-control-repeater').length == 0 ); },
+        isTopLevel: function($panel){ return ( $panel.closest('.rb-form-control-group-field').length == 0 && $panel.closest('.rb-form-control-repeater').length == 0 ); },
         getPanel: function($elem){ return $elem.closest('.rb-form-control-single-field'); },
         getValueInput: function($panel){ return $panel.find('[rb-control-value]'); },
         isInGroup: function($panel){ return $panel.parent('.group-control-single').length; },
-        getParentGroup: function($panel){ return $panel.closest('.rb-form-control-field-group') },
+        getParentGroup: function($panel){ return $panel.closest('.rb-form-control-group-field') },
         //Toggle control based on dependencies
         //Returns bool based on the control visibility and its value
         updateFieldStatus: function($panel){
@@ -409,7 +409,7 @@
             return this.isTopLevel($panel) && $panel.closest('.rb-customizer-control') ? $panel.closest('.rb-customizer-control') : false;
         },
         isTopLevel: function($panel){
-            return ( $panel.parent().closest('.rb-form-control-field-group').length == 0 && $panel.parent().closest('.rb-form-control-repeater').length == 0 );
+            return ( $panel.parent().closest('.rb-form-control-group-field').length == 0 && $panel.parent().closest('.rb-form-control-repeater').length == 0 );
         },
     }
     // =========================================================================
@@ -434,13 +434,13 @@
         // GROUP VALUE UPDATE
         // =============================================================================
         //Update when a group inside a group changes, without any rb-form-control between them
-        $(document).on('input change', '.rb-form-control-field-group :not(.rb-form-control) .rb-form-control-field-group [rb-control-group-value]', function(){
-            $panel = $(this).closest('.rb-form-control-field-group').parent().closest('.rb-form-control-field-group');
+        $(document).on('input change', '.rb-form-control-group-field :not(.rb-form-control) .rb-form-control-group-field [rb-control-group-value]', function(){
+            $panel = $(this).closest('.rb-form-control-group-field').parent().closest('.rb-form-control-group-field');
             groupType.updateValue($panel);
         });
 
-        $(document).on('input change', '.rb-form-control-field-group :not(.rb-form-control-repeater) [rb-control-value], .rb-form-control-field-group [rb-control-repeater-value]', function(){
-            $panel = $(this).closest('.rb-form-control-field-group');
+        $(document).on('input change', '.rb-form-control-group-field :not(.rb-form-control-repeater) [rb-control-value], .rb-form-control-group-field [rb-control-repeater-value]', function(){
+            $panel = $(this).closest('.rb-form-control-group-field');
             //console.log($(this));
             if($panel.length != 0){
                 groupType.updateValue($panel);
@@ -477,7 +477,7 @@
             var $control = $(this).closest('.group-control-single[data-id="'+linkID+'"]');
             //console.log($panel, linkID, $control);
             if( $control.length ){
-                var $group = $control.closest('.rb-form-control-field-group');
+                var $group = $control.closest('.rb-form-control-group-field');
                 if( $group.length )
                     repeaterType.updateGroupTitle($panel, $group);
             }
