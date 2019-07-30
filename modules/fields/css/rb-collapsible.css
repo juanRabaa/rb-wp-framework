@@ -139,5 +139,5 @@
 }
 
 .rb-accordion > .rb-collapsible:not(:first-child) > .rb-collapsible-header {
-    border-top: none;
+    border-top-width: 0;
 }

@@ -97,7 +97,7 @@ abstract class RB_Form_Field_Control{
         <div
         id="<?php echo $this->id; ?>"
         class="rb-form-control <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
-        data-dependencies="<?php echo esc_attr($this->get_field_dependencies_attr()); ?>" <?php echo esc_attr($this->get_container_attr()); ?>>
+        data-dependencies="<?php echo esc_attr($this->get_field_dependencies_attr()); ?>" <?php echo $this->get_container_attr(); ?>>
             <?php if($title): ?>
             <div class="control-header rb-collapsible-header">
                 <h1 data-title="Red Social 3" class="title"><?php echo esc_html($title); ?></h1>
@@ -251,7 +251,7 @@ class RB_Form_Group_Field extends RB_Form_Field_Control{
 
     public function get_container_class(){ return "rb-form-control-group-field"; }
 
-    public function get_container_attr(){ return 'data-id="$this->id"'; }
+    public function get_container_attr(){ return 'data-id="'. esc_attr($this->id) .'"'; }
 
     // =========================================================================
     // METHODS
@@ -428,9 +428,16 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
         return $value;
     }
 
+    public function get_item_base_title(){
+        $base_title = $this->get_repeater_setting('item_title');
+        return $base_title ? $base_title : 'Item';
+    }
+
     public function get_container_class(){ return "rb-form-control-repeater-field"; }
 
-    public function get_container_attr(){ return "data-id='$this->id'"; }
+    public function get_container_attr(){
+        return 'data-id="'.esc_attr($this->id).'" data-base-title="'. esc_attr($this->get_item_base_title()) .'"';
+    }
 }
 
 class RB_Repeater_Item{
