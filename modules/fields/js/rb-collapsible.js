@@ -73,7 +73,7 @@
     }
     window.RBCollapsibleMaster = RBCollapsibleMaster;
 
-    $(document).on('click', '.rb-collapsible .rb-collapsible-header', function(){
+    $(document).on('click', '.rb-collapsible > .rb-collapsible-header', function(){
         var $collapsible = $(this).closest('.rb-collapsible');
         var $accordion = $collapsible.parent('.rb-accordion');
         if($accordion.length > 0)

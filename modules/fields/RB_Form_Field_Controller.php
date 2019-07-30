@@ -94,7 +94,9 @@ abstract class RB_Form_Field_Control{
     public function render($post = null){
         $title = $this->get_title();
         ?>
-        <div class="rb-form-control <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
+        <div
+        id="<?php echo $this->id; ?>"
+        class="rb-form-control <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
         data-dependencies="<?php echo esc_attr($this->get_field_dependencies_attr()); ?>" <?php echo esc_attr($this->get_container_attr()); ?>>
             <?php if($title): ?>
             <div class="control-header rb-collapsible-header">
@@ -278,6 +280,7 @@ class RB_Form_Group_Field extends RB_Form_Field_Control{
         <input
         class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
         rb-control-group-value
+        rb-control-value
         name="<?php echo $this->id; ?>"
         value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
         type="hidden"></input>
@@ -312,6 +315,7 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
     public $repeater_settings = array(
         'collapsible'   => true,
         'accordion'     => false,
+        'empty_message' => 'Start adding items!',
     );
 
     public function __construct($id, $value, $repeater_settings, $controller_settings, $controls){
@@ -324,27 +328,35 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
     public function render_field($post = null){
         if(is_array($this->controls)):
         ?>
-        <div class="repeater-container">
+        <div class="repeater-container <?php echo $this->empty_class(); ?>">
+            <?php $this->print_empty_message(); ?>
             <div class="rb-repeater-items <?php $this->accordion_class(); ?>">
                 <?php
-                if(is_array($this->value) && !empty($this->value)):
+                if(!$this->is_empty()):
                     $i = 1;
                     foreach($this->value as $item_value):
                         $this->print_item($item_value, $i, $post);
                         $i++;
                     endforeach;
-                else://There is no value
-                    $this->print_item(null, 1, $post);
+                // else://There is no value
+                //     $this->print_item(null, 1, $post);
                 endif;
                 ?>
             </div>
             <div class="repeater-add-button">
                 <i class="add-button fas fa-plus"></i>
             </div>
+            <div class="repeater-empty-control">
+                <?php echo esc_attr($this->print_placeholder_item($post)); ?>
+            </div>
         </div>
         <?php $this->print_repeater_value_input(); ?>
         <?php
         endif;
+    }
+
+    public function print_placeholder_item($post = null){
+        $this->print_item('', '__($RB_REPEATER_PLACEHOLDER)', $post);
     }
 
     public function print_item($value, $index, $post){
@@ -355,16 +367,40 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
         $item->render($post);
     }
 
+    public function is_empty(){ return !is_array($this->value) || empty($this->value); }
+
+    public function empty_class(){ return $this->is_empty() ? 'empty' : ''; }
+
     public function get_item_controller_settings(){
-        return isset($this->repeater_settings['item_controller']) && is_array($this->repeater_settings['item_controller']) ? $this->repeater_settings['item_controller'] : array();
+        $item_controller = $this->get_repeater_setting('item_controller');
+        return is_array($item_controller) ? $this->repeater_settings['item_controller'] : array();
     }
 
     public function get_item_id($index){ return "$this->id-$index"; }
 
     public function accordion_class(){ echo $this->is_accordion() ? 'rb-accordion' : ''; }
 
-    public function is_accordion(){
-        return isset($this->repeater_settings['accordion']) && $this->repeater_settings['accordion'];
+    public function is_accordion(){ return true && $this->get_repeater_setting('accordion'); }
+
+    public function get_repeater_setting($name){ return isset($this->repeater_settings[$name]) ? $this->repeater_settings[$name] : null; }
+
+    public function print_empty_message(){
+        $message = $this->get_repeater_setting('empty_message');
+        ?>
+        <div class="rb-repeater-empty-message">
+            <?php
+            //If the message is a function
+            if( is_callable($message) )
+                $message($message);
+            //If the message is a string
+            else if ( is_string($message) ):
+            ?>
+                <p class="message"><?php echo $message; ?></p>
+            <?php
+            endif;
+            ?>
+        </div>
+        <?php
     }
 
     public function print_repeater_value_input(){
@@ -372,6 +408,7 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
         <input
         class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
         rb-control-repeater-value
+        rb-control-value
         name="<?php echo $this->id; ?>"
         value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
         type="hidden" ></input>

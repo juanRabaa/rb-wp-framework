@@ -154,6 +154,26 @@ body{
     color: #5ae535;
 }
 
+.rb-repeater-empty-message{
+    text-align: center;
+    display: none;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.repeater-container.empty .rb-repeater-empty-message {
+    display: block;
+    opacity: 1;
+}
+
+.rb-repeater-empty-message .message{
+    font-size: 1.4rem;
+}
+
+.repeater-empty-control{
+    display: none;
+}
+
 /* ========================================================================== */
 /* Repeate item no collapsible */
 /* ========================================================================== */
