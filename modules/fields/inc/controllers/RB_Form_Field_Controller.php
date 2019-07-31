@@ -54,8 +54,8 @@ class RB_Form_Field_Controller{
         return $this->is_repeater() && is_array($this->settings['repeater']) && !empty($this->settings['repeater']) ? $this->settings['repeater'] : array();
     }
 
-    public function get_sanitized_value($value){
-        return $this->control->get_sanitized_value($value);
+    public function get_sanitized_value($value, $args = array()){
+        return $this->control->get_sanitized_value($value, $args);
     }
 
     final static function get_input_class_link(){
@@ -69,6 +69,10 @@ class RB_Form_Field_Controller{
     // =========================================================================
     // METHODS
     // =========================================================================
+    public function is_single(){
+        return !$this->is_group() && !$this->is_repeater();
+    }
+
     public function is_group(){
         return is_array($this->controls) && count($this->controls) > 1;
     }

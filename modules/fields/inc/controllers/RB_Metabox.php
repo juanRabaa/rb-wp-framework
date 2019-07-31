@@ -51,10 +51,21 @@ class RB_Metabox extends RB_Form_Field_Controller{
         //not recognize the content as jsons. THE PROBLEM is that it also eliminates
         //th the '\' in the values of the JSON.
         //$_POST = array_map( 'stripslashes_deep', $_POST );
-
+        //echo "-----------METABOX SAVING PROCCESS----------------<br><br>";
         $new_meta_value = null;
-        if(isset($_POST[$this->id]))
-            $new_meta_value = $this->get_sanitized_value($_POST[$this->id]);
+        if(isset($_POST[$this->id])){
+            $new_meta_value = $this->get_sanitized_value($_POST[$this->id], array(
+                'unslash_group'             => true,
+                'escape_child_slashes'      => true,
+                'unslash_repeater_slashes'   => true,
+            ));
+        }
+
+
+        // if($this->id == 'rb-test-groups-repeater'){
+        //     echo "New value: "; var_dump($new_meta_value); echo "<br>";
+        //     errr();
+        // }
 
         /* Get the meta key. */
         $meta_key = $this->meta_id;
@@ -63,11 +74,8 @@ class RB_Metabox extends RB_Form_Field_Controller{
         $meta_exists = $this->meta_exists($post_id);
         $meta_value = get_post_meta( $post_id, $meta_key, true );
 
-        if($this->id == 'gen-project-preview'){
-            print_r("Last error: " . json_last_error()); echo "<br>";
-            print_r($new_meta_value); echo "<br>";
-            //err();
-        }
+        //echo "Sanitized value: "; var_dump($new_meta_value); echo "<br>";
+        //asdasd3453();
 
         // If the new value is not null
         if( isset($new_meta_value) ){

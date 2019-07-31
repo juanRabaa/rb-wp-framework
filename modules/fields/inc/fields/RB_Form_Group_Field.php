@@ -61,20 +61,41 @@ class RB_Form_Group_Field extends RB_Form_Field_Control{
         $this->value = $this->get_sanitized_value($this->value);
     }
 
-    public function get_sanitized_value($value){
+    public function get_sanitized_value($value, $args = array()){
+        $settings = array(
+            //Wheter to escape the child value slashes or not. Useful when there is
+            //no control over the save method, and it escapes the value slashes (as update_metabox does)
+            'unslash_group'             => false,
+            'escape_child_slashes'      => false,
+            'settings_to_child'         => true,
+        );
+        $settings = array_merge($settings, $args);
+        //print_r($this->id); echo "<br>";
+        //if($this->id == 'rb-test-groups-repeater-0'){echo "------------Values for $this->id GROUP--------------<br><br>\n";}
+        //if($this->id == 'rb-test-groups-repeater-0'){print_r($args); echo "<br>";}
+        //if($this->id == 'rb-test-groups-repeater-0'){echo "New value: "; var_dump($value); echo "<br><br>\n";}
         if(is_string($value)){
-            $json_value = json_decode($value, true);
+            $json_value = $settings['unslash_group'] ? wp_unslash($value) : $value;
+            //if($this->id == 'rb-test-groups-repeater'-0){echo "Unslashed value: "; var_dump($json_value); echo "<br><br>\n";}
+            $json_value = json_decode($json_value, true);
+            //if($this->id == 'rb-test-groups-repeater-0'){echo "JSON Error: "; var_dump(json_last_error()); ; echo "<br><br>\n";}
             // Sanitize child value using child controller sanitization function
-            // if(is_array($json_value)){
-            //     foreach($json_value as $child_id => $child_value){
-            //         $child_settings = $this->get_child_settings($child_id);
-            //         $child_controller = $child_settings ? $this->get_child_field_renderer($child_id, $child_settings) : null;
-            //         $json_value[$child_id] = $child_controller ? $child_controller->get_sanitized_value($child_value) : null;
-            //     }
-            // }
+            if(is_array($json_value)){
+                foreach($json_value as $child_id => $child_value){
+                    $child_settings = $this->get_child_settings($child_id);
+                    $child_value = $settings['escape_child_slashes'] ? wp_slash($child_value) : $child_value;
+                    $child_controller = $child_settings ? $this->get_child_field_renderer($child_id, $child_settings) : null;
+                    $child_sanitation_settings = $settings['settings_to_child'] ? $settings : array();
+                    $json_value[$child_id] = $child_controller ? $child_controller->get_sanitized_value($child_value, $child_sanitation_settings) : null;
+                }
+            }
             if(json_last_error() == JSON_ERROR_NONE)
                 $value = $json_value;
         }
+
+        //if($this->id == 'rb-test-groups-repeater-0'){echo "JSON Error: "; var_dump(json_last_error()); echo "<br><br>\n";}
+        //if($this->id == 'rb-test-groups-repeater-0'){echo "Sanitized value: "; print_r($value); echo "<br><br>\n";}
+
         return $value;
     }
 

@@ -115,23 +115,48 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
         $this->value = $this->get_sanitized_value($this->value);
     }
 
-    public function get_sanitized_value($value){
+    public function get_sanitized_value($value, $item_sanitation_args = array()){
+        $item_sanitation = array(
+             //Wheter to escape the child value slashes or not. Useful when there is
+             //no control over the save method, and it escapes the value slashes (as update_metabox does)
+            'unslash_single_repeater'   => false,
+            'unslash_group'             => false,
+            'unslash_repeater_slashes'  => false,
+        );
+        $item_sanitation = array_merge($item_sanitation, $item_sanitation_args);
+        $item_sanitation['unslash_group'] = false;
+
+        //echo "------------Values for $this->id REPEATER--------------<br><br>";
+        //print_r($item_sanitation); echo "<br>";
+        //echo "New value: "; var_dump(esc_html($value)); echo "<br><br>";
+
         $item_controller = $this->get_item_controller('', '0');
         if(is_string($value) || is_array($value)){
-            $decoded_value = is_string($value) ? json_decode($value, true) : $value;
+            $decoded_value = $value;
+            if(is_string($value)){
+                if($item_sanitation['unslash_repeater_slashes'] && !$item_controller->is_repeater() && ($item_sanitation['unslash_single_repeater'] || !$item_controller->is_single())){
+                    $decoded_value = wp_unslash($decoded_value);
+                }
+                $decoded_value = json_decode($decoded_value, true);
+            }
 
-            // Sanitize item value using child controller sanitization function
-            // if(is_array($decoded_value)){
-            //     foreach($decoded_value as $key => $item_value){
-            //         $decoded_value[$key] = $item_controller ? $item_controller->get_sanitized_value($item_value) : null;
-            //     }
-            // }
+            //echo "Decoded value: "; var_dump(esc_html($value)); echo "<br><br>";
+            //Sanitize item value using child controller sanitization function
+            if(is_array($decoded_value)){
+                foreach($decoded_value as $key => $item_value){
+                    $decoded_value[$key] = $item_controller ? $item_controller->get_sanitized_value($item_value, $item_sanitation) : null;
+                    //echo "Item value: ";var_dump($decoded_value[$key]); echo "<br><br>";
+                }
+            }
 
             if(json_last_error() == JSON_ERROR_NONE)
                 $value = $decoded_value;
         }
         else
             $value = null;
+
+        //echo "JSON Error: "; var_dump(json_last_error()); ; echo "<br><br>";
+        //echo "Sanitized value: "; var_dump($value); echo "<br><br>";
 
         return $value;
     }

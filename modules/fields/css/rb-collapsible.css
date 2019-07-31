@@ -121,6 +121,11 @@
     bottom: 0;
 }
 
+.rb-accordion > .rb-collapsible.active > .rb-collapsible-header .action-controls:after,
+.rb-accordion > .rb-collapsible:last-child:first-child > .rb-collapsible-header .action-controls:after{
+    opacity: 0;
+}
+
 .rb-accordion > .rb-collapsible:first-child > .rb-collapsible-header .action-controls {
     top: -1px;
     height: calc(100% + 2px);

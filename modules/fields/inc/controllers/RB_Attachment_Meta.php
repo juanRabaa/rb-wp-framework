@@ -60,9 +60,14 @@ class RB_Attachment_Meta extends RB_Form_Field_Controller{
         //$_POST = array_map( 'stripslashes_deep', $_POST );
 
         $new_meta_value = null;
-        if(isset($_POST[$this->id]))
-            $new_meta_value = $this->get_sanitized_value($_POST[$this->id]);
-
+        if(isset($_POST[$this->id])){
+            $new_meta_value = $this->get_sanitized_value($_POST[$this->id], array(
+                'unslash_group'             => true,
+                'escape_child_slashes'      => true,
+                'unslash_repeater_slashes'   => true,
+            ));
+        }
+        
         /* Get the meta key. */
         $meta_key = $this->meta_id;
 

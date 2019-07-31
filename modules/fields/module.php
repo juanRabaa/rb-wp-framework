@@ -11,7 +11,9 @@ if(!class_exists('RB_Fields_Module')){
             self::$initialized = true;
 
             require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/rb_fields_functions.php';
+            //Examples
             require_once RB_FORMS_FIELDS_MASTER_DIR . 'examples/metabox-example.php';
+            //require_once RB_FORMS_FIELDS_MASTER_DIR . 'examples/taxonomy-example.php';
 
             if(is_admin()){
                 //Screen

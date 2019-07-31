@@ -13,6 +13,9 @@ class RB_Repeater_Item{
         $this->controller = new RB_Form_Field_Controller($this->id, $this->value, $this->item_settings);
     }
 
+    public function is_single(){ return $this->controller->is_single(); }
+    public function is_repeater(){ return $this->controller->is_repeater(); }
+
     public function render($post = null){
         $item_title = $this->get_item_title($this->index);
         ?>
@@ -30,8 +33,8 @@ class RB_Repeater_Item{
         <?php
     }
 
-    public function get_sanitized_value($value){
-        return $this->controller->get_sanitized_value($value);
+    public function get_sanitized_value($value, $args = array()){
+        return $this->controller->get_sanitized_value($value, $args);
     }
 
     public function collapsible_class(){
