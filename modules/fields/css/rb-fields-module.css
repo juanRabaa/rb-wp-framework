@@ -2,8 +2,31 @@
     font-size: 12px!important;
 } */
 
+:root{
+    --main-color: #8ac3ff;
+}
+
 body{
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ========================================================================== */
+/* COLORS */
+/* ========================================================================== */
+.rb-collapsible.active{
+    box-shadow: 3px 4px 0px var(--main-color);
+}
+
+.rb-collapsible.active > .rb-collapsible-header, .rb-collapsible.active > .rb-collapsible-body {
+    border-color: var(--main-color);
+}
+
+.rb-collapsible.active > .rb-collapsible-header {
+    background-color: var(--main-color);
+}
+
+.rb-collapsible.active > .rb-collapsible-header .title {
+    color: #ffffff;
 }
 
 /* ========================================================================== */
@@ -58,7 +81,7 @@ body{
 
 .rb-form-control > .control-header .title{
     /* padding: 0; */
-    font-size: 1.5em;
+    font-size: 1.22rem;
 }
 
 .rb-form-control:not(.rb-collapsible) > .control-header .title {
@@ -168,22 +191,13 @@ body{
 
 .rb-repeater-empty-message .message{
     font-size: 1.4rem;
+    margin-top: 0;
 }
 
 .repeater-empty-control{
     display: none;
 }
 
-.repeater-item.ui-sortable-helper,
-.repeater-item.ui-sortable-helper + .repeater-item > .item-header,
-.repeater-item.ui-sortable-placeholder + .repeater-item > .item-header{
-    border-top-width: 1px;
-}
-
-.repeater-item.ui-sortable-placeholder{
-    border: dashed 1px grey;
-    visibility: visible!important;
-}
 
 /* ========================================================================== */
 /* Repeate item no collapsible */
@@ -202,6 +216,18 @@ body{
     /* display: flex; */
 }
 
+#poststuff .rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .item-title {
+    padding: 0;
+    margin-bottom: 1rem;
+    /* margin-top: 0.5rem; */
+    font-size: 1.3rem;
+    /* font-weight: 500; */
+}
+
+.rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .item-title {
+    margin-top: 0;
+}
+
 .rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls {
     text-align: right;
     font-size: 1.2rem;
@@ -213,13 +239,21 @@ body{
 .rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls .control {
     cursor: pointer;
     transition: all 0.3s;
-    background-color: #E53935;
+    background-color: #2196F3;
     color: #ffffff;
     padding: 0.25rem;
     font-size: 1rem;
 }
 
-.rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls .control:hover {
+.rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls .control:hover{
+    background-color: #1976D2;
+}
+
+.rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls .control.red{
+    background-color: #E53935
+}
+
+.rb-repeater-items > .repeater-item:not(.rb-collapsible) > .item-header .action-controls .control.red:hover {
     background-color: red;
 }
 
@@ -234,6 +268,26 @@ body{
     /* align-self: flex-end; */
 }
 
+
+/* ========================================================================== */
+/* REPEATER SORTABLE */
+/* ========================================================================== */
+.repeater-item.ui-sortable-helper,
+.repeater-item.ui-sortable-helper + .repeater-item > .item-header,
+.repeater-item.ui-sortable-placeholder + .repeater-item > .item-header{
+    border-top-width: 1px;
+}
+
+.rb-repeater-items > .repeater-item.ui-sortable-placeholder{
+    border: dashed 1px grey;
+    visibility: visible!important;
+    background-color: transparent;
+}
+
+.rb-repeater-items > .repeater-item > .item-header .action-controls .control.drag-button{
+    cursor: move;
+}
+
 /* ========================================================================== */
 /* GROUP */
 /* ========================================================================== */
@@ -245,10 +299,48 @@ body{
 }
 
 .rb-form-control-group-field:not(.rb-collapsible) {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .rb-form-control-group-field > .control-body > .controls > .group-child-control > .rb-form-control-repeater-field > .control-body {
     border: solid 1px #bfbfbf;
     padding: 0.75rem;
+}
+
+
+/* ========================================================================== */
+/* CONTROLS */
+/* ========================================================================== */
+.rb-wp-control > .control-header > .control-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.rb-wp-control > .control-header > .control-description {
+    margin-top: 0;
+}
+
+/* ========================================================================== */
+/* METABOX */
+/* ========================================================================== */
+.postbox > .inside{
+    padding-top: 0.5rem;
+}
+.postbox > .inside > .rb-form-control-group-field:not(.rb-collapsible) > .control-body {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}
+
+.postbox > .inside > .rb-form-control-group-field:not(.rb-collapsible) > .control-header{
+    margin-bottom: 0.25rem;
+}
+
+#poststuff .rb-form-control h2, #poststuff .rb-form-control h3.hndle {
+    /* font-size: 14px; */
+    /* padding: 8px 12px; */
+    /* margin: 0; */
+    /* line-height: 1.4; */
 }

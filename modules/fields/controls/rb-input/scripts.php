@@ -4,4 +4,4 @@
 // wp_localize_script( 'rb-fontawesome-control', 'faw_vars', array(
 //     'fontawesomeCodes'  => RB_Fontawesome_Control::$facodes,
 // ));
-// wp_enqueue_style( 'rb-fontawesome-control', plugin_dir_url(__FILE__) . 'css/rb-control-control.css' );
+wp_enqueue_style( 'rb-input-control', plugin_dir_url(__FILE__) . 'css/rb-input-control.css' );

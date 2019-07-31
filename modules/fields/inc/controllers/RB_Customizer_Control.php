@@ -39,7 +39,7 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
     }
 
     public function add_rb_sanitazion(){
-        //print_r("customize_sanitize_$this->id");
+        //print_r("Customizer sanitation of: $this->id \n");
         add_action( "customize_sanitize_$this->id", function($value) {
             $new_meta_value = $this->controller->get_sanitized_value($value);
             return $new_meta_value;

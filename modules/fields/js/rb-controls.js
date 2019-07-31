@@ -166,13 +166,13 @@
             });
         },
         attachEvents: function(){
-            $(document).on('input', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
+            $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
             .rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-group-field ${groupType.valueInputSelector}`
             , function(){
                 repeaterType.updateValue( repeaterType.getPanel($(this)) );
             });
 
-            $(document).on('input', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
+            $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
             , function(){
                 let $controlPanel = repeaterType.getPanel( repeaterType.getPanel($(this)).parent() );
                 repeaterType.updateValue( $controlPanel );
@@ -239,7 +239,7 @@
             this.getValueInput( this.getPanel($controlInput) ).val($controlInput.val()).trigger('input');
         },
         initialize: function(){
-            $(document).on('input', `.rb-customizer-control > .rb-form-control-single-field ${singleType.valueInputSelector},
+            $(document).on('input change', `.rb-customizer-control > .rb-form-control-single-field ${singleType.valueInputSelector},
             .rb-customizer-control > .rb-form-control-group-field ${groupType.valueInputSelector},
             .rb-customizer-control > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
             , function(){

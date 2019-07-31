@@ -153,11 +153,11 @@ class RB_Taxonomy_Form_Field extends RB_Form_Field_Controller{
         //JSONS Values in the $_POST get scaped quotes. That makes json_decode
         //not recognize the content as jsons. THE PROBLEM is that it also eliminates
         //th the '\' in the values of the JSON.
-        $_POST = array_map( 'stripslashes_deep', $_POST );
+        //$_POST = array_map( 'stripslashes_deep', $_POST );
 
         $new_meta_value = null;
         if(isset($_POST[$this->id]))
-            $new_meta_value = $this->get_sanitazed_value($_POST[$this->id]);
+            $new_meta_value = $this->get_sanitized_value($_POST[$this->id]);
 
         /* Get the meta key. */
         $meta_key = $this->id;

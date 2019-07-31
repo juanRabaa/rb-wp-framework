@@ -22,7 +22,6 @@
     cursor:  pointer;
     width: 100%;
     background-color: #ffffff;
-    color: #ffffff;
     border-bottom: 0;
     box-sizing: border-box;
     /* padding: 1rem 0.5rem; */
@@ -75,6 +74,7 @@
 
 .rb-collapsible > .rb-collapsible-header .action-controls > .control > i {
     transition: all 0.1s;
+    color: #ffffff;
 }
 
 .rb-collapsible > .rb-collapsible-header .action-controls > .control:hover > i {

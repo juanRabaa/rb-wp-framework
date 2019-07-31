@@ -11,6 +11,7 @@ if(!class_exists('RB_Fields_Module')){
             self::$initialized = true;
 
             require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/rb_fields_functions.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'examples/metabox-example.php';
 
             if(is_admin()){
                 //Screen
@@ -75,18 +76,29 @@ if(!class_exists('RB_Fields_Module')){
         // CLASSES
         // =========================================================================
 
+        static private function require_controller_and_fields(){
+            //Fields functionalities (fields creator - repeaters - groups)
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/controllers/RB_Form_Field_Controller.php';
+            //FIELDS
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/fields/RB_Form_Field_Control.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/fields/RB_Form_Single_Field.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/fields/RB_Form_Group_Field.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/fields/RB_Form_Repeater_Field.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/fields/RB_Repeater_Item.php';
+        }
+
         //Base classes
         static private function require_controller(){
-            //Fields functionalities (fields creator - repeaters - groups)
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Form_Field_Controller.php';
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Field_Control.php';
+            self::require_controller_and_fields();
+            //CONTROLS BASE
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/RB_Field_Control.php';
         }
 
         //Clases that makes posible to use this controls on different environments
         static private function require_environment_compability_classes(){
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Metabox.php';
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Taxonomy_Meta.php';
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Attachment_Meta.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/controllers/RB_Metabox.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/controllers/RB_Taxonomy_Meta.php';
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/controllers/RB_Attachment_Meta.php';
         }
 
         // =========================================================================
@@ -103,7 +115,7 @@ if(!class_exists('RB_Fields_Module')){
             //Sortabe jQuery UI
             wp_enqueue_script( 'jquery-ui-sortable');
             //Main
-            wp_enqueue_style( 'rb-form-fields-css', plugin_dir_url(__FILE__) . 'style.css' );
+            wp_enqueue_style( 'rb-form-fields-css', plugin_dir_url(__FILE__) . 'css/rb-fields-module.css' );
             wp_enqueue_script( 'rb-controls-values-manager', plugin_dir_url(__FILE__) . 'js/rb-controls.js', array('jquery'), true );
             //Font Aweasome
             wp_enqueue_style( "fontawesome", 'https://use.fontawesome.com/releases/v5.4.1/css/all.css', true );
@@ -129,8 +141,8 @@ if(!class_exists('RB_Fields_Module')){
         }
 
         static public function rb_customizer_field_register($wp_customize) {
-            require_once RB_FORMS_FIELDS_MASTER_DIR . '/RB_Form_Field_Controller.php';
-            require RB_FORMS_FIELDS_MASTER_DIR . '/RB_Customizer_Control.php';
+            self::require_controller_and_fields();
+            require_once RB_FORMS_FIELDS_MASTER_DIR . 'inc/controllers/RB_Customizer_Control.php';
         }
 
     }
