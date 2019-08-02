@@ -94,6 +94,7 @@
         getRepeaterContainer: function($panel){ return $panel.find('> .control-body > .repeater-container'); },
         getValue: function($panel){ return this.getValueInput($panel).val(); },
         getValueInput: function($panel){ return $panel.find(this.valueInputSelector); },
+        getItem: function($elem){ return $elem.closest(this.itemSelector); },
         getItemsContainer: function($panel){ return $panel.find('> .control-body > .repeater-container > .rb-repeater-items'); },
         getItems: function($panel){ return $panel.find(`> .control-body > .repeater-container > .rb-repeater-items > ${this.itemSelector}`); },
         getItemsAmount: function($panel){ return this.getItems($panel).length; },
@@ -101,6 +102,10 @@
         getItemValue: function($item){ return fieldsController.getControlValue( this.getItemControl($item) ); },
         getItemPlaceholder: function($panel){ return $panel.find(`> .control-body > .repeater-container > .repeater-empty-control > ${repeaterType.itemSelector}`); },
         getBaseTitle: function($panel){ return $panel.attr('data-base-title'); },
+        getBaseTitleFor: function($panel, $item){
+            let baseTitle = this.getBaseTitle($panel);
+            return baseTitle.replace(/\(\$n\)/g, $item.index() + 1);
+        },
         getEmptyItem: function($panel, index){
             let $emptyItem = this.getItemPlaceholder($panel).clone();
             var $tempDiv = $('<div>');
@@ -110,11 +115,32 @@
             $emptyItem = $tempDiv.children(repeaterType.itemSelector);
             return $emptyItem;
         },
+        getTitleLink: function($panel){ return $panel.attr('data-title-link'); },
+        updateItemTitle: function($panel, $item){
+            let linkedFieldID = this.getTitleLink($panel);
+            if(!linkedFieldID) return false;
+
+            let $itemControl = this.getItemControl($item);
+
+            if( this.itemIsSingle($item) )
+                linkedFieldID = fieldsController.getID($panel) + `-${$item.index() + 1}`;
+            else if( this.itemIsGroup($item) )
+                linkedFieldID = fieldsController.getID($itemControl) + `-${linkedFieldID}`;
+
+            let $linkedFieldControl = fieldsController.getPanelByID(linkedFieldID);
+            if( !singleType.isSingle($linkedFieldControl) ) return false;
+
+            let linkedValue = singleType.getValue($linkedFieldControl);
+            let $itemTitle = $item.find('> .item-header > .item-title');
+
+            if(linkedValue)
+                $itemTitle.text(linkedValue);
+            else
+                $itemTitle.text( this.getBaseTitleFor($panel, $item) );
+        },
         updateItemsTitles: function($panel){
-            var baseTitle = this.getBaseTitle($panel);
             this.getItems($panel).each(function(index){
-                let itemTitle = baseTitle.replace(/\(\$n\)/g, index + 1);
-                $(this).find('> .item-header > .item-title').text(itemTitle);
+                repeaterType.updateItemTitle($panel, $(this));
             });
         },
         updateValue: function($panel){
@@ -129,6 +155,8 @@
             //console.log('Repeater value:', repeaterValue);
         },
         itemIsRepeater: function($item){ return repeaterType.isRepeater( repeaterType.getItemControl($item) ); },
+        itemIsGroup: function($item){ return groupType.isGroup( repeaterType.getItemControl($item) ); },
+        itemIsSingle: function($item){ return singleType.isSingle( repeaterType.getItemControl($item) ); },
         isRepeater: function($panel){ return $panel.hasClass('rb-form-control-repeater-field'); },
         isEmpty: function($panel){ return !this.getItemsAmount($panel); },
         updateStatus: function($panel){
@@ -167,16 +195,28 @@
             });
         },
         attachEvents: function(){
+            //Changes in item values when item is a single or a group
             $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
             .rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-group-field ${groupType.valueInputSelector}`
             , function(){
                 repeaterType.updateValue( repeaterType.getPanel($(this)) );
             });
 
+            //Changes in item when it is a repeater
             $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
             , function(){
                 let $controlPanel = repeaterType.getPanel( repeaterType.getPanel($(this)).parent() );
                 repeaterType.updateValue( $controlPanel );
+            });
+
+            //Changes in item (single or group), when the items title is linked to changes in a field
+            $(document).on('input change',
+            `.rb-form-control-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
+            .rb-form-control-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-group-field ${groupType.valueInputSelector}`
+            , function(){
+                let $controlPanel = repeaterType.getPanel($(this));
+                let $item = repeaterType.getItem($(this));
+                repeaterType.updateItemTitle($controlPanel, $item);
             });
 
             $(document).on('click', '.rb-form-control-repeater-field > .control-body > .repeater-container > .repeater-add-button > .add-button'
@@ -195,6 +235,10 @@
                 setTimeout(function(){
                     $('.rb-form-control-repeater-field').each(function(){
                         repeaterType.makeSortable($(this));
+                    });
+
+                    $('.rb-form-control-repeater-field').each(function(){
+                        repeaterType.updateItemsTitles($(this));
                     });
                 }, 0);
             });

@@ -166,9 +166,21 @@ class RB_Repeater_Field extends RB_Field{
         return $base_title ? $base_title : 'Item';
     }
 
+    public function get_item_title_link(){
+        $title_link = $this->get_repeater_setting('title_link');
+        return $title_link ? $title_link : '';
+    }
+
     public function get_container_class(){ return "rb-form-control-repeater-field"; }
 
     public function get_container_attr(){
-        return 'data-id="'.esc_attr($this->id).'" data-base-title="'. esc_attr($this->get_item_base_title()) .'"';
+        $base_title = $this->get_item_base_title();
+        $title_link = $this->get_item_title_link();
+        $attr = 'data-id="'.esc_attr($this->id).'"';
+        if($base_title)
+            $attr .= ' data-base-title="'.esc_attr($base_title).'"';
+        if($title_link)
+            $attr .= ' data-title-link="'.esc_attr($title_link).'"';
+        return $attr;
     }
 }
