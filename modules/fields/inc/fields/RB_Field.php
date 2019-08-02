@@ -16,9 +16,9 @@ abstract class RB_Field{
         $title = $this->get_title();
         ?>
         <div
-        id="rb-field-control-<?php echo $this->id; ?>"
+        id="rb-field-control-<?php echo $this->id; ?>" data-id="<?php echo $this->id; ?>"
         class="rb-form-control <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
-        data-dependencies="<?php echo esc_attr($this->get_field_dependencies_attr()); ?>" <?php echo $this->get_container_attr(); ?>>
+        <?php $this->print_field_dependencies_attr(); ?> <?php echo $this->get_container_attr(); ?>>
             <?php if($title): ?>
             <div class="control-header rb-collapsible-header">
                 <h1 data-title="Red Social 3" class="title"><?php echo esc_html($title); ?></h1>
@@ -65,15 +65,19 @@ abstract class RB_Field{
 
     public function get_value(){ return $this->value; }
 
-    public function get_field_dependencies_attr(){
-        if(!isset($this->control_settings['dependencies']))
+    public function print_field_dependencies_attr(){
+        if(!isset($this->settings['dependencies']))
             return '';
 
         $dependecies = array();
-        $has_operator = isset($this->control_settings['dependencies'][1]) && is_array($this->control_settings['dependencies'][1]) && is_string($this->control_settings['dependencies'][0]);
-        $dependecies[0] = $has_operator ? $this->control_settings['dependencies'][0] : 'AND';
-        $dependecies[1] = $has_operator ? $this->control_settings['dependencies'][1] : $this->control_settings['dependencies'];
+        $has_operator = isset($this->settings['dependencies'][1]) && is_array($this->settings['dependencies'][1]) && is_string($this->settings['dependencies'][0]);
+        $dependecies[0] = $has_operator ? $this->settings['dependencies'][0] : 'AND';
+        $dependecies[1] = $has_operator ? $this->settings['dependencies'][1] : $this->settings['dependencies'];
 
-        return json_encode($dependecies);
+        if(!empty($dependecies))
+            echo 'data-dependencies="'. esc_attr( json_encode($dependecies) ).'"';
+
+        if(isset($this->settings['global_dependencies']) && $this->settings['global_dependencies'])
+            echo 'data-global-dependencies="1"';
     }
 }

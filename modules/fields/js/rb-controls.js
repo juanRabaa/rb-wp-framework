@@ -26,7 +26,7 @@
     var singleType = {
         valueInputSelector: '[rb-control-value]',
         getValue: function($panel){
-            return this.getValueInput($panel).val();
+            return getInputValue(this.getValueInput($panel));
         },
         getValueInput: function($panel){
             return $panel.find(this.valueInputSelector).first();
@@ -40,6 +40,7 @@
     var groupType = {
         valueInputSelector: '> .control-body > [rb-control-group-value]',
         getPanel: function($elem){ return $elem.closest('.rb-form-control-group-field'); },
+        getImmediatePanel: function($childControl){ return $childControl.parent('.group-child-control').parent('.controls').parent('.control-body').parent('.rb-form-control-group-field'); },
         getValueInput: function($panel){ return $panel.find(this.valueInputSelector); },
         getChildrens: function($panel){ return $panel.find('> .control-body > .controls > .group-child-control'); },
         getChildrenControl: function($groupChildControl){ return $groupChildControl.children('.rb-form-control'); },
@@ -60,7 +61,7 @@
                 groupValue[childID] = childValue;
             });
             $valueInput.val(JSON.stringify(groupValue)).trigger('input');
-            console.log('Group value: ', groupValue);
+            //console.log('Group value: ', groupValue);
         },
         attachEvents: function(){
             //console.log('Groups events attached');
@@ -222,9 +223,74 @@
             //console.log('Getting value from control: ', $panel, panelType);
             return panelType ? panelType.getValue($panel) : '';
         },
+        getPanelByID: function(id){ return $(`#rb-field-control-${id}`); },
+        getID: function($panel){ return $panel.attr('data-id'); },
+        getDependencies: function($panel){ return $panel.attr('data-dependencies') ? JSON.parse($panel.attr('data-dependencies')) : null; },
+        hasGlobalDependencies: function($panel){ return typeof $panel.attr('data-global-dependencies') != typeof undefined; },
+        checkFieldDependencies: function($panel, processedFields){
+            processedFields = typeof processedFields === typeof undefined ? {} : processedFields;
+            var fieldID = this.getID($panel);
+            var dependencies = this.getDependencies($panel);
+            var controlValue = this.getControlValue($panel);
+            var hiddenByDependencies = false;
+            var $parentGroup = groupType.getImmediatePanel($panel);
+            var hasGlobalDependencies = this.hasGlobalDependencies($panel);
+            var idPrefix = !hasGlobalDependencies && $parentGroup.length ? this.getID($parentGroup) + '-' : '';
+            processedFields[fieldID] = false;
+
+            if(dependencies){//Has dependencies
+
+                for(let dependencyID of dependencies[1]){
+                    //Check for the not operator in the dependencyID
+                    let notOperator = false;
+                    if(dependencyID.charAt(0) == '!'){
+                        notOperator = true;
+                        dependencyID = dependencyID.slice(1);
+                    }
+                    dependencyID = idPrefix + dependencyID;
+
+                    let $dependencyField = this.getPanelByID(dependencyID);
+                    //If it has been already processed, take the status from the processedFields, if not, run checkFieldDependencies on $dependencyField
+                    let dependencyStatus = processedFields[dependencyID] != null ? processedFields[dependencyID] : this.checkFieldDependencies($dependencyField, processedFields);
+                    dependencyStatus = notOperator ? !dependencyStatus : dependencyStatus;
+
+                    if(dependencies[0] == 'AND' && !dependencyStatus){
+                        hiddenByDependencies = true;
+                        break;
+                    }
+                    else if(dependencies[0] == 'OR' && dependencyStatus){
+                        hiddenByDependencies = false;
+                        break;
+                    }
+                }
+
+                //Hide/show based on dependencies result
+                if(hiddenByDependencies)
+                    $panel.stop().slideUp();
+                else
+                    $panel.stop().slideDown();
+            }
+
+            //If it is hidden by its dependencies, or if the value is false, the status will be false
+            processedFields[fieldID] = !hiddenByDependencies && !!controlValue;
+            return processedFields[fieldID];
+        },
+        checkFieldsDependencies: function(){
+            $('.rb-form-control[data-dependencies]').each(function(){
+                fieldsController.checkFieldDependencies($(this));
+            });
+        },
         initialize: function(){
             groupType.initialize();
             repeaterType.initialize();
+
+            $(document).ready(function(){
+                setTimeout(function(){ fieldsController.checkFieldsDependencies(); }, 0);
+            });
+
+            $(document).on('change input', '[rb-control-value]', function(){
+                fieldsController.checkFieldsDependencies();
+            });
         },
     };
     fieldsController.initialize();
