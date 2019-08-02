@@ -3,18 +3,12 @@
 // =============================================================================
 // RB REPEATER ITEM
 // =============================================================================
-class RB_Repeater_Item{
+class RB_Repeater_Item extends RB_Field_Factory{
     public function __construct($id, $value, $index, $item_settings, $repeater_settings){
-        $this->id = $id;
-        $this->value = $value;
+        parent::__construct($id, $value, $item_settings);
         $this->index = $index;
         $this->repeater_settings = is_array($repeater_settings) ? $repeater_settings : array();
-        $this->item_settings = $item_settings;
-        $this->controller = new RB_Field_Factory($this->id, $this->value, $this->item_settings);
     }
-
-    public function is_single(){ return $this->controller->is_single(); }
-    public function is_repeater(){ return $this->controller->is_repeater(); }
 
     public function render($post = null){
         $item_title = $this->get_item_title($this->index);
@@ -27,14 +21,10 @@ class RB_Repeater_Item{
                 <?php $this->print_action_controls(); ?>
             </div>
             <div class="item-content rb-collapsible-body">
-                <?php $this->controller->render($post); ?>
+                <?php parent::render($post); ?>
             </div>
         </div>
         <?php
-    }
-
-    public function get_sanitized_value($value, $args = array()){
-        return $this->controller->get_sanitized_value($value, $args);
     }
 
     public function collapsible_class(){
