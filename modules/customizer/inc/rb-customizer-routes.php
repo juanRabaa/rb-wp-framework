@@ -10,7 +10,7 @@ RB_WP_Rest_API_Extended::group(['role'   =>  'administrator'], function(){
     // ROUTES
     // =========================================================================
     RB_WP_Rest_API_Extended::get('rb-customizer/v1', '/control', function($request){
-        $control = new RB_Form_Field_Controller($request['id'], '', $request['options']);
+        $control = new RB_Form_Field_Factory($request['id'], '', $request['options']);
         ob_start();
         $control->render();
         return ob_get_clean();

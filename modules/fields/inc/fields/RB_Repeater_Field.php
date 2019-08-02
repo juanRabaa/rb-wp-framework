@@ -3,7 +3,7 @@
 // =============================================================================
 // REPEATER
 // =============================================================================
-class RB_Form_Repeater_Field extends RB_Form_Field_Control{
+class RB_Repeater_Field extends RB_Field{
     public $repeater_settings = array(
         'collapsible'   => true,
         'accordion'     => false,
@@ -102,7 +102,7 @@ class RB_Form_Repeater_Field extends RB_Form_Field_Control{
     public function print_repeater_value_input(){
         ?>
         <input
-        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        class="<?php echo RB_Field_Factory::get_input_class_link(); ?>"
         rb-control-repeater-value
         rb-control-value
         name="<?php echo $this->id; ?>"

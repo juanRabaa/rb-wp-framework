@@ -3,7 +3,7 @@
 // =============================================================================
 // RB FIELD CONTROLLER
 // =============================================================================
-class RB_Form_Field_Controller{
+class RB_Field_Factory{
     public $settings = array();
     public $controls = null;
 
@@ -26,14 +26,14 @@ class RB_Form_Field_Controller{
     public function generate_control(){
         $this->control = null;
         if($this->is_repeater()){
-            $this->control = new RB_Form_Repeater_Field($this->id, $this->value, $this->get_repeater_settings(), $this->settings, $this->controls);
+            $this->control = new RB_Repeater_Field($this->id, $this->value, $this->get_repeater_settings(), $this->settings, $this->controls);
         }
         else if( $this->is_group() ){
-            $this->control = new RB_Form_Group_Field($this->id, $this->value, $this->settings, $this->controls);
+            $this->control = new RB_Group_Field($this->id, $this->value, $this->settings, $this->controls);
         }
         //Generates the controler when only one control was provided
         else{
-            $this->control = new RB_Form_Single_Field($this->id, $this->value, $this->settings, $this->get_first_control());
+            $this->control = new RB_Single_Field($this->id, $this->value, $this->settings, $this->get_first_control());
         }
         return $this->control;
     }

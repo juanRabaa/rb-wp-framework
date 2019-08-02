@@ -10,7 +10,7 @@ class RB_Repeater_Item{
         $this->index = $index;
         $this->repeater_settings = is_array($repeater_settings) ? $repeater_settings : array();
         $this->item_settings = $item_settings;
-        $this->controller = new RB_Form_Field_Controller($this->id, $this->value, $this->item_settings);
+        $this->controller = new RB_Field_Factory($this->id, $this->value, $this->item_settings);
     }
 
     public function is_single(){ return $this->controller->is_single(); }

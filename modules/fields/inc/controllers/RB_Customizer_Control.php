@@ -10,7 +10,7 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
         $this->options = $args;
         $this->options['meta_id'] = $id;
 
-        $this->controller = new RB_Form_Field_Controller($this->id, $this->sanitazed_value(), $this->options);
+        $this->controller = new RB_Field_Factory($this->id, $this->sanitazed_value(), $this->options);
         $this->add_rb_sanitazion();
     }
 

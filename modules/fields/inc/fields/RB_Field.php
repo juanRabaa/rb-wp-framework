@@ -3,7 +3,7 @@
 // =============================================================================
 // RB FIELD ABSTRACT
 // =============================================================================
-abstract class RB_Form_Field_Control{
+abstract class RB_Field{
     public $settings = array();
 
     public function __construct($id, $value, $settings = array()) {

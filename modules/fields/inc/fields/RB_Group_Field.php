@@ -3,7 +3,7 @@
 // =============================================================================
 // GROUP FIELD
 // =============================================================================
-class RB_Form_Group_Field extends RB_Form_Field_Control{
+class RB_Group_Field extends RB_Field{
 
     /**
     * @param array $value
@@ -34,7 +34,7 @@ class RB_Form_Group_Field extends RB_Form_Field_Control{
         $controller_settings = isset($control_settings['controller']) ? $control_settings['controller'] : array();
         $controller_settings['controls'] = isset($control_settings['controls']) ? $control_settings['controls'] : array($control_ID => $control_settings);
         //print_r($controller_settings);
-        return new RB_Form_Field_Controller($child_id, $child_value, $controller_settings);
+        return new RB_Field_Factory($child_id, $child_value, $controller_settings);
     }
 
     //Gets one of the group controls id, sufixing the control_id to the repeater_id
@@ -102,7 +102,7 @@ class RB_Form_Group_Field extends RB_Form_Field_Control{
     public function print_group_value_input(){
         ?>
         <input
-        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        class="<?php echo RB_Field_Factory::get_input_class_link(); ?>"
         rb-control-group-value
         rb-control-value
         name="<?php echo $this->id; ?>"

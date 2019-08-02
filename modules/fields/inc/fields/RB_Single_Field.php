@@ -3,7 +3,7 @@
 // =============================================================================
 // SINGLE FIELD
 // =============================================================================
-class RB_Form_Single_Field extends RB_Form_Field_Control{
+class RB_Single_Field extends RB_Field{
     public $default_type = 'RB_Input_Control';
 
     public function __construct($id, $value, $settings = array(), $control = array()) {

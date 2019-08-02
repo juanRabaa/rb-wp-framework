@@ -15,7 +15,7 @@
 // 		),
 // 	)
 // ));
-class RB_Taxonomy_Form_Field extends RB_Form_Field_Controller{
+class RB_Taxonomy_Form_Field extends RB_Field_Factory{
     public $terms;
     public $render_nonce = true;
     public $add_form = false;

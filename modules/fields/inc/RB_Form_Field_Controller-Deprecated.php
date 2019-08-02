@@ -3,7 +3,7 @@
 // =============================================================================
 // SINGLE
 // =============================================================================
-class RB_Form_Single_Field{
+class RB_Single_Field{
     public $id;
     public $settings = array();
     public $type = 'RB_Input_Control';
@@ -55,7 +55,7 @@ class RB_Form_Single_Field{
         return false;
         ?>
         <input
-        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        class="<?php echo RB_Field_Factory::get_input_class_link(); ?>"
         rb-control-final-value
         name="<?php echo $this->id; ?>"
         value="<?php echo $this->value; ?>"
@@ -102,7 +102,7 @@ class RB_Form_Single_Field{
 // =============================================================================
 // GROUP
 // =============================================================================
-class RB_Form_Group_Field{
+class RB_Group_Field{
     public $id;
     public $settings = array();
     public $value = array();
@@ -172,10 +172,10 @@ class RB_Form_Group_Field{
                     $control_type = $control_settings['type'];
 
                     if( $control_settings['controls'] ){
-                        $field_controller = new RB_Form_Field_Controller($control_settings['id'], $control_value, $control_settings);
+                        $field_controller = new RB_Field_Factory($control_settings['id'], $control_value, $control_settings);
                     }
                     else{
-                        $field_controller = new RB_Form_Single_Field($control_settings['id'], $control_value, $control_settings, $control_type);
+                        $field_controller = new RB_Single_Field($control_settings['id'], $control_value, $control_settings, $control_type);
                     }
 
                     $class = $this->get_setting('field_classes') . ' ' . $control_settings['field_class'];
@@ -200,7 +200,7 @@ class RB_Form_Group_Field{
     public function print_group_value_input(){
         ?>
         <input
-        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        class="<?php echo RB_Field_Factory::get_input_class_link(); ?>"
         rb-control-group-value
         name="<?php echo $this->id; ?>"
         value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
@@ -256,7 +256,7 @@ class RB_Form_Group_Field{
 // =============================================================================
 // REPEATER
 // =============================================================================
-class RB_Form_Repeater_Field{
+class RB_Repeater_Field{
     public $id;
     public $settings = array();
     public $value = array();
@@ -333,7 +333,7 @@ class RB_Form_Repeater_Field{
     public function print_field_value_input(){
         ?>
         <input
-        class="<?php echo RB_Form_Field_Controller::get_input_class_link(); ?>"
+        class="<?php echo RB_Field_Factory::get_input_class_link(); ?>"
         rb-control-repeater-value
         name="<?php echo $this->id; ?>"
         value="<?php echo esc_attr(json_encode($this->value, JSON_UNESCAPED_UNICODE)); ?>"
@@ -363,7 +363,7 @@ class RB_Form_Repeater_Field{
         $item_id = $this->id  . '__' . $item_index;
 
         if( $this->is_group() ){
-            $renderer = new RB_Form_Group_Field($item_id, $item_value, $this->controls, array(
+            $renderer = new RB_Group_Field($item_id, $item_value, $this->controls, array(
                 'title'             => str_replace('($n)',$item_index,$this->get_setting('item_title')),
                 'collapsible'       => $this->get_items_setting('collapsible'),
                 'action_controls'   => array('delete_button'),
@@ -372,12 +372,12 @@ class RB_Form_Repeater_Field{
         else{
             $control_settings = reset($this->controls);
             if( isset($control_settings['controls']) && $control_settings['controls'] ){
-                $renderer = new RB_Form_Field_Controller($item_id, $item_value,$control_settings);
+                $renderer = new RB_Field_Factory($item_id, $item_value,$control_settings);
             }
             else{
                 $control_settings = reset($this->controls);//First item in the controls array
                 $control_type = $control_settings['type'] ? $control_settings['type'] : 'RB_Input_Control';
-                $renderer = new RB_Form_Single_Field($item_id, $item_value, $control_settings, $control_type, array(
+                $renderer = new RB_Single_Field($item_id, $item_value, $control_settings, $control_type, array(
                     //'title'             => str_replace('($n)',$this->item_index,$this->get_setting('item_title')),
                     'action_controls'   => array('delete_button'),
                 ));
@@ -455,7 +455,7 @@ class RB_Form_Repeater_Field{
 // =============================================================================
 // CONTROLLER
 // =============================================================================
-class RB_Form_Field_Controller{
+class RB_Field_Factory{
     public $id;
     public $type;
     public $value;
@@ -555,7 +555,7 @@ class RB_Form_Field_Controller{
         /*Generate a repeater*/
         if($this->is_repeater()){
             $repeater_settings = is_array($this->settings['repeater']) ? $this->settings['repeater'] : array();
-            $this->rb_control_field = new RB_Form_Repeater_Field($this->id, $this->value, $this->controls, $items_settings = array(
+            $this->rb_control_field = new RB_Repeater_Field($this->id, $this->value, $this->controls, $items_settings = array(
                 'collapsible'   => true,
             ), $repeater_settings);
         }
@@ -563,7 +563,7 @@ class RB_Form_Field_Controller{
         else if( $this->is_group() ){
             if( is_array($this->settings['controls']) ){
                 $group_settings = isset($args['group_settings']) && is_array($args['group_settings']) ? $args['group_settings'] : array();
-                $this->rb_control_field = new RB_Form_Group_Field($this->id, $this->value, $this->settings['controls'], $group_settings);
+                $this->rb_control_field = new RB_Group_Field($this->id, $this->value, $this->settings['controls'], $group_settings);
             }
         }
         //Generates the controler when only one control was provided
@@ -571,7 +571,7 @@ class RB_Form_Field_Controller{
             $control_settings = is_array($this->controls) ? reset($this->controls) : array();//First item in the controls array
             $control_settings['id'] = $this->id;
             $control_type = isset($control_settings['type']) && $control_settings['type'] ? $control_settings['type'] : 'RB_Input_Control';
-            $this->rb_control_field = new RB_Form_Single_Field($this->id, $this->value, $control_settings, $control_type);
+            $this->rb_control_field = new RB_Single_Field($this->id, $this->value, $control_settings, $control_type);
         }
     }
 

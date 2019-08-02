@@ -1,5 +1,5 @@
 <?php
-class RB_Metabox extends RB_Form_Field_Controller{
+class RB_Metabox extends RB_Field_Factory{
     public $meta_id;
     public $render_nonce = true;
     public $metabox_settings = array(

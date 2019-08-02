@@ -4,6 +4,7 @@
 
 :root{
     --main-color: #8ac3ff;
+    --dark-color: #78abe17d;
 }
 
 body{
@@ -14,7 +15,7 @@ body{
 /* COLORS */
 /* ========================================================================== */
 .rb-collapsible.active{
-    box-shadow: 3px 4px 0px var(--main-color);
+    box-shadow: 3px 4px 0px var(--dark-color);
 }
 
 .rb-collapsible.active > .rb-collapsible-header, .rb-collapsible.active > .rb-collapsible-body {
@@ -81,7 +82,8 @@ body{
 
 .rb-form-control > .control-header .title{
     /* padding: 0; */
-    font-size: 1.22rem;
+    font-size: 1rem;
+    /* font-size: 1.22rem; */
 }
 
 .rb-form-control:not(.rb-collapsible) > .control-header .title {
