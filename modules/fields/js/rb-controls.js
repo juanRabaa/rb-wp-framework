@@ -175,6 +175,9 @@
             this.updateStatus($panel);
             if(this.itemIsRepeater($item))//If item is repeater, attach sortable
                 this.makeSortable( this.getItemControl($item) );
+            $('.rb-form-control-repeater-field').each(function(){
+                repeaterType.updateItemsTitles($(this));
+            });
         },
         deleteItem: function($item){
             let $panel = this.getPanel($item);

@@ -3,8 +3,11 @@
 } */
 
 :root{
-    --main-color: #8ac3ff;
-    --dark-color: #78abe17d;
+    --rb-main-color: #008ec2;
+    --rb-main-shadow-color: #006d9585;
+    --rb-blue-color: #008ec2;
+    --rb-shadow-blue-color: #006d9585;
+    --rb-red-color: #E53935;
 }
 
 body{
@@ -15,15 +18,15 @@ body{
 /* COLORS */
 /* ========================================================================== */
 .rb-collapsible.active{
-    box-shadow: 3px 4px 0px var(--dark-color);
+    box-shadow: 3px 4px 0px var(--rb-main-shadow-color);
 }
 
 .rb-collapsible.active > .rb-collapsible-header, .rb-collapsible.active > .rb-collapsible-body {
-    border-color: var(--main-color);
+    border-color: var(--rb-main-color);
 }
 
 .rb-collapsible.active > .rb-collapsible-header {
-    background-color: var(--main-color);
+    background-color: var(--rb-main-color);
 }
 
 .rb-collapsible.active > .rb-collapsible-header .title {

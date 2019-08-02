@@ -1288,16 +1288,22 @@ class RB_Fontawesome_Control extends RB_Field_Control{
     public function render_content(){
         extract($this->settings);
     ?>
+        <?php $this->print_control_header(); ?>
         <div class="fa-control" data-fa-current="<?php echo $this->value; ?>">
-            <?php $this->print_control_header(); ?>
             <div class="current-fa">
                 <i class="<?php echo $this->value; ?>"></i>
             </div>
-            <div class="collapsible-title fa-control-title">
-                <span>Choose icon</span>
-                <i class="fas fa-angle-down collapsible-arrow" aria-hidden="true"></i>
+            <div class="rb-collapsible">
+            <div class="rb-collapsible-header fa-control-title">
+                <h2 class="title">Choose icon</h2>
+                <div class="action-controls">
+                    <div class="control collapsible-arrow blue">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                </div>
+                <!--<i class="fas fa-angle-down collapsible-arrow" aria-hidden="true"></i>-->
             </div>
-            <div class="collapsible-body font-awesome-list">
+            <div class="rb-collapsible-body font-awesome-list">
                 <div class="nav">
                     <input type="text" placeholder="Search..." class="fa-search">
                 </div>
@@ -1305,28 +1311,35 @@ class RB_Fontawesome_Control extends RB_Field_Control{
                     <div class="fa-search-list"></div>
                     <div class="fa-normal-list">
                         <!-- BRANDS -->
-                        <div class="collapsible-title fa-icons-group-title">Brands</div>
-                        <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach(self::$facodes['brands'] as $icon_code)
-                                $this->fontawesome_icon("fab", $icon_code,$this->value);
-                        ?>
+                        <div class="rb-collapsible">
+                            <div class="rb-collapsible-header fa-icons-group-title"><h2 class="title">Brands<h2></div>
+                            <div class="rb-collapsible-body fa-icons-group-body">
+                            <?php foreach(self::$facodes['brands'] as $icon_code)
+                                    $this->fontawesome_icon("fab", $icon_code,$this->value);
+                            ?>
+                            </div>
                         </div>
                         <!-- REGULAR -->
-                        <div class="collapsible-title fa-icons-group-title">Regular</div>
-                        <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach(self::$facodes['regular'] as $icon_code)
-                                $this->fontawesome_icon("far", $icon_code, $this->value);
-                        ?>
+                        <div class="rb-collapsible">
+                            <div class="rb-collapsible-header fa-icons-group-title"><h2 class="title">Regular<h2></div>
+                            <div class="rb-collapsible-body fa-icons-group-body">
+                            <?php foreach(self::$facodes['regular'] as $icon_code)
+                                    $this->fontawesome_icon("far", $icon_code, $this->value);
+                            ?>
+                            </div>
                         </div>
                         <!-- SOLID -->
-                        <div class="collapsible-title fa-icons-group-title">Solid</div>
-                        <div class="collapsible-body fa-icons-group-body">
-                        <?php foreach(self::$facodes['solid'] as $icon_code)
-                                $this->fontawesome_icon("fas", $icon_code ,$this->value);
-                        ?>
+                        <div class="rb-collapsible">
+                            <div class="rb-collapsible-header fa-icons-group-title"><h2 class="title">Solid<h2></div>
+                            <div class="rb-collapsible-body fa-icons-group-body">
+                            <?php foreach(self::$facodes['solid'] as $icon_code)
+                                    $this->fontawesome_icon("fas", $icon_code ,$this->value);
+                            ?>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <input <?php $this->print_input_link(); ?> class="<?php $this->print_input_classes(); ?>" name="<?php echo $id; ?>" type="hidden" value="<?php echo esc_attr($this->value); ?>"></input>
         </div>
