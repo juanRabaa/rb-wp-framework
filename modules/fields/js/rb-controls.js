@@ -109,8 +109,10 @@
         getEmptyItem: function($panel, index){
             let $emptyItem = this.getItemPlaceholder($panel).clone();
             var $tempDiv = $('<div>');
+            var repeaterID = fieldsController.getID($panel);
             $tempDiv.append($emptyItem).html(function(i, oldHTML) {
-                return oldHTML.replace(/__\(\$RB_REPEATER_PLACEHOLDER\)/g, index);
+                let reg = new RegExp(`__\\(\\$RB_REPEATER_PLACEHOLDER=${repeaterID}\\)`,"g");
+                return oldHTML.replace(reg, index);
             });
             $emptyItem = $tempDiv.children(repeaterType.itemSelector);
             return $emptyItem;
@@ -159,6 +161,8 @@
         itemIsSingle: function($item){ return singleType.isSingle( repeaterType.getItemControl($item) ); },
         isRepeater: function($panel){ return $panel.hasClass('rb-form-control-repeater-field'); },
         isEmpty: function($panel){ return !this.getItemsAmount($panel); },
+        //Returns the jQuery object without the elements that are inside an item placeholder
+        filterNotInPlaceholder: function($el){ return $el.filter( (index, el) => { return !$(el).closest('.repeater-empty-control').length; } ); },
         updateStatus: function($panel){
             let $container = this.getRepeaterContainer($panel);
             if( this.isEmpty($panel) )
@@ -173,11 +177,15 @@
             $item.appendTo($itemsContainer);
             $item.slideDown(200);
             this.updateStatus($panel);
-            if(this.itemIsRepeater($item))//If item is repeater, attach sortable
-                this.makeSortable( this.getItemControl($item) );
-            $('.rb-form-control-repeater-field').each(function(){
-                repeaterType.updateItemsTitles($(this));
+
+            let newItemEvent = new CustomEvent('rbItemCreation', {
+                detail: {
+                    $item: $item,
+                    //Controls inside this new item, not including the ones inside the item placeholder in a repeater
+                    $controls: this.filterNotInPlaceholder($item.find('.rb-wp-control')),
+                }
             });
+            document.dispatchEvent(newItemEvent);
         },
         deleteItem: function($item){
             let $panel = this.getPanel($item);
@@ -186,6 +194,14 @@
             this.updateStatus($panel);
             this.updateValue($panel);
             this.updateItemsTitles($panel);
+            let itemRemovalEvent = new CustomEvent('rbItemRemoval', {
+                detail: {
+                    $item: $item,
+                    //Controls inside this new item, not including the ones inside the item placeholder in a repeater
+                    $controls: this.filterNotInPlaceholder($item.find('.rb-wp-control')),
+                }
+            });
+            document.dispatchEvent(itemRemovalEvent);
         },
         makeSortable: function($panel){
             this.getItemsContainer($panel).sortable({
@@ -196,6 +212,10 @@
                     repeaterType.updateItemsTitles($panel);
                 },
             });
+        },
+        initializeRepeater: function($panel){
+            this.makeSortable($panel);
+            this.updateItemsTitles($panel);
         },
         attachEvents: function(){
             //Changes in item values when item is a single or a group
@@ -222,11 +242,13 @@
                 repeaterType.updateItemTitle($controlPanel, $item);
             });
 
+            //ITEM CREATION
             $(document).on('click', '.rb-form-control-repeater-field > .control-body > .repeater-container > .repeater-add-button > .add-button'
             , function(){
                 repeaterType.addNewItem( repeaterType.getPanel($(this)) );
             });
 
+            //ITEM REMOVAL
             $(document).on('click', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-header .delete-button`
             , function(e){
                 e.preventDefault();
@@ -237,15 +259,18 @@
             $(document).ready(function(){
                 setTimeout(function(){
                     $('.rb-form-control-repeater-field').each(function(){
-                        repeaterType.makeSortable($(this));
-                    });
-
-                    $('.rb-form-control-repeater-field').each(function(){
-                        repeaterType.updateItemsTitles($(this));
+                        repeaterType.initializeRepeater($(this));
                     });
                 }, 0);
             });
 
+            //On item creation, initialize any repeater inside the new item
+            document.addEventListener('rbItemCreation', function (event) {
+                let $repeatersInItem = repeaterType.filterNotInPlaceholder( event.detail.$item.find('.rb-form-control-repeater-field') );
+                $repeatersInItem.each(function(){
+                    repeaterType.initializeRepeater($(this));
+                });
+            }, false);
         },
         initialize: function(){
             this.attachEvents();

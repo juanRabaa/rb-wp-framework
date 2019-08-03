@@ -117,7 +117,7 @@ if(!class_exists('RB_Fields_Module')){
             //Sortabe jQuery UI
             wp_enqueue_script( 'jquery-ui-sortable');
             //Main
-            wp_enqueue_style( 'rb-form-fields-css', plugin_dir_url(__FILE__) . 'css/rb-fields-module.css' );
+            wp_enqueue_style( 'rb-fields-module-css', plugin_dir_url(__FILE__) . 'css/rb-fields-module.css' );
             wp_enqueue_script( 'rb-controls-values-manager', plugin_dir_url(__FILE__) . 'js/rb-controls.js', array('jquery'), true );
             //Font Aweasome
             wp_enqueue_style( "fontawesome", 'https://use.fontawesome.com/releases/v5.4.1/css/all.css', true );

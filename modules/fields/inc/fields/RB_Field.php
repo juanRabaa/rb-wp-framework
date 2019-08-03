@@ -21,7 +21,7 @@ abstract class RB_Field{
         <?php $this->print_field_dependencies_attr(); ?> <?php echo $this->get_container_attr(); ?>>
             <?php if($title): ?>
             <div class="control-header rb-collapsible-header">
-                <h1 data-title="Red Social 3" class="title"><?php echo esc_html($title); ?></h1>
+                <h1 class="title"><?php echo esc_html($title); ?></h1>
             </div>
             <?php endif; ?>
             <div class="control-body rb-collapsible-body">

@@ -48,7 +48,7 @@ class RB_Repeater_Field extends RB_Field{
     }
 
     public function print_placeholder_item($post = null){
-        $this->print_item('', '__($RB_REPEATER_PLACEHOLDER)', $post);
+        $this->print_item('', '__($RB_REPEATER_PLACEHOLDER='.$this->id.')', $post);
     }
 
     public function get_item_controller($value, $index){
