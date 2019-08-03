@@ -317,18 +317,18 @@
 
                 for(let dependencyID in dependencies[1]){
                     let expectedValue = dependencies[1][dependencyID];
-
+                    let expectingBool = typeof expectedValue == 'boolean';
                     dependencyID = idPrefix + dependencyID;
 
                     let $dependencyField = this.getPanelByID(dependencyID);
                     //If it has been already processed, take the status from the processedFields, if not, run checkFieldDependencies on $dependencyField
                     let dependencyValue = processedFields[dependencyID] != null ? processedFields[dependencyID] : this.checkFieldDependencies($dependencyField, processedFields);
                     //console.log(dependencyID, expectedValue, dependencyValue);
-                    if(dependencies[0] == 'AND' && dependencyValue != expectedValue){
+                    if(dependencies[0] == 'AND' && ( (expectingBool && expectedValue != !!dependencyValue) || (!expectingBool && expectedValue != dependencyValue) )){
                         hiddenByDependencies = true;
                         break;
                     }
-                    else if(dependencies[0] == 'OR' && dependencyValue == expectedValue){
+                    else if(dependencies[0] == 'OR' && ( (expectingBool && expectedValue == !!dependencyValue) || (!expectingBool && expectedValue == dependencyValue) )){
                         hiddenByDependencies = false;
                         break;
                     }

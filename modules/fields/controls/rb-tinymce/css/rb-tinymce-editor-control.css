@@ -10,6 +10,7 @@
     background-image: url(http://modx.s3.amazonaws.com/extras/54eb652ddc532f725a02bf64/tinymcerte.png);
     background-size: 100%;
     background-repeat: no-repeat;
+    min-height: 0rem;
 }
 
 .rb-tinymce-control .editor-open-button {
@@ -24,6 +25,10 @@
     user-select: none;
     cursor: pointer;
     transition: all 0.3s;
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .rb-tinymce-control .editor-open-button:hover {
@@ -41,6 +46,7 @@
     position: relative;
     box-shadow: 0px 0px 3px black;
     padding: 0.5rem;
+    min-height: 6rem;
 }
 
 .rb-tinymce-control .tinymce-editor-container .media-button {

@@ -42,7 +42,7 @@
     		$image.attr('src','');
     		$input.val('').trigger('input');
     		console.log($controlPanel);
-    		updateValue( $controlPanel );
+    		//updateValue( $controlPanel );
     	}
     });
 
