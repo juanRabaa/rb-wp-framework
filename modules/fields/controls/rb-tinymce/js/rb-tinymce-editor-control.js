@@ -146,6 +146,7 @@
                     rbEditorManager.getEditorHiddenInput(tinymce).trigger('change');
                 });
                 rbEditorManager.removePlaceholderValueLink($panel);
+                $panel.addClass('editor-open');
             }
         },
     };
@@ -164,6 +165,26 @@
         $panel = $(this).closest('.rb-tinymce-control');
         rbTinymceEditor.openPanelMediaUploader($panel);
     });
+    // 
+    // $(document).ready(function(){
+    //     setTimeout(function(){
+    //         $('.rb-tinymce-control').each(function(){
+    //             openPanelTinyMCE($(this));
+    //         });
+    //     }, 0);
+    // });
+    //
+    // document.addEventListener('rbItemCreation', function(event){
+    //     event.detail.$controls.find('.rb-tinymce-control').each(function(){
+    //         openPanelTinyMCE($(this));
+    //     });
+    // });
+    //
+    // document.addEventListener('rbItemRemoval', function(event){
+    //     event.detail.$controls.find('.rb-tinymce-control').each(function(){
+    //         rbTinymceEditor.removeEditor( rbTinymceEditor.getPanelEditorID($(this)) );
+    //     });
+    // });
 
     // Toggle editors when tinymce gets defined. removed for compability issues with other plugins
     // var tinymceCheckInterval = setInterval(function(){
