@@ -75,7 +75,7 @@ abstract class RB_Field_Control{
     }
 
     final public function get_control_input_link(){
-        return RB_Field_Factory::get_control_input_link();
+        return class_exists('RB_Field_Factory') ? RB_Field_Factory::get_control_input_link() : '';
     }
 
     //Prints special classes for the control's value input
@@ -87,7 +87,7 @@ abstract class RB_Field_Control{
     }
 
     final public function get_control_input_class(){
-        return RB_Field_Factory::get_input_class_link();
+        return class_exists('RB_Field_Factory') ? RB_Field_Factory::get_input_class_link() : '';
     }
 
     //Returns the control markup as n string
