@@ -83,6 +83,10 @@ body{
     margin-bottom: 1rem;
 }
 
+.rb-field p {
+    margin-top: 0;
+}
+
 .rb-field > .control-header .title{
     /* padding: 0; */
     font-size: 1rem;

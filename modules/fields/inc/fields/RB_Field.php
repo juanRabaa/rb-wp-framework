@@ -16,7 +16,7 @@ abstract class RB_Field{
         $title = $this->get_title();
         ?>
         <div
-        id="rb-field-control-<?php echo $this->id; ?>" data-id="<?php echo $this->id; ?>"
+        id="rb-field-<?php echo $this->id; ?>" data-id="<?php echo $this->id; ?>"
         class="rb-field <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
         <?php $this->print_field_dependencies_attr(); ?> <?php echo $this->get_container_attr(); ?>>
             <?php if($title): ?>
@@ -46,12 +46,16 @@ abstract class RB_Field{
     public function print_description(){
         $description = $this->get_description();
         if($description):
-        ?><p class="control-description"><?php echo esc_html($description); ?></p><?php
+            if(is_callable($description)):
+            ?><div class="control-description"><?php $description(); ?></div><?php
+            else:
+            ?><p class="control-description"><?php echo esc_html($description); ?></p><?php
+            endif;
         endif;
     }
 
     public function get_description(){
-        return isset($this->settings['description']) && is_string($this->settings['description']) ? $this->settings['description'] : '';
+        return isset($this->settings['description']) && (is_string($this->settings['description']) || is_callable($this->settings['description'])) ? $this->settings['description'] : '';
     }
 
     public function get_title(){
@@ -69,13 +73,26 @@ abstract class RB_Field{
         if(!isset($this->settings['dependencies']))
             return '';
 
-        $dependecies = array();
-        $has_operator = isset($this->settings['dependencies'][1]) && is_array($this->settings['dependencies'][1]) && is_string($this->settings['dependencies'][0]);
-        $dependecies[0] = $has_operator ? $this->settings['dependencies'][0] : 'AND';
-        $dependecies[1] = $has_operator ? $this->settings['dependencies'][1] : $this->settings['dependencies'];
+        $dependecies_data = array();
+        $has_operator = isset($this->settings['dependencies'][1]) && is_array($this->settings['dependencies'][1])
+        && is_string($this->settings['dependencies'][0]) && ($this->settings['dependencies'][0] == 'AND' || $this->settings['dependencies'][0] == 'OR');
+        $dependecies_data[0] = $has_operator ? $this->settings['dependencies'][0] : 'AND';
+        $dependecies_data[1] = $has_operator ? $this->settings['dependencies'][1] : $this->settings['dependencies'];
+        $expected_values = array();
 
-        if(!empty($dependecies))
-            echo 'data-dependencies="'. esc_attr( json_encode($dependecies) ).'"';
+        foreach($dependecies_data[1] as $dependency_key => $dependency_value){
+            $has_expected_value = !is_int($dependency_key);
+            $dependency_name = $has_expected_value ? $dependency_key : $dependency_value;
+            $has_not_op = $dependency_name[0] == '!' ? true : false;
+            $dependency_name = $has_not_op ? substr($dependency_name, 1) : $dependency_name;
+            $expected_value = $has_expected_value ? $dependency_value : !$has_not_op;
+            $expected_values[$dependency_name] = $expected_value;
+        }
+
+        $dependecies_data[1] = $expected_values;
+
+        if(!empty($expected_values))
+            echo 'data-dependencies="'. esc_attr( json_encode($dependecies_data) ).'"';
 
         if(isset($this->settings['global_dependencies']) && $this->settings['global_dependencies'])
             echo 'data-global-dependencies="1"';

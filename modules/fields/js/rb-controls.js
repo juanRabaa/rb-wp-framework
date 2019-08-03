@@ -14,8 +14,10 @@
         if( $input.attr('rb-json') )
             value = JSON.parse(value);
 
-        if(typeof $input.attr('value-as-number') !== typeof undefined && $input.attr('value-as-number') !== false)
+        if(typeof $input.attr('value-as-number') !== typeof undefined && $input.attr('value-as-number') !== false){
             value = parseInt(value);
+            if(Number.isNaN(value)) value = 0;
+        }
 
         return value;
     }
@@ -295,7 +297,7 @@
             //console.log('Getting value from control: ', $panel, panelType);
             return panelType ? panelType.getValue($panel) : '';
         },
-        getPanelByID: function(id){ return $(`#rb-field-control-${id}`); },
+        getPanelByID: function(id){ return $(`#rb-field-${id}`); },
         getID: function($panel){ return $panel.attr('data-id'); },
         getDependencies: function($panel){ return $panel.attr('data-dependencies') ? JSON.parse($panel.attr('data-dependencies')) : null; },
         hasGlobalDependencies: function($panel){ return typeof $panel.attr('data-global-dependencies') != typeof undefined; },
@@ -304,33 +306,29 @@
             var fieldID = this.getID($panel);
             var dependencies = this.getDependencies($panel);
             var controlValue = this.getControlValue($panel);
-            var hiddenByDependencies = false;
+            var hiddenByDependencies;
             var $parentGroup = groupType.getImmediatePanel($panel);
             var hasGlobalDependencies = this.hasGlobalDependencies($panel);
             var idPrefix = !hasGlobalDependencies && $parentGroup.length ? this.getID($parentGroup) + '-' : '';
             processedFields[fieldID] = false;
 
             if(dependencies){//Has dependencies
+                hiddenByDependencies = dependencies[0] == 'AND' ? false : true;
 
-                for(let dependencyID of dependencies[1]){
-                    //Check for the not operator in the dependencyID
-                    let notOperator = false;
-                    if(dependencyID.charAt(0) == '!'){
-                        notOperator = true;
-                        dependencyID = dependencyID.slice(1);
-                    }
+                for(let dependencyID in dependencies[1]){
+                    let expectedValue = dependencies[1][dependencyID];
+
                     dependencyID = idPrefix + dependencyID;
 
                     let $dependencyField = this.getPanelByID(dependencyID);
                     //If it has been already processed, take the status from the processedFields, if not, run checkFieldDependencies on $dependencyField
-                    let dependencyStatus = processedFields[dependencyID] != null ? processedFields[dependencyID] : this.checkFieldDependencies($dependencyField, processedFields);
-                    dependencyStatus = notOperator ? !dependencyStatus : dependencyStatus;
-
-                    if(dependencies[0] == 'AND' && !dependencyStatus){
+                    let dependencyValue = processedFields[dependencyID] != null ? processedFields[dependencyID] : this.checkFieldDependencies($dependencyField, processedFields);
+                    //console.log(dependencyID, expectedValue, dependencyValue);
+                    if(dependencies[0] == 'AND' && dependencyValue != expectedValue){
                         hiddenByDependencies = true;
                         break;
                     }
-                    else if(dependencies[0] == 'OR' && dependencyStatus){
+                    else if(dependencies[0] == 'OR' && dependencyValue == expectedValue){
                         hiddenByDependencies = false;
                         break;
                     }
@@ -340,11 +338,11 @@
                 if(hiddenByDependencies)
                     $panel.stop().slideUp();
                 else
-                    $panel.stop().slideDown();
+                    $panel.stop().slideDown(function(){$panel.css('height', 'auto');});
             }
 
             //If it is hidden by its dependencies, or if the value is false, the status will be false
-            processedFields[fieldID] = !hiddenByDependencies && !!controlValue;
+            processedFields[fieldID] = hiddenByDependencies ? false : controlValue;
             return processedFields[fieldID];
         },
         checkFieldsDependencies: function(){
