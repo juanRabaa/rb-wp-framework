@@ -24,7 +24,7 @@ class RB_Single_Field extends RB_Field{
         <?php
     }
 
-    public function get_container_class(){ return "rb-form-control-single-field"; }
+    public function get_container_class(){ return "rb-single-field"; }
 
     public function get_value(){
         if( !isset($this->value) && is_array($this->control) && isset($this->control['default']) )

@@ -42,10 +42,10 @@
                 return JSON.stringify(finalValue);
             },
             isGroup: function($panel){
-                return $panel.children('.rb-form-control-group-field').length != 0;
+                return $panel.children('.rb-group-field').length != 0;
             },
             getGroupBaseID: function($panel){
-                return $panel.children('.rb-form-control-group-field').attr('data-id');
+                return $panel.children('.rb-group-field').attr('data-id');
             }
         }
 
@@ -65,7 +65,7 @@
                 return finalValue;
             },
             isSingle: function($panel){
-                return $panel.children('.rb-form-control-single-field').length != 0;
+                return $panel.children('.rb-single-field').length != 0;
             },
         }
     });

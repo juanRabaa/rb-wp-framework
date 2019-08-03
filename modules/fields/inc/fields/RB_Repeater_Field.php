@@ -171,7 +171,7 @@ class RB_Repeater_Field extends RB_Field{
         return $title_link ? $title_link : '';
     }
 
-    public function get_container_class(){ return "rb-form-control-repeater-field"; }
+    public function get_container_class(){ return "rb-repeater-field"; }
 
     public function get_container_attr(){
         $base_title = $this->get_item_base_title();

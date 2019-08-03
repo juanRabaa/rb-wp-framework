@@ -70,26 +70,26 @@ body{
 /* ========================================================================== */
 /* GENERAL */
 /* ========================================================================== */
-.rb-form-control{
+.rb-field{
     margin-bottom: 1rem;
 }
 
-.rb-form-control:not(.rb-collapsible) > .control-header{
+.rb-field:not(.rb-collapsible) > .control-header{
     margin-bottom: 0.5rem;
 }
 
-.rb-form-control .control-body > .control-description {
+.rb-field .control-body > .control-description {
     margin: 0;
     margin-bottom: 1rem;
 }
 
-.rb-form-control > .control-header .title{
+.rb-field > .control-header .title{
     /* padding: 0; */
     font-size: 1rem;
     /* font-size: 1.22rem; */
 }
 
-.rb-form-control:not(.rb-collapsible) > .control-header .title {
+.rb-field:not(.rb-collapsible) > .control-header .title {
     padding: 0;
 }
 
@@ -296,18 +296,18 @@ body{
 /* ========================================================================== */
 /* GROUP */
 /* ========================================================================== */
-:not(.item-content) > .rb-form-control-group-field:not(.rb-collapsible) > .control-body {
+:not(.item-content) > .rb-group-field:not(.rb-collapsible) > .control-body {
     background-color: #ffffff;
     border: solid 1px #00000033;
     padding: 1rem;
     box-shadow: 3px 4px 0px #00000040;
 }
 
-.rb-form-control-group-field:not(.rb-collapsible) {
+.rb-group-field:not(.rb-collapsible) {
     margin-bottom: 2rem;
 }
 
-.rb-form-control-group-field > .control-body > .controls > .group-child-control > .rb-form-control-repeater-field > .control-body {
+.rb-group-field > .control-body > .controls > .group-child-control > .rb-repeater-field > .control-body {
     border: solid 1px #bfbfbf;
     padding: 0.75rem;
 }
@@ -333,17 +333,17 @@ body{
 .postbox > .inside{
     padding-top: 0.5rem;
 }
-.postbox > .inside > .rb-form-control-group-field:not(.rb-collapsible) > .control-body {
+.postbox > .inside > .rb-group-field:not(.rb-collapsible) > .control-body {
     box-shadow: none;
     border: none;
     padding: 0;
 }
 
-.postbox > .inside > .rb-form-control-group-field:not(.rb-collapsible) > .control-header{
+.postbox > .inside > .rb-group-field:not(.rb-collapsible) > .control-header{
     margin-bottom: 0.25rem;
 }
 
-#poststuff .rb-form-control h2, #poststuff .rb-form-control h3.hndle {
+#poststuff .rb-field h2, #poststuff .rb-field h3.hndle {
     /* font-size: 14px; */
     /* padding: 8px 12px; */
     /* margin: 0; */

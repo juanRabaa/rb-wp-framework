@@ -17,7 +17,7 @@ abstract class RB_Field{
         ?>
         <div
         id="rb-field-control-<?php echo $this->id; ?>" data-id="<?php echo $this->id; ?>"
-        class="rb-form-control <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
+        class="rb-field <?php echo $this->collapsible_class(); ?> <?php echo esc_attr($this->get_container_class()); ?>"
         <?php $this->print_field_dependencies_attr(); ?> <?php echo $this->get_container_attr(); ?>>
             <?php if($title): ?>
             <div class="control-header rb-collapsible-header">

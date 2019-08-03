@@ -44,7 +44,7 @@ class RB_Group_Field extends RB_Field{
         return is_array($this->value) && isset($this->value[$control_id]) ? $this->value[$control_id] : $default;
     }
 
-    public function get_container_class(){ return "rb-form-control-group-field"; }
+    public function get_container_class(){ return "rb-group-field"; }
 
     public function get_container_attr(){ return 'data-id="'. esc_attr($this->id) .'"'; }
 

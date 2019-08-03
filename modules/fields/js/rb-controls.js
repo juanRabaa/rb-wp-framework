@@ -31,7 +31,7 @@
         getValueInput: function($panel){
             return $panel.find(this.valueInputSelector).first();
         },
-        isSingle: function($panel){ return $panel.hasClass('rb-form-control-single-field'); },
+        isSingle: function($panel){ return $panel.hasClass('rb-single-field'); },
     };
 
     // =========================================================================
@@ -39,11 +39,11 @@
     // =========================================================================
     var groupType = {
         valueInputSelector: '> .control-body > [rb-control-group-value]',
-        getPanel: function($elem){ return $elem.closest('.rb-form-control-group-field'); },
-        getImmediatePanel: function($childControl){ return $childControl.parent('.group-child-control').parent('.controls').parent('.control-body').parent('.rb-form-control-group-field'); },
+        getPanel: function($elem){ return $elem.closest('.rb-group-field'); },
+        getImmediatePanel: function($childControl){ return $childControl.parent('.group-child-control').parent('.controls').parent('.control-body').parent('.rb-group-field'); },
         getValueInput: function($panel){ return $panel.find(this.valueInputSelector); },
         getChildrens: function($panel){ return $panel.find('> .control-body > .controls > .group-child-control'); },
-        getChildrenControl: function($groupChildControl){ return $groupChildControl.children('.rb-form-control'); },
+        getChildrenControl: function($groupChildControl){ return $groupChildControl.children('.rb-field'); },
         getChildValue: function($groupChildControl){ return fieldsController.getControlValue( this.getChildrenControl($groupChildControl) ); },
         getValue: function($panel){ return this.getValueInput($panel).val(); },
         updateValue: function($panel){
@@ -66,19 +66,19 @@
         attachEvents: function(){
             //console.log('Groups events attached');
             $(document).on('input change', `
-            .rb-form-control-group-field > .control-body > .controls > .group-child-control > .rb-form-control-single-field ${singleType.valueInputSelector},
-            .rb-form-control-group-field > .control-body > .controls > .group-child-control > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
+            .rb-group-field > .control-body > .controls > .group-child-control > .rb-single-field ${singleType.valueInputSelector},
+            .rb-group-field > .control-body > .controls > .group-child-control > .rb-repeater-field ${repeaterType.valueInputSelector}`
             , function(){
                 groupType.updateValue(groupType.getPanel($(this)));
             });
 
-            $(document).on('input change', `.rb-form-control-group-field > .control-body > .controls > .group-child-control > .rb-form-control-group-field ${groupType.valueInputSelector}`
+            $(document).on('input change', `.rb-group-field > .control-body > .controls > .group-child-control > .rb-group-field ${groupType.valueInputSelector}`
             , function(){
                 let $controlPanel = groupType.getPanel( groupType.getPanel($(this)).parent() );
                 groupType.updateValue($controlPanel);
             });
         },
-        isGroup: function($panel){ return $panel.hasClass('rb-form-control-group-field'); },
+        isGroup: function($panel){ return $panel.hasClass('rb-group-field'); },
         initialize: function(){
             this.attachEvents();
         },
@@ -90,7 +90,7 @@
     var repeaterType = {
         valueInputSelector: '> .control-body > [rb-control-repeater-value]',
         itemSelector: '.repeater-item:not(.item-placeholder)',
-        getPanel: function($elem){ return $elem.closest('.rb-form-control-repeater-field'); },
+        getPanel: function($elem){ return $elem.closest('.rb-repeater-field'); },
         getRepeaterContainer: function($panel){ return $panel.find('> .control-body > .repeater-container'); },
         getValue: function($panel){ return this.getValueInput($panel).val(); },
         getValueInput: function($panel){ return $panel.find(this.valueInputSelector); },
@@ -98,7 +98,7 @@
         getItemsContainer: function($panel){ return $panel.find('> .control-body > .repeater-container > .rb-repeater-items'); },
         getItems: function($panel){ return $panel.find(`> .control-body > .repeater-container > .rb-repeater-items > ${this.itemSelector}`); },
         getItemsAmount: function($panel){ return this.getItems($panel).length; },
-        getItemControl: function($item){ return $item.find('> .item-content > .rb-form-control'); },
+        getItemControl: function($item){ return $item.find('> .item-content > .rb-field'); },
         getItemValue: function($item){ return fieldsController.getControlValue( this.getItemControl($item) ); },
         getItemPlaceholder: function($panel){ return $panel.find(`> .control-body > .repeater-container > .repeater-empty-control > ${repeaterType.itemSelector}`); },
         getBaseTitle: function($panel){ return $panel.attr('data-base-title'); },
@@ -159,7 +159,7 @@
         itemIsRepeater: function($item){ return repeaterType.isRepeater( repeaterType.getItemControl($item) ); },
         itemIsGroup: function($item){ return groupType.isGroup( repeaterType.getItemControl($item) ); },
         itemIsSingle: function($item){ return singleType.isSingle( repeaterType.getItemControl($item) ); },
-        isRepeater: function($panel){ return $panel.hasClass('rb-form-control-repeater-field'); },
+        isRepeater: function($panel){ return $panel.hasClass('rb-repeater-field'); },
         isEmpty: function($panel){ return !this.getItemsAmount($panel); },
         //Returns the jQuery object without the elements that are inside an item placeholder
         filterNotInPlaceholder: function($el){ return $el.filter( (index, el) => { return !$(el).closest('.repeater-empty-control').length; } ); },
@@ -219,14 +219,14 @@
         },
         attachEvents: function(){
             //Changes in item values when item is a single or a group
-            $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
-            .rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-group-field ${groupType.valueInputSelector}`
+            $(document).on('input change', `.rb-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-single-field ${singleType.valueInputSelector},
+            .rb-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-group-field ${groupType.valueInputSelector}`
             , function(){
                 repeaterType.updateValue( repeaterType.getPanel($(this)) );
             });
 
             //Changes in item when it is a repeater
-            $(document).on('input change', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
+            $(document).on('input change', `.rb-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-repeater-field ${repeaterType.valueInputSelector}`
             , function(){
                 let $controlPanel = repeaterType.getPanel( repeaterType.getPanel($(this)).parent() );
                 repeaterType.updateValue( $controlPanel );
@@ -234,8 +234,8 @@
 
             //Changes in item (single or group), when the items title is linked to changes in a field
             $(document).on('input change',
-            `.rb-form-control-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-single-field ${singleType.valueInputSelector},
-            .rb-form-control-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-form-control-group-field ${groupType.valueInputSelector}`
+            `.rb-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-single-field ${singleType.valueInputSelector},
+            .rb-repeater-field[data-title-link] > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-content > .rb-group-field ${groupType.valueInputSelector}`
             , function(){
                 let $controlPanel = repeaterType.getPanel($(this));
                 let $item = repeaterType.getItem($(this));
@@ -243,13 +243,13 @@
             });
 
             //ITEM CREATION
-            $(document).on('click', '.rb-form-control-repeater-field > .control-body > .repeater-container > .repeater-add-button > .add-button'
+            $(document).on('click', '.rb-repeater-field > .control-body > .repeater-container > .repeater-add-button > .add-button'
             , function(){
                 repeaterType.addNewItem( repeaterType.getPanel($(this)) );
             });
 
             //ITEM REMOVAL
-            $(document).on('click', `.rb-form-control-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-header .delete-button`
+            $(document).on('click', `.rb-repeater-field > .control-body > .repeater-container > .rb-repeater-items > ${repeaterType.itemSelector} > .item-header .delete-button`
             , function(e){
                 e.preventDefault();
                 e.stopPropagation();
@@ -258,7 +258,7 @@
 
             $(document).ready(function(){
                 setTimeout(function(){
-                    $('.rb-form-control-repeater-field').each(function(){
+                    $('.rb-repeater-field').each(function(){
                         repeaterType.initializeRepeater($(this));
                     });
                 }, 0);
@@ -266,7 +266,7 @@
 
             //On item creation, initialize any repeater inside the new item
             document.addEventListener('rbItemCreation', function (event) {
-                let $repeatersInItem = repeaterType.filterNotInPlaceholder( event.detail.$item.find('.rb-form-control-repeater-field') );
+                let $repeatersInItem = repeaterType.filterNotInPlaceholder( event.detail.$item.find('.rb-repeater-field') );
                 $repeatersInItem.each(function(){
                     repeaterType.initializeRepeater($(this));
                 });
@@ -348,7 +348,7 @@
             return processedFields[fieldID];
         },
         checkFieldsDependencies: function(){
-            $('.rb-form-control[data-dependencies]').each(function(){
+            $('.rb-field[data-dependencies]').each(function(){
                 fieldsController.checkFieldDependencies($(this));
             });
         },
@@ -377,9 +377,9 @@
             this.getValueInput( this.getPanel($controlInput) ).val($controlInput.val()).trigger('input');
         },
         initialize: function(){
-            $(document).on('input change', `.rb-customizer-control > .rb-form-control-single-field ${singleType.valueInputSelector},
-            .rb-customizer-control > .rb-form-control-group-field ${groupType.valueInputSelector},
-            .rb-customizer-control > .rb-form-control-repeater-field ${repeaterType.valueInputSelector}`
+            $(document).on('input change', `.rb-customizer-control > .rb-single-field ${singleType.valueInputSelector},
+            .rb-customizer-control > .rb-group-field ${groupType.valueInputSelector},
+            .rb-customizer-control > .rb-repeater-field ${repeaterType.valueInputSelector}`
             , function(){
                 customizerController.updateValue($(this));
             });
