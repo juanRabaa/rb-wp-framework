@@ -147,7 +147,7 @@ class RB_Form_Validator{
     }
 
     addField(field){
-        console.log(this);
+        //console.log(this);
         if(field instanceof RB_Field_Validator)
             this.fields.push(field);
         return this;
