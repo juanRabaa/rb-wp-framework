@@ -145,7 +145,6 @@ class RB_Taxonomy_Form_Field extends RB_Field_Factory{
     // SAVE
     // =============================================================================
     public function save_extra_term_fields( $term_id ) {
-
         /* Verify the nonce before proceeding. */
         // if ( !isset( $_POST[$this->id . '_nonce'] ) || !wp_verify_nonce( $_POST[$this->id . '_nonce'], basename( __FILE__ ) ) )
         //     return $term_id;
@@ -171,18 +170,18 @@ class RB_Taxonomy_Form_Field extends RB_Field_Factory{
         $meta_exists = $this->meta_exists($term_id);
         $meta_value = get_term_meta( $term_id, $meta_key, true );
 
-        if( $this->id == 'gg_prod_cat_show_title'  ){
-            var_dump($_POST[$this->id]);
-            echo "<br>";
-            echo $meta_key;
-            echo "<br>";
-            var_dump($new_meta_value);
-            echo "<br>";
-            var_dump($meta_value);
-            echo "<br>";
-            var_dump($new_meta_value != $meta_value);
-            //err();
-        }
+        // if( $this->id == 'lr-article-suplement'  ){
+        //     var_dump($_POST[$this->id]);
+        //     echo "<br>";
+        //     echo $meta_key;
+        //     echo "<br>";
+        //     var_dump($new_meta_value);
+        //     echo "<br>";
+        //     var_dump($meta_value);
+        //     echo "<br>";
+        //     var_dump($new_meta_value != $meta_value);
+        //     err();
+        // }
 
         // If the new value is not null
         if( isset($new_meta_value) ){

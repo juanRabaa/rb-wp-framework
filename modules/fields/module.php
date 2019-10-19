@@ -25,6 +25,7 @@ if(!class_exists('RB_Fields_Module')){
 
                 //ADMIN SCRIPTS
                 add_action( 'admin_enqueue_scripts', array(self::class, 'rb_fields_scripts') );
+
                 //Controller and core classes
                 self::require_controller();
                 self::require_core_controls();
@@ -32,7 +33,8 @@ if(!class_exists('RB_Fields_Module')){
                 self::require_environment_compability_classes();
             }
 
-            //add_action( 'customize_controls_enqueue_scripts', array(self::class, 'rb_fields_module_customizer_scripts') );
+            //CUSTOMIZER SCRIPTS
+            add_action( 'customize_controls_enqueue_scripts', array(self::class, 'rb_fields_module_customizer_scripts') );
             add_action( 'customize_register', array(self::class, 'rb_customizer_field_register') );
     	}
 
@@ -99,6 +101,7 @@ if(!class_exists('RB_Fields_Module')){
         //Clases that makes posible to use this controls on different environments
         static private function require_environment_compability_classes(){
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Metabox.php';
+            //require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Menu_Item.php';
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Taxonomy_Meta.php';
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Attachment_Meta.php';
         }
@@ -138,6 +141,7 @@ if(!class_exists('RB_Fields_Module')){
         // =============================================================================
         //CUSTOMIZER SCRIPTS
         static public function rb_fields_module_customizer_scripts($wp_customize) {
+                wp_enqueue_style( 'rb-fields-module-customizer-css', plugin_dir_url(__FILE__) . 'css/rb-fields-module-customizer.css' );
             //wp_enqueue_script( 'jQuery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', true );
             //wp_enqueue_script( 'rb-customizer-values-manager', plugin_dir_url(__FILE__) . 'js/customizerControlsValuesManager.js', array(), true );
         }

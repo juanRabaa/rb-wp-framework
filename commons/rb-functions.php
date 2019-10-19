@@ -146,3 +146,30 @@ function get_most_recent_post( $args = array() ){
 	wp_reset_postdata();
 	return $most_recent_post;
 }
+
+// =============================================================================
+//
+// =============================================================================
+function print_if($content, $condition){
+    $condition ? print_r($content) : false;
+}
+
+// =============================================================================
+// TEMPLATE PART
+// =============================================================================
+function rb_get_template_part($slug, $name = '', $args = array()){
+    $previous_query_vars = array();
+    if(is_array($args) && count($args)){
+        foreach($args as $arg_name => $arg_value){
+            $previous_query_vars[$arg_name] = get_query_var($arg_name, null);
+            set_query_var($arg_name, $arg_value);
+        }
+    }
+
+    get_template_part($slug, $name);
+
+    foreach($previous_query_vars as $var_name => $var_value){
+        set_query_var($var_name, $var_value);
+    }
+
+}

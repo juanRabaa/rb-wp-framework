@@ -117,6 +117,7 @@ body{
     align-items:  center;
     justify-content:  center;
     background-color: #d2d2d2;
+    margin-bottom: 0.5rem;
 }
 
 .input-wp-media-image-holder .input-image-placeholder {
@@ -134,7 +135,7 @@ body{
 }
 
 .input-wp-media-image-holder .input-image-placeholder p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 0;
 }
 
@@ -156,7 +157,7 @@ body{
 
 .remove-image-button {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .remove-image-button i:hover {
@@ -206,7 +207,6 @@ body{
 .repeater-empty-control{
     display: none;
 }
-
 
 /* ========================================================================== */
 /* Repeate item no collapsible */
