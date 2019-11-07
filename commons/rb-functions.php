@@ -173,3 +173,31 @@ function rb_get_template_part($slug, $name = '', $args = array()){
     }
 
 }
+
+/**
+*   @param string/array     $vars                       Name of the query var to retrieve, or array of (var_name => default_value)
+*   @param mixed            $default                    Default value if $vars is string. If both the query var value and $default
+*                                                       are arrays, the returned value will be a merge between them
+*/
+function rb_get_query_var($vars, $default = null){
+    if( !$vars && !is_string($vars) && ( !is_array($vars) || empty($vars) ) )
+        return null;
+
+    if(is_string($vars)){
+        $query_var = get_query_var($vars, null);
+        if(is_array($default)){
+
+            if(is_array($query_var))
+                $query_var = array_merge($default, $query_var);
+        }
+        if($query_var == null)
+            $query_var = $default;
+        return $query_var;
+    }
+    //no string then array
+    $result_vars = array();
+    foreach($vars as $var_name => $var_default){
+        $result_vars[$var_name] = get_query_var($var_name, $var_default);
+    }
+    return $result_vars;
+}
