@@ -113,6 +113,26 @@ function array_to_tree($array, $is_child){
     return $make_tree($array, $is_child);
 }
 
+/**
+*   Performs a deep merge of $array1 and $array2. If an item of type array is found in both arrays with the same
+*   item key, a deep merge will be performed with them.
+*/
+function array_merge_deep(array $array1, array $array2){
+    $new_array = $array1;
+    foreach($array2 as $item_key => $array2_item_value){
+        if(!isset($array1[$item_key]))
+            $new_array[$item_key] = $array2_item_value;
+        else{
+            $item_old_value = $array1[$item_key];
+            if(is_array($item_old_value) && is_array($array2_item_value))
+                $new_array[$item_key] = array_merge_deep($item_old_value, $array2_item_value);
+            else
+                $new_array[$item_key] = $array2_item_value;
+        }
+    }
+    return $new_array;
+}
+
 // =============================================================================
 //
 // =============================================================================
@@ -147,6 +167,32 @@ function get_most_recent_post( $args = array() ){
 	return $most_recent_post;
 }
 
+/**
+*   Simple Tax query to be used in a WP_Query
+*   @param string   $relation                                   Query relation. Accepts 'OR' or 'AND'
+*   @param array    $tems                                       Array of terms to query for. Format must be (taxonomy_name => terms_array)
+*   @param string   $fields                                     Fields to check terms against in the query. Can be any field that a WP_Term have.
+*/
+function rb_get_tax_query($relation, $terms, $field = 'term_id'){
+    if(!is_array($terms) || empty($terms))
+        return null;
+    $tax_query = array();
+    foreach($terms as $taxonomy => $tax_terms){
+        if(!$tax_terms || empty($tax_terms))
+            continue;
+        $tax_query[] = array(
+            'taxonomy' => $taxonomy,
+            'field'    => $field,
+            'terms'    => $tax_terms,
+        );
+    }
+    if(empty($tax_query))
+        return null;
+    if(count($tax_query) > 1)
+        $tax_query['relation'] = 'OR';
+    return $tax_query;
+}
+
 // =============================================================================
 //
 // =============================================================================
@@ -168,36 +214,50 @@ function rb_get_template_part($slug, $name = '', $args = array()){
 
     get_template_part($slug, $name);
 
+    //Return the queries var to their previous value
     foreach($previous_query_vars as $var_name => $var_value){
         set_query_var($var_name, $var_value);
     }
-
 }
 
 /**
 *   @param string/array     $vars                       Name of the query var to retrieve, or array of (var_name => default_value)
 *   @param mixed            $default                    Default value if $vars is string. If both the query var value and $default
-*                                                       are arrays, the returned value will be a merge between them
+*                                                       are arrays, the returned value will be a deep merge between them
 */
 function rb_get_query_var($vars, $default = null){
     if( !$vars && !is_string($vars) && ( !is_array($vars) || empty($vars) ) )
         return null;
 
     if(is_string($vars)){
-        $query_var = get_query_var($vars, null);
-        if(is_array($default)){
-
-            if(is_array($query_var))
-                $query_var = array_merge($default, $query_var);
-        }
-        if($query_var == null)
-            $query_var = $default;
-        return $query_var;
+        return rb_parsed_query_var($vars, $default);
     }
     //no string then array
     $result_vars = array();
     foreach($vars as $var_name => $var_default){
-        $result_vars[$var_name] = get_query_var($var_name, $var_default);
+        // var_dump($var_name);
+        // var_dump(rb_parsed_query_var($var_name, $var_default));
+        // echo "<br>";
+        $result_vars[$var_name] = rb_parsed_query_var($var_name, $var_default);
     }
     return $result_vars;
+}
+
+/**
+*   @param string           $var                        Name of the query var to retrieve.
+*   @param mixed            $default                    Default value. If both the query var value and $default
+*                                                       are arrays, the returned value will be a deep merge between them
+*/
+function rb_parsed_query_var($var, $default){
+    if(!is_string($var))
+        return null;
+    $query_var_value = get_query_var($var, null);
+    $final_value = null;
+    if(is_array($default) && is_array($query_var_value))
+        $final_value = array_merge_deep($default, $query_var_value);
+    else
+        $final_value = $query_var_value;
+    if($final_value === null)
+        $final_value = $default;
+    return $final_value;
 }

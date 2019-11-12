@@ -55,12 +55,12 @@ class RB_Admin_Panel_Manager{
     // CALL ON PAGE
     // =========================================================================
     //Hook a callback function to only be called on a certain admin page
-    static public function call_on_page($hook, $callback){
-        if(!is_string($hook) || !is_callable($callback))
+    static public function call_on_page($menu_slug, $callback){
+        if(!is_string($menu_slug) || !is_callable($callback))
             return false;
 
         array_push(self::$on_page_functions, array(
-            'hook'      => $hook,
+            'hook'      => $menu_slug,
             'callback'  => $callback,
         ));
     }
@@ -73,6 +73,21 @@ class RB_Admin_Panel_Manager{
 
     static private function hook_on_page_functions(){
         add_action( 'admin_menu', array(self::class, 'add_on_page_callbacks'), 999 );
+    }
+
+    static public function forbid_access_to_page($menu_slug, $redirect = true){
+        self::remove_page($menu_slug);
+        array_push(self::$on_page_functions, array(
+            'hook'      => $menu_slug,
+            'callback'  => function() use ($redirect){
+                ?>
+                <p>Access forbidden</p>
+                <?php
+                if($redirect)
+                    header("Location: ''");
+                die();
+            },
+        ));
     }
 }
 
