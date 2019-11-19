@@ -80,12 +80,13 @@ class RB_Admin_Panel_Manager{
         array_push(self::$on_page_functions, array(
             'hook'      => $menu_slug,
             'callback'  => function() use ($redirect){
+                ob_start();
                 ?>
-                <p>Access forbidden</p>
+                <h1>Access Forbidden</h1>
+                <p>We are sorry <?php echo translate_smiley([':(']); ?>, but access to this page is forbidden for your permissions level</p>
                 <?php
-                if($redirect)
-                    header("Location: ''");
-                die();
+                $message = ob_get_clean();
+                wp_die($message, "Access Forbidenn");
             },
         ));
     }
