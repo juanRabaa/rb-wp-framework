@@ -72,7 +72,50 @@ class RB_Posts_Module extends RB_Framework_Module{
             }
             return true;
         };
-        add_action( 'init', $post_labels_callback, $priority );
-        RB_Actions_Manager::store_action($action_id, 'init', $post_labels_callback);
+
+        RB_Actions_Manager::add_action($action_id, 'init', $post_labels_callback, array(
+            'priority'      => $priority,
+        ));
+    }
+
+    /**
+    *   Returns a post with a field that matches a value. Can be any field in the wp_posts table
+    *   @param string $field_value                          The value that must have the field of the post we are searching for
+    *   @param string $field                                The field for which we are searching the post
+    *   @param string $post_type                            The post type of the post
+    *   @param mixed $output                                Output that the 'get_post' function accepts
+    */
+    static public function get_post_by($field_value, $field = 'post_title', $post_type = "post", $output = OBJECT){
+        global $wpdb;
+
+        if ( is_array( $post_type ) ) {
+            $post_type = esc_sql( $post_type );
+            $post_type_in_string = "'" . implode( "','", $post_type ) . "'";
+            $sql = $wpdb->prepare(
+                "
+                SELECT ID
+                FROM $wpdb->posts
+                WHERE $field = %s
+                AND post_type IN ($post_type_in_string)
+            ",
+                $field_value
+            );
+        } else {
+            $sql = $wpdb->prepare(
+                "
+                SELECT ID
+                FROM $wpdb->posts
+                WHERE $field = %s
+                AND post_type = %s
+            ",
+                $field_value, $post_type
+            );
+        }
+
+        $post = $wpdb->get_var( $sql );
+
+        if ( $post ) {
+            return get_post( $post, $output );
+        }
     }
 }
