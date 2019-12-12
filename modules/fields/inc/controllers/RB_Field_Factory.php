@@ -20,7 +20,7 @@ class RB_Field_Factory{
         //print_r($this->controls);
         $rb_control = $this->generate_control();
         if($rb_control)
-            $rb_control->render();
+            $rb_control->render($post);
     }
 
     public function generate_control(){
