@@ -63,5 +63,5 @@ if(!class_exists('RB_Wordpress_Framework')){
     }
 
     require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Framework_Module.php';
-	require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Actions_Manager.php';
+	require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Filters_Manager.php';
 }

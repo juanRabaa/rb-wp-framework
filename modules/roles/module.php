@@ -24,7 +24,7 @@ class RB_Roles_Module{
             return false;
         };
 
-        RB_Actions_Manager::add_action($action_id, 'wp_roles_init', $hook_callback, array(
+        RB_Filters_Manager::add_action($action_id, 'wp_roles_init', $hook_callback, array(
             'priority'      => $priority,
         ));
     }

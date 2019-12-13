@@ -73,7 +73,7 @@ class RB_Posts_Module extends RB_Framework_Module{
             return true;
         };
 
-        RB_Actions_Manager::add_action($action_id, 'init', $post_labels_callback, array(
+        RB_Filters_Manager::add_action($action_id, 'init', $post_labels_callback, array(
             'priority'      => $priority,
         ));
     }
