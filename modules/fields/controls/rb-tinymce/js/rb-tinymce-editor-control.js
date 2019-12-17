@@ -165,7 +165,7 @@
         $panel = $(this).closest('.rb-tinymce-control');
         rbTinymceEditor.openPanelMediaUploader($panel);
     });
-    // 
+    //
     // $(document).ready(function(){
     //     setTimeout(function(){
     //         $('.rb-tinymce-control').each(function(){

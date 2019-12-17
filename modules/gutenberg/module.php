@@ -16,7 +16,7 @@ class RB_Gutenberg_Module extends RB_Framework_Module{
             'apply_content_filter'              => true,
             'disable_autop'                     => true,
             'disable_autop_dynamic_block'       => true,
-            'disable_autop_not_dynamic_block'   => false,
+            'disable_autop_not_dynamic_block'   => true,
         );
         $args = array_merge($default_args, $args);
         extract($args);
