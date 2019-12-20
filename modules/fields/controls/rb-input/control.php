@@ -83,8 +83,8 @@ class RB_Input_Control extends RB_Field_Control{
         $checked_attr = $this->value ? 'checked' : '';
         ?>
         <label>
-            <input type="hidden" value-as-number class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>" value=<?php echo $this->value; ?>>
-            <input type="checkbox" <?php echo $checked_attr; ?> <?php $this->print_input_attributes(); ?> onclick="this.previousElementSibling.value=1-this.previousElementSibling.value; $(this.previousElementSibling).trigger('input');">
+            <input type="hidden" value-as-bool class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>" value=<?php echo $this->value; ?>>
+            <input type="checkbox" <?php echo $checked_attr; ?> <?php $this->print_input_attributes(); ?> onclick="this.previousElementSibling.value=1-this.previousElementSibling.value; jQuery(this.previousElementSibling).trigger('input');">
             <span class="control-title"><?php echo $this->settings['label']; ?></span>
             <?php $this->print_description(); ?>
         </label>

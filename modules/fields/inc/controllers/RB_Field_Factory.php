@@ -74,7 +74,7 @@ class RB_Field_Factory{
     }
 
     public function is_group(){
-        return is_array($this->controls) && count($this->controls) > 1;
+        return (isset($this->settings['group']) && $this->settings['group'] === true) || (is_array($this->controls) && count($this->controls) > 1);
     }
 
     public function is_repeater(){

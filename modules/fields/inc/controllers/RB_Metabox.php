@@ -36,7 +36,7 @@ class RB_Metabox extends RB_Field_Factory{
     }
 
     public function render_metabox($post){
-        $value = get_post_meta( $post->ID, $this->meta_id, true );
+        $value = metadata_exists('post', $post->ID, $this->meta_id) ? get_post_meta( $post->ID, $this->meta_id, true ) : null;
         $this->value = $value;
         $this->render($post);
     }
