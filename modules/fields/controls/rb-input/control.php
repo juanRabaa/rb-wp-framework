@@ -83,7 +83,7 @@ class RB_Input_Control extends RB_Field_Control{
         $checked_attr = $this->value ? 'checked' : '';
         ?>
         <label>
-            <input type="hidden" value-as-bool class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>" value=<?php echo $this->value; ?>>
+            <input type="hidden" value-as-bool-not class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>" value=<?php echo $this->value; ?>>
             <input type="checkbox" <?php echo $checked_attr; ?> <?php $this->print_input_attributes(); ?> onclick="this.previousElementSibling.value=1-this.previousElementSibling.value; jQuery(this.previousElementSibling).trigger('input');">
             <span class="control-title"><?php echo $this->settings['label']; ?></span>
             <?php $this->print_description(); ?>
@@ -95,22 +95,23 @@ class RB_Input_Control extends RB_Field_Control{
         //$choices = array( $value => $title, ...)
         //$option_none = array($value, $title)
         if( is_array($this->choices) && !empty($this->choices) ): $option_none = $this->get_input_option('option_none')?>
-        <select class="browser-default <?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>">
-            <?php if( is_array($option_none) && !empty($option_none) ): ?>
-                <option value="<?php echo $option_none[0]; ?>"><?php echo $option_none[1]; ?></option>
-            <?php else: ?>
-                <option value=""></option>
-            <?php endif; ?>
-            <?php
-                foreach($this->choices as $value => $title):
-                    $selected_attr = $value == $this->value ? 'selected' : '';
-            ?>
-                <option value="<?php echo esc_attr($value); ?>" <?php echo $selected_attr; ?>><?php echo esc_html($title); ?></option>
-            <?php endforeach; ?>
-        </select>
+            <?php $this->print_description(); ?>
+            <select class="browser-default <?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo $this->id; ?>">
+                <?php if( is_array($option_none) && !empty($option_none) ): ?>
+                    <option value="<?php echo $option_none[0]; ?>"><?php echo $option_none[1]; ?></option>
+                <?php else: ?>
+                    <option value=""></option>
+                <?php endif; ?>
+                <?php
+                    foreach($this->choices as $value => $title):
+                        $selected_attr = $value == $this->value ? 'selected' : '';
+                ?>
+                    <option value="<?php echo esc_attr($value); ?>" <?php echo $selected_attr; ?>><?php echo esc_html($title); ?></option>
+                <?php endforeach; ?>
+            </select>
         <?php
         else:?>
-        <p>No choices were given for the selection control</p>
+            <p>No choices were given for the selection control</p>
         <?php endif;
     }
 

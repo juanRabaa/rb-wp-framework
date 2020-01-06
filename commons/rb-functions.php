@@ -29,6 +29,11 @@ function rb_get_default_customizable($string, $default){
     return ob_get_clean();
 }
 
+function rb_get_customizer_link($entity = "control", $id = ""){
+    $autofocus = $entity && $id ? "?autofocus[$entity]=$id" : "";
+    return admin_url("customize.php$autofocus");
+}
+
 // =============================================================================
 // ARRAY FUNCTIONS
 // =============================================================================
@@ -147,6 +152,48 @@ function rb_catch_template_part($generic,$specialised){
     ob_start();
     get_template_part($generic, $specialised);
     return ob_get_clean();
+}
+
+/*breadcrumbs*/
+function rb_get_term_ancestors($category, $taxonomy = 'category', $set_breadcrumbs_properties = false){
+    if(!$category)
+        return null;
+
+    $breadcrumbs = array();
+    $category = is_integer($category) ? get_term($category, $taxonomy) : $category;
+    $ancestor = get_term($category->parent, $taxonomy);
+    while(isset($ancestor) && !is_wp_error($ancestor)){
+        if($set_breadcrumbs_properties)
+            $ancestor = rb_set_crumb_properties($ancestor);
+        array_push($breadcrumbs, $ancestor);
+        $ancestor = $ancestor->parent ? get_term($ancestor->parent, $taxonomy) : null;
+    }
+
+    return array_reverse($breadcrumbs);
+}
+
+function rb_set_crumb_properties(&$page){
+    if(!isset($page))
+        return $page;
+    //POST
+    if(property_exists($page, 'post_id')){
+        $page->crumb_id = $page->ID;
+        $page->crumb_link = get_post_permalink($page->ID);
+        $page->crumb_title = $page->post_title;
+    }
+    //TERM
+    else if(property_exists($page, 'term_id')){
+        $page->crumb_id = $page->term_id;
+        $page->crumb_link = get_category_link($page->term_id);
+        $page->crumb_title = $page->name;
+    }
+    //WOOCOMMERCE PRODUCT
+    else if(method_exists($page, 'get_id')){
+        $page->crumb_id = $page->get_id();
+        $page->crumb_link = get_permalink( $page->get_id() );
+        $page->crumb_title = $page->get_name();
+    }
+    return $page;
 }
 
 // =============================================================================

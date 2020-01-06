@@ -8,6 +8,12 @@
 	cursor: move !important;
 	padding: 0.6rem;
 	overflow: hidden;
+	height: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .sortables-ul > .sortable-li:not(.ui-sortable-placeholder):before {
@@ -15,8 +21,8 @@
     counter-increment: list;
     position: absolute;
     left: 0;
-    font-size: 6rem;
-    top: -3rem;
+    font-size: 5rem;
+    top: 0.75rem;
     color: #adadad;
     font-family: sans-serif;
 }
@@ -79,4 +85,8 @@ body.dragging, body.dragging * {
     border-color: #999;
     color: #0073aa;
     overflow:  visible;
+}
+
+.sortables-ul li:hover:before, .sortables-ul li:hover:before, .sortables-ul li.dragged {
+    z-index: 1;
 }

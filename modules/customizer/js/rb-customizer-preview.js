@@ -80,6 +80,18 @@
             this.frontEdition.currentValue = value;
         }
 
+        managePasteOnEditableElement(event){
+            // Stop data actually being pasted into div
+            const originalEvent = event.originalEvent;
+            event.stopPropagation();
+            event.preventDefault();
+
+            // Get pasted data via clipboard API
+            const clipboardData = originalEvent.clipboardData || window.clipboardData;
+            const pastedData = clipboardData ? clipboardData.getData('text/plain') : '';
+            document.execCommand('insertHTML', false, pastedData);
+        }
+
         makeEditable(){
             var $elements = this.getSelectiveRefreshElements();
             if(!$elements)
@@ -90,6 +102,7 @@
             // MAKE SELECTIVE REFRESH ELEMENTS EDITABLE
             // =================================================================
             $elements.attr('contenteditable', '');
+            $elements.on('paste', this.managePasteOnEditableElement);
             $elements.addClass('rb-customizer-editable-element');
             $elements.on('click', function(event){
                 if(!event.ctrlKey)

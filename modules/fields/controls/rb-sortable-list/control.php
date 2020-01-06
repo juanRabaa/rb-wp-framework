@@ -69,7 +69,7 @@ class RB_Sortable_List_Control extends RB_Field_Control{
         $ordered_items_values = $this->current_value;
 
         ?>
-        <label class="customize-control-sortable-list">
+        <div class="customize-control-sortable-list">
             <?php if(isset($this->label)): ?>
             <span class="customize-control-title"><?php echo $this->label; ?></span>
             <?php endif; ?>
@@ -96,7 +96,7 @@ class RB_Sortable_List_Control extends RB_Field_Control{
                 ?>
                 <input type="hidden" value="<?php echo $this->value(); ?>" class="<?php $this->print_input_classes(); ?>" <?php $this->print_input_link(); ?> name="<?php echo esc_attr($id); ?>" id="<?php echo esc_attr($id); ?>">
             </ul>
-        </label>
+        </div>
         <?php
     }
 }

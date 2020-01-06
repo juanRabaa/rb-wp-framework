@@ -21,6 +21,7 @@
         if(typeof $input.attr('value-as-bool') !== typeof undefined && $input.attr('value-as-bool') !== false){
             value = value == 'true' || value == 1 || value == '1' ? true : false;
         }
+
         return value;
     }
 

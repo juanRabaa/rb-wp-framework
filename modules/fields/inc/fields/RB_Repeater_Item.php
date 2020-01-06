@@ -11,7 +11,7 @@ class RB_Repeater_Item extends RB_Field_Factory{
     }
 
     public function render($post = null){
-        $item_title = $this->get_item_title($this->index);
+        $item_title = $this->get_item_title();
         ?>
         <div class="repeater-item <?php echo $this->collapsible_class(); ?>">
             <div class="item-header rb-collapsible-header">
@@ -36,7 +36,7 @@ class RB_Repeater_Item extends RB_Field_Factory{
     }
 
     public function get_item_title(){
-        $base_title = isset($this->repeater_settings['item_title']) ? $this->repeater_settings['item_title'] : 'Item';
+        $base_title = isset($this->repeater_settings['item_title']) ? $this->repeater_settings['item_title'] : '';
         return str_replace('($n)', $this->index, $base_title);
     }
 
