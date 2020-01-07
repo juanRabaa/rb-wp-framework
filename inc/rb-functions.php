@@ -276,17 +276,12 @@ function rb_get_query_var($vars, $default = null){
     if( !$vars && !is_string($vars) && ( !is_array($vars) || empty($vars) ) )
         return null;
 
-    if(is_string($vars)){
+    if(is_string($vars))
         return rb_parsed_query_var($vars, $default);
-    }
     //no string then array
     $result_vars = array();
-    foreach($vars as $var_name => $var_default){
-        // var_dump($var_name);
-        // var_dump(rb_parsed_query_var($var_name, $var_default));
-        // echo "<br>";
+    foreach($vars as $var_name => $var_default)
         $result_vars[$var_name] = rb_parsed_query_var($var_name, $var_default);
-    }
     return $result_vars;
 }
 
@@ -299,11 +294,24 @@ function rb_parsed_query_var($var, $default){
     if(!is_string($var))
         return null;
     $query_var_value = get_query_var($var, null);
+    return rb_get_value($query_var_value, $default);
+}
+
+/**
+*   Returns a result based on a current value and a default one.
+*   If boths default and current are arrays, a deep merged between them is performed
+*   @param mixed $the_value                             The value to check for. If it is null, then the default value
+*                                                       is returned. If both $the_value and $default
+*                                                       are arrays, the result will be a deep merge between them
+*   @param mixed $default                               Default value.
+*   @return mixed
+*/
+function rb_get_value($the_value, $default){
     $final_value = null;
-    if(is_array($default) && is_array($query_var_value))
-        $final_value = array_merge_deep($default, $query_var_value);
+    if(is_array($default) && is_array($the_value))
+        $final_value = array_merge_deep($default, $the_value);
     else
-        $final_value = $query_var_value;
+        $final_value = $the_value;
     if($final_value === null)
         $final_value = $default;
     return $final_value;

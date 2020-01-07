@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if(defined('RB_WORDPRESS_FRAMEWORK_VERSION'))
     return;
+
 // =============================================================================
 // CONSTANTS
 // =============================================================================
@@ -17,7 +18,8 @@ define('RB_WORDPRESS_FRAMEWORK_COMMONS_URI', plugins_url("commons", __FILE__));
 // =============================================================================
 // COMMONS
 // =============================================================================
-require_once RB_WORDPRESS_FRAMEWORK_PATH . '/commons/rb-functions.php';
+require_once RB_WORDPRESS_FRAMEWORK_PATH . '/inc/rb-functions.php';
+require_once RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Globals.php';
 
 // =============================================================================
 // FRAMEWORK
