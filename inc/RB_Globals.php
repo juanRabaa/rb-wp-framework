@@ -7,7 +7,7 @@ class RB_Globals{
 
     /**
     *   Sets a global
-    *   @param string|array $name                           Global identifier.
+    *   @param string|array $name                           Global identifier. Can be an array of [identifier => default_value]
     *   @param string $default                              A default value, in case the global doesn't exists.
     */
     static public function get($name, $default = null){
