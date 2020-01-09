@@ -29,6 +29,7 @@
     border: solid 1px #b2b2b2;
     display: flex;
     position: relative;
+    min-height: 1.5rem;
 }
 
 .rb-collapsible > .rb-collapsible-header .title {

@@ -62,12 +62,13 @@ class RB_Attachment_Meta extends RB_Field_Factory{
         $new_meta_value = null;
         if(isset($_POST[$this->id])){
             $new_meta_value = $this->get_sanitized_value($_POST[$this->id], array(
-                'unslash_group'             => true,
-                'escape_child_slashes'      => true,
-                'unslash_repeater_slashes'   => true,
+                'unslash_group'                 => true,
+                'escape_child_slashes'          => true,
+                'unslash_repeater_slashes'      => true,
+                'unslash_single_repeater'       => true,
             ));
         }
-        
+
         /* Get the meta key. */
         $meta_key = $this->meta_id;
 

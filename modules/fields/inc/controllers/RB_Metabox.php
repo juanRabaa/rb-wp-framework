@@ -55,14 +55,14 @@ class RB_Metabox extends RB_Field_Factory{
         $new_meta_value = null;
         if(isset($_POST[$this->id])){
             $new_meta_value = $this->get_sanitized_value($_POST[$this->id], array(
-                'unslash_group'             => true,
-                'escape_child_slashes'      => true,
-                'unslash_repeater_slashes'   => true,
+                'unslash_group'                 => true,
+                'escape_child_slashes'          => true,
+                'unslash_repeater_slashes'      => true,
+                'unslash_single_repeater'       => true,
             ));
         }
 
-
-        // if($this->id == 'rb-test-groups-repeater'){
+        // if($this->id == 'lr_encuesta_opciones'){
         //     echo "New value: "; var_dump($new_meta_value); echo "<br>";
         //     errr();
         // }

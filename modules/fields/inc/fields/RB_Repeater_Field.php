@@ -134,9 +134,8 @@ class RB_Repeater_Field extends RB_Field{
         if(is_string($value) || is_array($value)){
             $decoded_value = $value;
             if(is_string($value)){
-                if($item_sanitation['unslash_repeater_slashes'] && !$item_controller->is_repeater() && ($item_sanitation['unslash_single_repeater'] || !$item_controller->is_single())){
-                    $decoded_value = wp_unslash($decoded_value);
-                }
+                if($item_sanitation['unslash_repeater_slashes'] && !$item_controller->is_repeater() && ($item_sanitation['unslash_single_repeater'] || !$item_controller->is_single()))
+                    $decoded_value = wp_unslash($decoded_value);//remove slashes if neccesary
                 $decoded_value = json_decode($decoded_value, true);
             }
 

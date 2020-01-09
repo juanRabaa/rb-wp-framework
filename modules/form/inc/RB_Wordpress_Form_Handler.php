@@ -57,6 +57,14 @@ if(!class_exists('RB_Wordpress_Form_Handler')){
             }
         }
 
+        /**
+        *   Registers a function to be called that should print the form content
+        *   @param function $callback
+        */
+        public function register_form_content($callback){
+            $this->options['form_content'] = $callback;
+        }
+
         // =========================================================================
         // PRINTERS
         // =========================================================================
@@ -70,9 +78,8 @@ if(!class_exists('RB_Wordpress_Form_Handler')){
         }
 
         public function print_form_content(){
-            if(is_callable($this->options['form_content'])){
+            if(is_callable($this->options['form_content']))
                 $this->options['form_content']($this);
-            }
         }
 
         public function print_form_action_input(){

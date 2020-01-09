@@ -123,21 +123,27 @@
             return $emptyItem;
         },
         getTitleLink: function($panel){ return $panel.attr('data-title-link'); },
+        /**
+        *   Updates the title based on its base title and the title-link (if the title changes with an input change)
+        */
         updateItemTitle: function($panel, $item){
             let linkedFieldID = this.getTitleLink($panel);
-            if(!linkedFieldID) return false;
+            let linkedValue = null;
 
-            let $itemControl = this.getItemControl($item);
+            if(linkedFieldID){
+                let $itemControl = this.getItemControl($item);
 
-            if( this.itemIsSingle($item) )
-                linkedFieldID = fieldsController.getID($panel) + `-${$item.index() + 1}`;
-            else if( this.itemIsGroup($item) )
-                linkedFieldID = fieldsController.getID($itemControl) + `-${linkedFieldID}`;
+                if( this.itemIsSingle($item) )
+                    linkedFieldID = fieldsController.getID($panel) + `-${$item.index() + 1}`;
+                else if( this.itemIsGroup($item) )
+                    linkedFieldID = fieldsController.getID($itemControl) + `-${linkedFieldID}`;
 
-            let $linkedFieldControl = fieldsController.getPanelByID(linkedFieldID);
-            if( !singleType.isSingle($linkedFieldControl) ) return false;
+                let $linkedFieldControl = fieldsController.getPanelByID(linkedFieldID);
+                if( !singleType.isSingle($linkedFieldControl) ) return false;
 
-            let linkedValue = singleType.getValue($linkedFieldControl);
+                linkedValue = singleType.getValue($linkedFieldControl);
+            }
+
             let $itemTitle = $item.find('> .item-header > .item-title');
 
             if(linkedValue)
