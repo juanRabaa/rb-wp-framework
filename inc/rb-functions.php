@@ -268,9 +268,30 @@ function rb_get_template_part($slug, $name = '', $args = array()){
 }
 
 /**
+*   Sets one or multiple query vars
+*   @param string/array     $vars                       Name of the query var to set, or array of (var_name => value)
+*   @param mixed $value                                 Value of the query var, if it is a single one
+*/
+function rb_set_query_var($vars, $value = null){
+    if( !$vars && !is_string($vars) && ( !is_array($vars) || empty($vars) ) )
+        return null;
+
+    if(is_string($vars))
+        return set_query_var($vars, $value);
+
+    foreach($vars as $var_name => $var_value)
+        set_query_var($var_name, $var_value);
+}
+
+/**
+*   Gets one or multiple query vars.
+*   If the default value of a query var is an array, and they found value is too, then
+*   a deep merge is performed between this two (if an item is both an array in both values, it gets
+*   merged recursively)
 *   @param string/array     $vars                       Name of the query var to retrieve, or array of (var_name => default_value)
 *   @param mixed            $default                    Default value if $vars is string. If both the query var value and $default
 *                                                       are arrays, the returned value will be a deep merge between them
+*   @return mixed|mixed[]
 */
 function rb_get_query_var($vars, $default = null){
     if( !$vars && !is_string($vars) && ( !is_array($vars) || empty($vars) ) )
