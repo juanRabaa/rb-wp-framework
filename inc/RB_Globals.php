@@ -38,6 +38,7 @@ class RB_Globals{
     *   been called
     *   @param mixed[] $globals                             Array of globals ( id => value ).
     *   @param callable $callback                           The function to call before the globals return to their original value.
+    *   @return mixed The value returned by the callback, if any
     */
     static public function set_temporary($globals, $callback){
         $previous_values = array();//backup
@@ -48,20 +49,26 @@ class RB_Globals{
             self::set($global_name, $global_new_val);
         }
         //Call the function with access to the temporary values
-        call_user_func($callback);
+        $callback_result = call_user_func($callback);
         //Set back the previous values
         foreach($previous_values as $global_name => $global_prev_val)
             self::set($global_name, $global_prev_val);
+
+        return $callback_result;
     }
 
     /**
     *   Require a file and sets some temporary values for a set of globals
     *   @param string $path                                 The required file path.
     *   @param mixed[] $globals                             Array of globals ( id => value ).
+    *   @param mixed[] $required                            Indicates if the file should be required or included
     */
-    static public function require_with_temp($path, $globals){
+    static public function require_with_temp($path, $globals, $required = true){
         self::set_temporary($globals, function() use ($path){
-            require $path;
+            if($required)
+                require $path;
+            else
+                include $path;
         });
     }
 }
