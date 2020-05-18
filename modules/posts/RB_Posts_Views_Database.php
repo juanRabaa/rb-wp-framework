@@ -38,7 +38,7 @@ class RB_Post_Views_Database{
     *   @param array[] $format                          Array de formatos. Uno para cada item que debe tener
     *                                                   $data. [ 'itemID'   => [ $formato ] ];
     */
-    public function get_sanitized_data($data, $format){
+    static public function get_sanitized_data($data, $format){
         $sanitized_data = array();
         $types = array();
 
@@ -57,7 +57,7 @@ class RB_Post_Views_Database{
         );
     }
 
-    public function get_view_sanitized_data($view_data){
+    static public function get_view_sanitized_data($view_data){
         return self::get_sanitized_data($view_data, array(
             'view_id'                           => array('%s', false),
             'post_id'                           => array('%d', false),

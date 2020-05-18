@@ -37,6 +37,7 @@ abstract class RB_Field{
     abstract public function get_container_class();
 
     public function collapsible_class(){
+        $class = '';
         if(isset($this->settings['collapsible']) && ( $this->settings['collapsible'] === true || is_array($this->settings['collapsible']) && !empty($this->settings['collapsible']) ) ){
             $class = "rb-collapsible";
             if(isset($this->settings['collapsible']['open']) && $this->settings['collapsible']['open'])

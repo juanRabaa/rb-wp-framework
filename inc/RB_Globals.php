@@ -64,7 +64,7 @@ class RB_Globals{
     *   @param mixed[] $required                            Indicates if the file should be required or included
     */
     static public function require_with_temp($path, $globals, $required = true){
-        self::set_temporary($globals, function() use ($path){
+        self::set_temporary($globals, function() use ($path, $required){
             if($required)
                 require $path;
             else
