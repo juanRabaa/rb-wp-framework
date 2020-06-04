@@ -101,7 +101,7 @@ if(!class_exists('RB_Fields_Module')){
         //Clases that makes posible to use this controls on different environments
         static private function require_environment_compability_classes(){
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Metabox.php';
-            //require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Menu_Item.php';
+            require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Menu_Item_Meta.php';
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Taxonomy_Meta.php';
             require_once RB_FIELDS_MASTER_DIR . 'inc/controllers/RB_Attachment_Meta.php';
         }

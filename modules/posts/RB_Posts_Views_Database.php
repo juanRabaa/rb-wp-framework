@@ -82,6 +82,7 @@ class RB_Post_Views_Database{
     static private function create_views_table(){
         global $wpdb;
         $table_name = self::get_views_table_name();
+        $charset_collate = $wpdb->get_charset_collate();
         // $wpdb->query( "DROP TABLE IF EXISTS $table_name" );
         $sql = "CREATE TABLE $table_name (
             view_id int NOT NULL AUTO_INCREMENT,
