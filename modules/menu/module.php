@@ -18,28 +18,3 @@ if(!class_exists('RB_Menu_Module')){
 
     RB_Menu_Module::initialize();
 }
-
-new RB_Menu_Item_Type('test_type', array(
-    'labels' 			=> array(
-        'name' 				 => __( 'Redes Sociales' ),
-        'singular_name' 	 => __( 'Red Social' ),
-    )
-));
-
-
-if(is_admin()){
-    new RB_Menu_Item_Meta('meta_key_test', array(
-        'admin_page'	=> 'test_type',
-    ), array(
-        'controls'		=> array(
-            'url'	=> array(
-                'input_type'    => 'text',
-                'label'         => 'Link',
-            ),
-            'fa'	=> array(
-                'type'      => 'RB_Fontawesome_Control',
-                'label'     => 'Icono',
-            ),
-        ),
-    ));
-}

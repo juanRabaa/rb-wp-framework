@@ -13,7 +13,7 @@ class RB_Menu_Item_Meta{
     }
 
     public function metabox_setup(){
-        /* Add meta boxes on the 'add_meta_boxes' hook. */
+        /* Hook the fields to the menu item of the post type. */
         add_action( 'wp_nav_menu_item_custom_fields', array($this, 'add_meta_field'), 10, 4 );
         /* Save post meta on the 'save_post' hook. */
         add_action( 'wp_update_nav_menu_item', array($this, 'save_meta_value'), 10, 3 );
