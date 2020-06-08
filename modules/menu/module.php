@@ -18,3 +18,39 @@ if(!class_exists('RB_Menu_Module')){
 
     RB_Menu_Module::initialize();
 }
+
+// new RB_Menu_Item_Type('test_type', array(
+//     'labels' => array(
+//         'name'              => 'Tests',
+//         'singular_name'     => 'Test',
+//     )
+// ));
+//
+// if(is_admin()){
+//     new RB_Menu_Item_Meta('meta_key_test', array(
+//         'admin_page'    => 'test_type',
+//     ), array(
+//         'controls'      => array(
+//             'url'  => array(
+//                 'input_type'    => 'text',
+//                 'label'         => 'Link',
+//             ),
+//             'fa'  => array(
+//                 'type'    => 'RB_Fontawesome_Control',
+//                 'label'         => 'Icono',
+//             ),
+//             'position_y'   => array(
+//                 'input_type'    => 'select',
+//                 'choices'       => array(
+//                     'top'                   => 'Arriba',
+//                     'bottom'                => 'Abajo',
+//                     'center'                => 'Centro'
+//                 ),
+//                 'input_options' => array(
+//                     'option_none'   => array('top', 'Por defecto'),
+//                 ),
+//                 'default'       => 'top',
+//             ),
+//         ),
+//     ));
+// }

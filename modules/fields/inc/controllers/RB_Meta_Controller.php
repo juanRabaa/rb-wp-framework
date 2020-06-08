@@ -1,5 +1,5 @@
 <?php
-class RB_Attachment_Meta{
+class RB_Meta_Controller{
     public $meta_id;
     public $render_nonce = true;
     public $metabox_settings = array(
@@ -14,7 +14,6 @@ class RB_Attachment_Meta{
         $this->register_metabox();
     }
 
-    // Sets the instance of the controller for the field to display
     public function set_field_controller($value = null){
         $this->field_controller = new RB_Field_Factory($this->meta_id, $value, $this->control_settings);
     }
@@ -38,6 +37,12 @@ class RB_Attachment_Meta{
         );
 
         return $form_fields;
+    }
+
+    public function get_control_html_as_string($post = null){
+        ob_start();
+        $this->field_controller->render($post);
+        return ob_get_clean();
     }
 
     public function save_metabox( $post_id ) {
@@ -85,10 +90,7 @@ class RB_Attachment_Meta{
         return metadata_exists( 'post', $post_id, $this->meta_id );
     }
 
-    // Return the render of the control as a string
-    public function get_control_html_as_string($post = null){
-        ob_start();
-        $this->field_controller->render($post);
-        return ob_get_clean();
-    }
+    public function get_posted_value()
+
+    public function update_value()
 }

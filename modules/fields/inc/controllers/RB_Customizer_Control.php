@@ -10,7 +10,7 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
         $this->options = $args;
         $this->options['meta_id'] = $id;
 
-        $this->controller = new RB_Field_Factory($this->id, $this->sanitazed_value(), $this->options);
+        $this->field_controller = new RB_Field_Factory($this->id, $this->sanitazed_value(), $this->options);
         $this->add_rb_sanitazion();
     }
 
@@ -32,7 +32,7 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
     public function render_content(){
         ?>
         <div class="rb-customizer-control">
-            <?php $this->controller->render(); ?>
+            <?php $this->field_controller->render(); ?>
             <input rb-customizer-control-value type='hidden' <?php $this->link(); ?>>
         </div>
         <?php
@@ -41,7 +41,7 @@ class RB_Customizer_Field_Control extends WP_Customize_Control{
     public function add_rb_sanitazion(){
         //print_r("Customizer sanitation of: $this->id \n");
         add_action( "customize_sanitize_$this->id", function($value) {
-            $new_meta_value = $this->controller->get_sanitized_value($value);
+            $new_meta_value = $this->field_controller->get_sanitized_value($value);
             return $new_meta_value;
         });
     }

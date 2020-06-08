@@ -1,5 +1,5 @@
 <?php
-class RB_Metabox extends RB_Field_Factory{
+class RB_Metabox{
     public $meta_id;
     public $render_nonce = true;
     public $metabox_settings = array(
@@ -11,11 +11,17 @@ class RB_Metabox extends RB_Field_Factory{
         'column'        => null,
     );
 
-    public function __construct($id, $metabox_settings, $control_settings ) {
+    public function __construct($id, $metabox_settings, $control_settings) {
         $this->metabox_settings = array_merge($this->metabox_settings, $metabox_settings);
+        $this->control_settings = $control_settings;
         $this->meta_id = $this->metabox_settings['meta_id'] = $id;
-        parent::__construct($id, null, $control_settings);
+        $this->set_field_controller();
         $this->register_metabox();
+    }
+
+    // Sets the instance of the controller for the field to display
+    public function set_field_controller($value = null){
+        $this->field_controller = new RB_Field_Factory($this->meta_id, $value, $this->control_settings);
     }
 
     //Returns the metabox title
@@ -84,7 +90,7 @@ class RB_Metabox extends RB_Field_Factory{
     public function add_metabox(){
         extract( $this->metabox_settings );
         foreach($this->get_admin_pages() as $admin_page){
-            add_meta_box( $this->id, $title, array($this, 'render_metabox'), $admin_page, $context, $priority);
+            add_meta_box( $this->meta_id, $title, array($this, 'render_metabox'), $admin_page, $context, $priority);
         }
         $this->add_metabox_classes();
     }
@@ -99,14 +105,14 @@ class RB_Metabox extends RB_Field_Factory{
     }
 
     public function render_metabox($post){
-        $this->value = $this->get_value($post);
-        $this->render($post);
+        $this->field_controller->set_value($this->get_value($post));
+        $this->field_controller->render($post);
     }
 
     public function save_metabox( $post_id, $post ) {
 
         // /* Verify the nonce before proceeding. */
-        // if ( !isset( $_POST[$this->id . '_nonce'] ) || !wp_verify_nonce( $_POST[$this->id . '_nonce'], basename( __FILE__ ) ) )
+        // if ( !isset( $_POST[$this->meta_id . '_nonce'] ) || !wp_verify_nonce( $_POST[$this->meta_id . '_nonce'], basename( __FILE__ ) ) )
         //     return $post_id;
 
         //JSONS Values in the $_POST get scaped quotes. That makes json_decode
@@ -115,8 +121,8 @@ class RB_Metabox extends RB_Field_Factory{
         //$_POST = array_map( 'stripslashes_deep', $_POST );
         //echo "-----------METABOX SAVING PROCCESS----------------<br><br>";
         $new_meta_value = null;
-        if(isset($_POST[$this->id])){
-            $new_meta_value = $this->get_sanitized_value($_POST[$this->id], array(
+        if(isset($_POST[$this->meta_id])){
+            $new_meta_value = $this->field_controller->get_sanitized_value($_POST[$this->meta_id], array(
                 'unslash_group'                 => true,
                 'escape_child_slashes'          => true,
                 'unslash_repeater_slashes'      => true,
@@ -124,7 +130,7 @@ class RB_Metabox extends RB_Field_Factory{
             ));
         }
 
-        // if($this->id == 'lr_encuesta_opciones'){
+        // if($this->meta_id == 'lr_encuesta_opciones'){
         //     echo "New value: "; var_dump($new_meta_value); echo "<br>";
         //     errr();
         // }
@@ -136,8 +142,7 @@ class RB_Metabox extends RB_Field_Factory{
         $meta_exists = $this->meta_exists($post_id);
         $meta_value = get_post_meta( $post_id, $meta_key, true );
 
-        //echo "Sanitized value: "; var_dump($new_meta_value); echo "<br>";
-        //asdasd3453();
+
 
         // If the new value is not null
         if( isset($new_meta_value) ){
@@ -173,7 +178,7 @@ class RB_Metabox extends RB_Field_Factory{
         if( is_array($this->metabox_settings['classes']) ){
             $admin_pages = $this->get_admin_pages();
             foreach($admin_pages as $admin_page){
-                add_filter( "postbox_classes_{$admin_page}_{$this->id}", function( $classes = array() ){
+                add_filter( "postbox_classes_{$admin_page}_{$this->meta_id}", function( $classes = array() ){
                     foreach ( $this->metabox_settings['classes'] as $class ) {
                         if ( ! in_array( $class, $classes ) ) {
                             $classes[] = sanitize_html_class( $class );
@@ -186,6 +191,6 @@ class RB_Metabox extends RB_Field_Factory{
     }
 
     protected function meta_exists($post_id){
-        return metadata_exists( 'post', $post_id, $this->id );
+        return metadata_exists( 'post', $post_id, $this->meta_id );
     }
 }

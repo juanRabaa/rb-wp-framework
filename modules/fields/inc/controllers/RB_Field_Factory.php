@@ -9,10 +9,18 @@ class RB_Field_Factory{
 
     public function __construct($id, $value, $settings = array()) {
         $this->settings = array_merge($this->settings, $settings);
-        $this->id = $this->settings['id'] = $id;
+        $this->set_id($id);
         $this->controls = isset($this->settings['controls']) && is_array($this->settings['controls']) ? $this->settings['controls'] : null;
-        $this->value = $value;
+        $this->set_value($value);
         $this->generate_control();
+    }
+
+    public function set_id($id){
+        $this->id = $this->settings['id'] = $id;
+    }
+
+    public function set_value($value){
+        $this->value = $value;
     }
 
     //Renders the controller accordingly to the settings passed
