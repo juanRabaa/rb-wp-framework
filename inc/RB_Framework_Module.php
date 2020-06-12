@@ -1,6 +1,5 @@
 <?php
 class RB_Framework_Module{
-
     static public function load_dependencies($dependencies){
         if(is_array($dependencies)){
             foreach($dependencies as $module_name){

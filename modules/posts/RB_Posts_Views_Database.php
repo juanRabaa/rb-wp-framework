@@ -123,8 +123,8 @@ class RB_Post_Views_Database{
     static public function get_view($post = null){
         global $wpdb;
         $post = get_post($post);
-        $user_http_x_forwarded_for = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        $user_remote_addr = $_SERVER['REMOTE_ADDR'];
+        $user_http_x_forwarded_for = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : null;
+        $user_remote_addr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
         $views_table_name = self::get_views_table_name();
         $user_view = $wpdb->get_row(
             "SELECT * FROM $views_table_name
