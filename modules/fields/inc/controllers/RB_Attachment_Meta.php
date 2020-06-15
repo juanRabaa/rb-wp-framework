@@ -11,7 +11,7 @@ class RB_Attachment_Meta extends RB_Metabox_Base{
     }
 
     protected function set_metafield(){
-        $this->meta_field = new RB_Post_Meta_Control($this->meta_id, $this->control_settings);
+        $this->meta_field = new RB_Post_Meta_Control($this->meta_id, $this->control_settings, $this->get_field_args());
     }
 
     public function register_metabox(){

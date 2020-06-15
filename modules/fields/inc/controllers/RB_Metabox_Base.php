@@ -15,6 +15,9 @@ abstract class RB_Metabox_Base{
         'column'        => null,
     );
 
+    public $custom_content = null;
+    public $sanitize_value = null;
+
     /**
     *   @param string   $meta_id                                  Key for the meta to store
     *   @param mixed[]  $metabox_settings                         Options for the metabox
@@ -24,7 +27,8 @@ abstract class RB_Metabox_Base{
         $this->metabox_settings = array_merge($this->metabox_settings, $metabox_settings);
         $this->control_settings = $control_settings;
         $this->meta_id = $this->metabox_settings['meta_id'] = $meta_id;
-        $this->custom_content = isset($this->metabox_settings['custom_content']) ? $this->metabox_settings['custom_content'] : null;
+        $this->custom_content = isset($this->metabox_settings['custom_content']) ? $this->metabox_settings['custom_content'] : $this->custom_content;
+        $this->sanitize_value = isset($this->metabox_settings['sanitize_value']) ? $this->metabox_settings['sanitize_value'] : $this->sanitize_value;
     }
 
     // Sets the field controller and registers the metabox using the child methods
@@ -45,15 +49,26 @@ abstract class RB_Metabox_Base{
 
     // Renders the control passing a wordpress object
     public function render_meta_field($wp_object){
+        ob_start();
         if(is_callable($this->custom_content))
             call_user_func($this->custom_content, $wp_object);
         else
             $this->meta_field->render_meta_field($wp_object);
+        echo apply_filters( "rb_metabox_render__$this->meta_id", ob_get_clean(), $this, $wp_object );
     }
 
     // =========================================================================
     // METHODS
     // =========================================================================
+
+    /**
+    *   @return mixed[] returns a set of arguments to pass to the field on set_metafield
+    */
+    public function get_field_args(){
+        return array(
+            'sanitize_value'    => $this->sanitize_value,
+        );
+    }
 
     /**
     *   @return string the metabox's title

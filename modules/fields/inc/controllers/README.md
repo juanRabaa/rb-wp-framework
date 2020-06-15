@@ -44,6 +44,12 @@ new RB_Metabox('meta_key', array(
             echo "Cell content";
         },
     ),
+    /**
+    *   @property callback                                                  A callback to sanitize the field value before its saved
+    *   @param mixed $value                                                 The value before the sanitation
+    *   @return mixed                                                       The sanitized value
+    */
+    'sanitize_value'    => null,
 ), array(
     /**
     *   Fields settings. Manages the metabox content (see fields docs.)
@@ -98,6 +104,12 @@ new RB_Taxonomy_Form_Field('meta_key', array(
             echo "Cell content";
         },
     ),
+    /**
+    *   @property callback                                                  A callback to sanitize the field value before its saved
+    *   @param mixed $value                                                 The value before the sanitation
+    *   @return mixed                                                       The sanitized value
+    */
+    'sanitize_value'    => null,
 ), array(
     /**
     *   Fields settings. Manages the metabox content (see fields docs.)
@@ -126,8 +138,11 @@ new RB_Attachment_Meta('meta_key', array(
     */
     'custom_content'    => null,
     /**
-    *   @property null|mixed[]                                              Column for the metadata
+    *   @property callback                                                  A callback to sanitize the field value before its saved
+    *   @param mixed $value                                                 The value before the sanitation
+    *   @return mixed                                                       The sanitized value
     */
+    'sanitize_value'    => null,
 ), array(
     /**
     *   Fields settings. Manages the metabox content (see fields docs.)
@@ -155,9 +170,36 @@ new RB_Menu_Item_Meta('meta_key', array(
     *   @param WP_Post|int|null $term
     */  
     'custom_content'    => null,
+    /**
+    *   @property callback                                                  A callback to sanitize the field value before its saved
+    *   @param mixed $value                                                 The value before the sanitation
+    *   @return mixed                                                       The sanitized value
+    */
+    'sanitize_value'    => null,
 ), array(
     /**
     *   Fields settings. Manages the metabox content (see fields docs.)
     */
 ));
+````
+
+
+# Filters
+
+### Metabox Content: `rb_metabox_render__${meta_id}`
+
+Filters the content to be render.
+````php
+<?php
+$meta_id = "meta_key";
+/**
+*   @param string $content                                  The render content
+*   @param RB_Metabox_Base $rb_metabox                      The metabox object. Extends RB_Metabox_Base
+*   @param WP_Post|WP_Term|int|null                         The wordpress object
+*   @return string                                          The filtered content
+*/
+$callback = function($content, $rb_metabox, $wp_object){
+    return "<div class='metabox-container'>$content</div>";
+};
+add_filter("rb_metabox_render__$meta_id", $callback);
 ````

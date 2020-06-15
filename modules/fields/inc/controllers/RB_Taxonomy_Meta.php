@@ -19,7 +19,7 @@ class RB_Taxonomy_Form_Field extends RB_Metabox_Column_Extension{
     }
 
     protected function set_metafield(){
-        $this->meta_field = new RB_Term_Meta_Control($this->meta_id, $this->control_settings);
+        $this->meta_field = new RB_Term_Meta_Control($this->meta_id, $this->control_settings, $this->get_field_args());
     }
 
     /**

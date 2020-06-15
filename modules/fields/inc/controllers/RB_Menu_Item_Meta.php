@@ -18,7 +18,7 @@ class RB_Menu_Item_Meta extends RB_Metabox_Base{
     }
 
     protected function set_metafield(){
-        $this->meta_field = new RB_Post_Meta_Control($this->meta_id, $this->control_settings);
+        $this->meta_field = new RB_Post_Meta_Control($this->meta_id, $this->control_settings, $this->get_field_args());
     }
 
     // Registers the metabox render and save
