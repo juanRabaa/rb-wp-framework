@@ -172,7 +172,6 @@ abstract class RB_Meta_Control extends RB_Meta_Field_Controller{
     }
 
     public function get_sanitized_value($value){
-        var_dump($value);
         return $this->field_controller->get_sanitized_value(parent::get_sanitized_value($value), array(
             'unslash_group'                 => true,
             'escape_child_slashes'          => true,
