@@ -51,7 +51,11 @@ class RB_Field_Factory{
     // =============================================================================
 
     //Get the first control in the $controls array. The one that would be used in a single field
-    public function get_first_control(){ foreach($this->controls as $control) return $control; }
+    public function get_first_control(){
+        if(is_array($this->controls))
+            foreach($this->controls as $control) return $control;
+        return null;
+    }
 
     //Returns the value of one of the settings
     public function get_setting( $name, $default = null ){

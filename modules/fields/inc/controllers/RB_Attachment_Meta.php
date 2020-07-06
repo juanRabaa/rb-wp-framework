@@ -23,11 +23,24 @@ class RB_Attachment_Meta extends RB_Metabox_Base{
 
     /* Adds a new field to the attachment form fields array */
     public function add_metabox($form_fields, $post){
-        $form_fields[$this->meta_id] = array(
+        $original_fields = $form_fields;
+        $columns_amount = count($original_fields);
+        $position = isset($this->metabox_settings['position']) && is_int($this->metabox_settings['position']) ? $this->metabox_settings['position'] : $columns_amount;
+        $position = $position >= 0 && $position <= $columns_amount ? $position : $columns_amount;
+        $new_field = array(
             'label'  => __( $this->get_title() ),
             'input'  => 'html',
             'html'   => $this->get_control_html_as_string($post),
         );
+
+        if($position == $columns_amount){
+            $form_fields[$this->meta_id] = $new_field;
+        }
+        else{
+            $last_half = array_slice($original_fields, $position);
+            $last_half = array_merge(array( $this->meta_id => $new_field), $last_half);
+            array_splice( $form_fields, $position, 0, $last_half );
+        }
 
         return $form_fields;
     }
