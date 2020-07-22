@@ -1,3 +1,21 @@
+These classes facilitates the creation of metaboxes in posts, terms, attachments, and menu items. The metabox content is rendered with the **fields API**, or if wanted, a
+**custom content** can be printed.
+
+The classes are:
+
+- ``RB_Metabox``: Posts
+- ``RB_Taxonomy_Meta``: Term
+- ``RB_Attachment_Meta``: Attachment
+- ``RB_Menu_Item_Meta``: Menu Item
+
+Creating a new instance of these classes requires 3 parameters.
+
+| Argument  	| Type    	| Required                                              	| Description                                                  	|
+|-----------	|---------	|-------------------------------------------------------	|--------------------------------------------------------------	|
+| $meta_key 	| `string`  	| yes                                                   	| Sets the meta key which will store the value in the database 	|
+| $config   	| `mixed[]` 	| yes                                                   	| The configuration of the metabox. These arguments are documented for each class down below.                             	|
+| $fields   	| `mixed[]` 	| If `custom_content` is not set on the `$config` array 	| The field configuration array, as seen in the  [Fields Documentation](../fields/README.md)                               	|
+
 # RB_Metabox
 
 Adds a metabox to the post creation and edition screens. A column for this

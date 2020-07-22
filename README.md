@@ -25,9 +25,9 @@ RB_Wordpress_Framework::load_module($module_name);
 
 ## Fields
 
-[Complete API Documentation](modules/fields/README.md)
-
-The API is primarily used to manage meta fields and values in
+The API is primarily used to manage **meta fields and values** in
 posts, terms, menu items, and in the customizer.
 
 It allows the use of ``single``, ``group``, and ``repeater`` fields. This fields usually display `controls` that manage the front end of the value input, but a custom render function can be assign to render the input. The module comes with some basic `controls`, but you can create your own.
+
+Check the [Fields API Documentation](modules/fields/README.md) and start adding some fields!
