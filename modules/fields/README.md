@@ -10,13 +10,13 @@ It is composed of `fields` and ``enviroment classes``.
 
 # Fields
 
-[Fields Documentation](modules/fields/inc/fields/README.md)
+[Fields Documentation](inc/fields/README.md)
 
 These manage the way the value input behaves both on front and backend.
 
 # Envirioment Classes
 
-[Envirioment Classes Documentation](modules/fields/inc/controllers/README.md)
+[Envirioment Classes Documentation](inc/controllers/README.md)
 
 They display **meta fields** in the most common places needed on a Wordpress
 site. These also **manages the saving process of the meta value**.
@@ -25,7 +25,7 @@ Were thought to use the `fields system`, but a custom render function for the in
 can be passed through the `custom_content` parameter if needed.
 
 When using `fields`, an array must be passed as parameter that indicates the `field`
-settings, including the `controls` to use. These are completely documented in the [Fields Documentation](modules/fields/inc/fields/README.md)
+settings, including the `controls` to use. These are completely documented in the [Fields Documentation](inc/fields/README.md)
 
 
 ___________
