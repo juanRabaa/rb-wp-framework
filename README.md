@@ -25,7 +25,7 @@ RB_Wordpress_Framework::load_module($module_name);
 
 ## Fields
 
-[Complete API Documentation](modules\fields)
+[Complete API Documentation](modules/fields/README.md)
 
 The API is primarily used to manage meta fields and values in
 posts, terms, menu items, and in the customizer.
