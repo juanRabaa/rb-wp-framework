@@ -4,9 +4,9 @@ These classes facilitates the creation of metaboxes in posts, terms, attachments
 The classes are:
 
 - ``RB_Metabox``: Posts
-- ``RB_Taxonomy_Meta``: Term
+- ``RB_Taxonomy_Meta``: Terms
 - ``RB_Attachment_Meta``: Attachment
-- ``RB_Menu_Item_Meta``: Menu Item
+- ``RB_Menu_Item_Meta``: Menu Items
 
 Creating a new instance of these classes requires 3 parameters.
 

@@ -1,33 +1,31 @@
 # Fields API
 
-The Fields API is primarily used to manage meta fields and values in
-posts, terms, menu items, and in the customizer, although it can be used as a stand alone value input outside of these screens.
+The Fields API is primarily used to manage **meta fields and values** in
+posts, terms, menu items, and attachments. It can also be used as a stand alone value input outside of these screens.
 
-It is composed of `fields` and ``enviroment classes``.
-
-- [Adding Metaboxes / Envirioment Classes](#envirioment-classes)
+- [Adding Metaboxes](#adding-metaboxes)
 - [Metabox Examples](#metabox-examples)
 
-# Fields
+# Metabox Controllers
 
-[Fields Documentation](inc/fields/README.md)
+These display **meta fields** in the most common places needed on a Wordpress
+site, and **manages the saving process of the meta value**.
 
-These manage the way the value input behaves both on front and backend.
-
-# Envirioment Classes
-
-[Envirioment Classes Documentation](inc/controllers/README.md)
-
-They display **meta fields** in the most common places needed on a Wordpress
-site. These also **manages the saving process of the meta value**.
-
-Were thought to use the `fields system`, but a custom render function for the input
-can be passed through the `custom_content` parameter if needed.
+Were thought to be used with the `fields system` to render the value input, but a custom render function can be passed through the `custom_content` parameter if needed.
 
 When using `fields`, an array must be passed as parameter that indicates the `field`
 settings, including the `controls` to use. These are completely documented in the [Fields Documentation](inc/fields/README.md)
 
+How to use these classes can be seen in the [Metabox Controllers Documentation](inc/controllers/README.md)
 
+# Fields
+
+These manage the way the value input behaves both on front and backend. The different field types and arguments can be seen in the [Fields Documentation](inc/fields/README.md)
+
+# Adding Metaboxes
+
+Using the right metabox controller class, you can add a meta value control where you want it.
+How to do this is explain in depth in the [Metabox Controllers Documentation](inc/controllers/README.md).
 ___________
 
 # Metabox Examples

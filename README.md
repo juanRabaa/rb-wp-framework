@@ -5,8 +5,7 @@ recurrent tasks a developer faces while creating a Wordpress theme or plugin.
 
 # Utilization
 
-To load the library, one must include `rb-wordpress-framework.php` in the proyect
-tu use.
+To load the library, one must include `rb-wordpress-framework.php` in the proyect to use.
 
 # Modules - APIs
 
@@ -25,9 +24,9 @@ RB_Wordpress_Framework::load_module($module_name);
 
 ## Fields
 
-The API is primarily used to manage **meta fields and values** in
+The Fields API is primarily used to manage **meta fields and values** in
 posts, terms, menu items, and in the customizer.
 
-It allows the use of ``single``, ``group``, and ``repeater`` fields. This fields usually display `controls` that manage the front end of the value input, but a custom render function can be assign to render the input. The module comes with some basic `controls`, but you can create your own.
+It allows the use of ``single``, ``group``, and ``repeater`` fields. These fields usually display `controls` that manages the front end of the value input, but a custom render function can be assign to render the input. The module comes with some basic `controls`, but you can create your own.
 
 Check the [Fields API Documentation](modules/fields/README.md) and start adding some fields!
