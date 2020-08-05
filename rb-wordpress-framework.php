@@ -4,22 +4,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if(defined('RB_WORDPRESS_FRAMEWORK_VERSION'))
+if(defined('RB_WPL_VERSION'))
     return;
 
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-define('RB_WORDPRESS_FRAMEWORK_VERSION', '0.1.0');
-define('RB_WORDPRESS_FRAMEWORK_PATH',  dirname(__FILE__) );
-define('RB_WORDPRESS_FRAMEWORK_URI',  plugins_url("", __FILE__) );
-define('RB_WORDPRESS_FRAMEWORK_COMMONS_URI', plugins_url("commons", __FILE__));
+define('RB_WPL_VERSION', '0.1.0');
+define('RB_WPL_PATH',  dirname(__FILE__) );
 
 // =============================================================================
 // COMMONS
 // =============================================================================
-require_once RB_WORDPRESS_FRAMEWORK_PATH . '/inc/rb-functions.php';
-require_once RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Globals.php';
+require_once RB_WPL_PATH . '/inc/rb-functions.php';
+require_once RB_WPL_PATH . '/inc/RB_Globals.php';
+
+define('RB_WPL_URI',  get_template_directory_uri() . '/inc/rb-wordpress-library');
+define('RB_WPL_COMMONS_URI', get_template_directory_uri() . '/inc/rb-wordpress-library/commons');
+define('RB_WPL_IS_THEME', rb_is_theme_file(__FILE__));
 
 // =============================================================================
 // FRAMEWORK
@@ -29,11 +31,11 @@ if(!class_exists('RB_Wordpress_Framework')){
         static private $modules_loaded = array();
 
         static public function get_framework_path($path = ''){
-            return RB_WORDPRESS_FRAMEWORK_PATH . $path;
+            return RB_WPL_PATH . $path;
         }
 
         static public function get_framework_uri($path = ''){
-            return RB_WORDPRESS_FRAMEWORK_URI . $path;
+            return RB_WPL_URI . $path;
         }
 
         static public function module_exists($module_name){
@@ -64,7 +66,7 @@ if(!class_exists('RB_Wordpress_Framework')){
         }
     }
 
-    require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Framework_Module.php';
-	require RB_WORDPRESS_FRAMEWORK_PATH . '/inc/RB_Filters_Manager.php';
+    require RB_WPL_PATH . '/inc/RB_Framework_Module.php';
+	require RB_WPL_PATH . '/inc/RB_Filters_Manager.php';
 	RB_Wordpress_Framework::load_module('wplists');
 }

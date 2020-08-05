@@ -17,7 +17,7 @@ if(!class_exists('RB_Form_Module')){
     	}
 
         static public function form_validation_scripts(){
-        	wp_enqueue_script( "rb-wp-form-validation-js", plugin_dir_url(__FILE__) . "js/rb-form-validator.js", true );
+        	wp_enqueue_script( "rb-wp-form-validation-js", rb_get_file_url(dirname(__FILE__)) . "js/rb-form-validator.js", true );
         }
 
         static public function enqueue_scripts(){

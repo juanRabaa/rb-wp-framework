@@ -30,9 +30,9 @@ class RB_Customizer_Module extends RB_Framework_Module{
     // =============================================================================
     static public function enqueue_customizer_scripts(){
         //STYLES
-        //wp_enqueue_style( "normalize-css", RB_WORDPRESS_FRAMEWORK_COMMONS_URI . "/libs/Skeleton-2.0.4/css/normalize.css", array() );
-        //wp_enqueue_style( "skeleton-css", RB_WORDPRESS_FRAMEWORK_COMMONS_URI ."/libs/Skeleton-2.0.4/css/skeleton.css", array() );
-        wp_enqueue_style( "font-awesome-css", RB_WORDPRESS_FRAMEWORK_COMMONS_URI. "/libs/fontawesome-free-5.1.0-web/css/all.css", array() );
+        //wp_enqueue_style( "normalize-css", RB_WPL_COMMONS_URI . "/libs/Skeleton-2.0.4/css/normalize.css", array() );
+        //wp_enqueue_style( "skeleton-css", RB_WPL_COMMONS_URI ."/libs/Skeleton-2.0.4/css/skeleton.css", array() );
+        wp_enqueue_style( "font-awesome-css", RB_WPL_COMMONS_URI. "/libs/fontawesome-free-5.1.0-web/css/all.css", array() );
         //wp_enqueue_style( "rb-customizer-css", RB_CUSTOMIZER_FRAMEWORK_URI . "/css/rb-customizer.css" );
         //SCRIPTS
         wp_enqueue_script( "jquery", true );

@@ -337,3 +337,65 @@ function rb_get_value($the_value, $default){
         $final_value = $default;
     return $final_value;
 }
+
+// =============================================================================
+// PATH/URL FUNCTIONS
+// =============================================================================
+
+/**
+*   Returns the absolute path of a file in a theme
+*   @param string $file                                                 Path to the file we want the absolute path to
+*   @return string file path
+*/
+function rb_get_theme_file_path($file){
+    $theme_name = get_template();
+    $theme_path = str_replace('/', "\\", get_template_directory()) . "\\";
+    $breaked = explode($theme_path, str_replace('/', "\\", $file));
+    $wanted = is_array($breaked) && isset($breaked[1]) ? "$theme_path{$breaked[1]}\\" : '';
+    return $wanted;
+}
+
+/**
+*   Returns the absolute url of a file in a theme
+*   @param string $file                                                 File we want the url for
+*   @return string file url
+*/
+function rb_get_theme_file_url($file = __FILE__){
+    $theme_name = get_template();
+    $theme_uri = get_template_directory_uri();
+    $file = str_replace('\\', "/", $file);
+    $breaked = explode("$theme_name/", $file);
+    $wanted = is_array($breaked) && isset($breaked[1]) ? "$theme_uri/{$breaked[1]}/" : '';
+    return $wanted;
+}
+
+/**
+*   Checks if a file is on the current theme
+*   @param string $file                                                 File we want the url for
+*   @return bool
+*/
+function rb_is_theme_file($file){
+    return rb_get_theme_file_path($file) != false;
+}
+
+/**
+*   Returns a theme/plugin file absolute path
+*   @param string $file                                                 File we want the url for
+*   @return string file path
+*/
+function rb_get_file_path($file){
+    return  rb_is_theme_file($file) ? rb_get_theme_file_path($file) : plugin_dir_path($file);
+}
+
+/**
+*   Returns a theme/plugin file absolute URL
+*   @param string $file                                                 File we want the url for
+*   @return string file url
+*/
+function rb_get_file_url($file){
+    return  rb_is_theme_file($file) ? rb_get_theme_file_url($file) : plugins_url('', $file);
+}
+
+// =============================================================================
+// 
+// =============================================================================
