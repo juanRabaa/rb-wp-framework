@@ -247,6 +247,10 @@ function print_if($content, $condition){
     $condition ? print_r($content) : false;
 }
 
+function is_child_theme_active(){
+    return get_stylesheet() != get_template();
+}
+
 // =============================================================================
 // TEMPLATE PART
 // =============================================================================
@@ -259,7 +263,7 @@ function rb_get_template_part($slug, $name = '', $args = array()){
         }
     }
 
-    get_template_part($slug, $name);
+    get_template_part($slug, $name, $args);
 
     //Return the queries var to their previous value
     foreach($previous_query_vars as $var_name => $var_value){
@@ -366,6 +370,13 @@ function rb_get_theme_file_url($file = __FILE__){
     $file = str_replace('\\', "/", $file);
     $breaked = explode("$theme_name/", $file);
     $wanted = is_array($breaked) && isset($breaked[1]) ? "$theme_uri/{$breaked[1]}/" : '';
+
+    if(!$wanted && is_child_theme_active()){//check if on child theme
+        $theme_name = get_stylesheet();
+        $theme_uri = get_stylesheet_directory_uri();
+        $breaked = explode("$theme_name/", $file);
+        $wanted = is_array($breaked) && isset($breaked[1]) ? "$theme_uri/{$breaked[1]}/" : '';
+    }
     return $wanted;
 }
 
@@ -397,5 +408,5 @@ function rb_get_file_url($file){
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
