@@ -354,8 +354,15 @@ function rb_get_value($the_value, $default){
 function rb_get_theme_file_path($file){
     $theme_name = get_template();
     $theme_path = str_replace('/', "\\", get_template_directory()) . "\\";
-    $breaked = explode($theme_path, str_replace('/', "\\", $file));
+    $file = str_replace('/', "\\", $file);
+    $breaked = explode($theme_path, $file);
     $wanted = is_array($breaked) && isset($breaked[1]) ? "$theme_path{$breaked[1]}\\" : '';
+
+    if(!$wanted && is_child_theme_active()){//check if on child theme
+        $child_theme_path = str_replace('/', "\\", get_stylesheet_directory()) . "\\";
+        $breaked = explode($child_theme_path, $file);
+        $wanted = is_array($breaked) && isset($breaked[1]) ? "$child_theme_path{$breaked[1]}\\" : '';
+    }
     return $wanted;
 }
 
