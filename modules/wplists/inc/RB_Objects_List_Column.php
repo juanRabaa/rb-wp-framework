@@ -59,27 +59,36 @@ abstract class RB_Objects_List_Column{
         }
     }
 
+    /**
+    *   @param string $admin_page                                               ID of the entity admin page (post, page, category, etc)
+    *   @return string filter tag for the column base managment for an admin_page
+    */
+    abstract static protected function manage_column_base_filter_tag($admin_page);
+    /**
+    *   Sets up the column to show on the objects list.
+    *   @param string $admin_page                                               ID of the entity admin page (post, page, category, etc)
+    */
     abstract protected function setup_screen_column($admin_page);
+    /**
+    *   Must return the correct object to work with.
+    *   @param WP_Term|WP_Post|mixed $wp_object
+    *   @return mixed
+    */
     abstract protected function get_object($wp_object);
 
     /**
-    *   Adds the metabox column to the wp objects list. The content is then setted by render_content
+    *   Adds the metabox column to the wp objects list. The content is then set by render_content
     *   @param string[] $columns                            Columns names array
     */
     public function add_column_base($columns){
         $original_columns = $columns;
         $columns_amount = count($original_columns);
-        $position = is_int($this->position) && $this->position >= 0 && $this->position <= $columns_amount ? $this->position : $columns_amount;
+        $position = is_int($this->position) && $this->position >= 0 && $this->position < $columns_amount ? $this->position : $columns_amount;
 
-        if($position == $columns_amount){
+        if($position == $columns_amount)
             $columns[$this->id] = $this->title;
-        }
-        else{
-            $last_half = array_slice($original_columns, $position);
-            var_dump($position);
-            $last_half = array_merge(array( $this->id => $this->title), $last_half);
-            array_splice( $columns, $position, 0, $last_half );
-        }
+        else
+            array_splice( $columns, $position, 0, array( $this->id => $this->title) );
         return $columns;
     }
 
@@ -111,5 +120,38 @@ abstract class RB_Objects_List_Column{
     */
     public function filter_cell_class(){
         return $this->cell_class;
+    }
+
+    /**
+    *   Removes one or more columns from an objects list
+    *   @param string $filter_id                                                ID for the filter stored in the filter manager. It allows this action to be
+    *                                                                           removed using RB_Filters_Manager::remove_filter
+    *   @param string|string[] $admin_pages                                     Admin page or pages IDs
+    *   @param string|string[] $columns_remove                                  Column or columns ids to remove
+    *   @param mixed[] $args
+    *       @param int $priority                                                Filter priority
+    */
+    static public function remove($filter_id, $admin_pages, $columns_remove, $args = array()){
+        if(!is_array($columns_remove) && !is_string($columns_remove))
+            return;
+
+        $default_args = array(
+            'priority'  => 10,
+        );
+        $args = array_merge($default_args, $args);
+
+        $admin_pages = is_array($admin_pages) ? $admin_pages : [$admin_pages];
+        foreach($admin_pages as $admin_page){
+            $page_filter_id = count($admin_pages) == 1 ? $filter_id : "{$filter_id}-$admin_page";
+            RB_Filters_Manager::add_filter( $page_filter_id, static::manage_column_base_filter_tag($admin_page), function($columns) use ($columns_remove){
+                $columns_remove = is_array($columns_remove) ? $columns_remove : [$columns_remove];
+                foreach($columns_remove as $col_remove_id){
+                    unset($columns[$col_remove_id]);
+                }
+                return $columns;
+            }, array(
+                'priority'  => $args['priority'],
+            ));
+        }
     }
 }

@@ -6,8 +6,12 @@ class RB_Terms_List_Column extends RB_Objects_List_Column{
         parent::__construct($id, $admin_pages, $title, $render_callback, $args);
     }
 
+    static protected function manage_column_base_filter_tag($admin_page){
+        return "manage_edit-{$admin_page}_columns";
+    }
+
     protected function setup_screen_column($admin_page){
-        RB_Filters_Manager::add_filter( "rb_tax_metabox-$this->id-column_base", "manage_edit-{$admin_page}_columns", array($this, 'add_column_base') );
+        RB_Filters_Manager::add_filter( "rb_tax_metabox-$this->id-column_base", self::manage_column_base_filter_tag($admin_page), array($this, 'add_column_base') );
         RB_Filters_Manager::add_filter( "rb_tax_metabox-$this->id-column_content", "manage_{$admin_page}_custom_column", array($this, 'add_column_content'), array(
             'accepted_args'  => 3,
         ));
