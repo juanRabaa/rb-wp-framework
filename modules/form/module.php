@@ -12,12 +12,12 @@ if(!class_exists('RB_Form_Module')){
             require plugin_dir_path(__FILE__) . 'inc/RB_Wordpress_Form_Handler.php';
             require plugin_dir_path(__FILE__) . 'inc/RB_Form.php';
             require plugin_dir_path(__FILE__) . 'inc/RB_Form_Field.php';
-            
+
             self::enqueue_scripts();
     	}
 
         static public function form_validation_scripts(){
-        	wp_enqueue_script( "rb-wp-form-validation-js", rb_get_file_url(dirname(__FILE__)) . "js/rb-form-validator.js", true );
+        	wp_enqueue_script( "rb-wp-form-validation-js", rb_get_file_url(__FILE__) . "/js/rb-form-validator.js", true );
         }
 
         static public function enqueue_scripts(){

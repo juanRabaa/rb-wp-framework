@@ -411,7 +411,7 @@ function rb_get_file_path($file){
 *   @return string file url
 */
 function rb_get_file_url($file){
-    return  rb_is_theme_file($file) ? rb_get_theme_file_url($file) : plugins_url('', $file);
+    return  rb_is_theme_file($file) ? rb_get_theme_file_url($file) : plugin_dir_url($file);
 }
 
 // =============================================================================

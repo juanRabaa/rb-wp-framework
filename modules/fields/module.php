@@ -118,13 +118,13 @@ if(!class_exists('RB_Fields_Module')){
             // COMMONS
             // =====================================================================
             //Collapsibles
-            wp_enqueue_style( 'rb-collapsible', rb_get_file_url(dirname(__FILE__)) . 'css/rb-collapsible.css' );
-            wp_enqueue_script( 'rb-collapsible', rb_get_file_url(dirname(__FILE__)) . 'js/rb-collapsible.js', array('jquery'), true );
+            wp_enqueue_style( 'rb-collapsible', rb_get_file_url(__FILE__) . '/css/rb-collapsible.css' );
+            wp_enqueue_script( 'rb-collapsible', rb_get_file_url(__FILE__) . '/js/rb-collapsible.js', array('jquery'), true );
             //Sortabe jQuery UI
             wp_enqueue_script( 'jquery-ui-sortable');
             //Main
-            wp_enqueue_style( 'rb-fields-module-css', rb_get_file_url(dirname(__FILE__)) . 'css/rb-fields-module.css' );
-            wp_enqueue_script( 'rb-controls-values-manager', rb_get_file_url(dirname(__FILE__)) . 'js/rb-controls.js', array('jquery'), true );
+            wp_enqueue_style( 'rb-fields-module-css', rb_get_file_url(__FILE__) . '/css/rb-fields-module.css' );
+            wp_enqueue_script( 'rb-controls-values-manager', rb_get_file_url(__FILE__) . '/js/rb-controls.js', array('jquery'), true );
             //Font Aweasome
             wp_enqueue_style( "fontawesome", 'https://use.fontawesome.com/releases/v5.4.1/css/all.css', true );
 
@@ -144,9 +144,9 @@ if(!class_exists('RB_Fields_Module')){
         // =============================================================================
         //CUSTOMIZER SCRIPTS
         static public function rb_fields_module_customizer_scripts($wp_customize) {
-                wp_enqueue_style( 'rb-fields-module-customizer-css', rb_get_file_url(dirname(__FILE__)) . 'css/rb-fields-module-customizer.css' );
+                wp_enqueue_style( 'rb-fields-module-customizer-css', rb_get_file_url(__FILE__) . '/css/rb-fields-module-customizer.css' );
             //wp_enqueue_script( 'jQuery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', true );
-            //wp_enqueue_script( 'rb-customizer-values-manager', rb_get_file_url(dirname(__FILE__)) . 'js/customizerControlsValuesManager.js', array(), true );
+            //wp_enqueue_script( 'rb-customizer-values-manager', rb_get_file_url(__FILE__) . '/js/customizerControlsValuesManager.js', array(), true );
         }
 
         static public function rb_customizer_field_register($wp_customize) {
