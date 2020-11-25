@@ -7,12 +7,12 @@ if(!class_exists('RB_Posts_Module')){
         /**
         *   Tracks the amount of views a post has and stores it in the rb_post_views_count post meta
         */
-        static public function track_views(){
+        static public function track_views($config = array()){
             if(self::$tracking_views)
                 return false;
             self::$tracking_views = true;
             require_once plugin_dir_path( __FILE__ ) . 'RB_Posts_Views_Tracker.php';
-            RB_Posts_Views_Tracker::track_views();
+            RB_Posts_Views_Tracker::track_views($config);
         }
 
         /**
