@@ -3,7 +3,7 @@ if(!class_exists('RB_Taxonomies_Module')){
     class RB_Taxonomies_Module extends RB_Framework_Module{
         static private $initialized = false;
 
-        public function initialize(){
+        static public function initialize(){
             if(self::$initialized)
                 return false;
             self::$initialized = true;
