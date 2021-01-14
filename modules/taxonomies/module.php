@@ -19,7 +19,7 @@ if(!class_exists('RB_Taxonomies_Module')){
         *                                                                       the rb_config['unique'] argument. If not, the component may allow
         *                                                                       to add more terms, but the backend will only add one.
         */
-        private function add_rb_config_support(){
+        static private function add_rb_config_support(){
             add_filter( 'rest_prepare_taxonomy', array(self::class, 'rest_add_rb_config'), 10, 3);
             add_filter( 'registered_taxonomy', array(self::class, 'add_rb_config'), 10, 3);
             add_action( 'set_object_terms', array(self::class, 'filter_unique_tax_terms'), 10, 6 );
